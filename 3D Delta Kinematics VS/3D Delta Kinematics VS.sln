@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.35325.158
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "3D Delta Kinematics VS", "3D Delta Kinematics VS\3D Delta Kinematics VS.csproj", "{950A3B65-8EBA-4EC1-9F67-2E11C47523C0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{950A3B65-8EBA-4EC1-9F67-2E11C47523C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{950A3B65-8EBA-4EC1-9F67-2E11C47523C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{950A3B65-8EBA-4EC1-9F67-2E11C47523C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{950A3B65-8EBA-4EC1-9F67-2E11C47523C0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2A8A2229-7F66-41DE-98F0-4B3AAF058829}
+	EndGlobalSection
+EndGlobal
