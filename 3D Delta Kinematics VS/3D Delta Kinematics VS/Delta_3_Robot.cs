@@ -19,7 +19,6 @@ namespace _3D_Delta_Kinematics_VS
         //Delta Specification
         private float fStaticPlateRadius = 120;
         private float fActiveLeg = 180;
-        private float fPassiveLeg = 500;
         private float fMovingPlate = 50;
 
         private float fRatio = 0.03f;
@@ -123,10 +122,6 @@ namespace _3D_Delta_Kinematics_VS
             rc.DrawJoint();
             GL.PopMatrix();
         }
-
-
-
-        float plateX, plateY, plateZ;
 
         public void DrawMovePlate()
         {

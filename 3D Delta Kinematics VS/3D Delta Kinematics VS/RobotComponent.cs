@@ -11,7 +11,6 @@ namespace _3D_Delta_Kinematics_VS
     class RobotComponent
     {
         static vec3 baseTrans = new vec3(-0.5f, 0, 0);
-        static float baseSpin = 0;
 
         public void DrawCircle()
         {
