@@ -72,7 +72,7 @@ namespace _3D_Delta_Kinematics_VS
             // Set up the projection matrix
             GL.MatrixMode(MatrixMode.Projection);
             GL.LoadIdentity();
-            GL.Frustum(-1.0, 1.0, -1.0, 1.0, 1.0, 100.0); // Adjust near and far planes
+            GL.Frustum(-1.0, 1.0, -1.0, 1.0, 1.0, 50.0); // Adjust near and far planes
 
             // Set up the view matrix
             GL.MatrixMode(MatrixMode.Modelview);
@@ -164,16 +164,11 @@ namespace _3D_Delta_Kinematics_VS
         // Method to draw 3D Delta Robot
         private void Render()
         {
+            DrawGrid();
 
-            // Draw coordinate axes
             DrawCoordinateAxes();
 
-
-            //Draw a Delta Robot 
-            Delta_3_Robot D3R = new Delta_3_Robot(new vec3(MovePlatePos.x, MovePlatePos.y, MovePlatePos.z));
-            D3R.DrawDelta3Robot();
-
-
+            DrawRobot();
 
         }
     
@@ -200,6 +195,39 @@ namespace _3D_Delta_Kinematics_VS
             GL.Vertex3(0, 0, 0); // Start point
             GL.Vertex3(0, 10, 0);  // End point
             GL.End();
+        }
+
+        // Method to Draw Grid
+        private void DrawGrid()
+        {
+            GL.Color3(Color.Gray);
+            GL.Begin(PrimitiveType.Lines);
+
+            int size = 25; // Grid size
+
+            for (int i = 0; i <= size; i=i+3)
+            {
+                // Lines parallel to X-axis
+                GL.Vertex3(i, 0, 0);
+                GL.Vertex3(i, 0, size);
+
+                // Lines parallel to Z-axis
+                GL.Vertex3(0, 0, i);
+                GL.Vertex3(size, 0, i);
+            }
+
+            GL.End();
+        }
+
+        // Draw Robot 
+        private void DrawRobot()
+        {
+            //Move / Translate Robot Position 
+            GL.Translate(10, 15, 10);
+
+            //Delta Robot Draw
+            Delta_3_Robot D3R = new Delta_3_Robot(new vec3(MovePlatePos.x, MovePlatePos.y, MovePlatePos.z));
+            D3R.DrawDelta3Robot();
         }
 
     }
