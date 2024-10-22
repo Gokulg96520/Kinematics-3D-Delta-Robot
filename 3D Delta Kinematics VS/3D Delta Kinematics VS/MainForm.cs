@@ -20,6 +20,8 @@ namespace _3D_Delta_Kinematics_VS
         private float _zoom; // Initial zoom factor
         private float _rotationX ; // Rotation around X-axis
         private float _rotationY ; // Rotation around Y-axis
+        private float _moveXDirection; // Rotation around X-axis
+        private float _moveYDirection; // Rotation around Y-axis
         private bool _isDragging = false; // For mouse dragging
         private Point _lastMousePosition; // Last mouse position for rotation
 
@@ -38,6 +40,8 @@ namespace _3D_Delta_Kinematics_VS
             _zoom = 30.0f; 
             _rotationX = 30.0f; 
             _rotationY = 50.0f;
+            _moveXDirection = -15.0f;
+            _moveYDirection = -5.0f;
 
             glControl.Load += GLControl_Load; // Subscribe to the Load event
             glControl.Paint += GLControl_Paint; // Subscribe to the Paint event
@@ -77,7 +81,7 @@ namespace _3D_Delta_Kinematics_VS
             GL.LoadIdentity();
 
             // Zoom: Move back along the Z-axis & also in x,y position
-            GL.Translate(-15.0f, -5.0f, -_zoom);
+            GL.Translate(_moveXDirection, _moveYDirection, -_zoom);
 
             // Apply rotation transformations for the entire scene
             GL.Rotate(_rotationX, 1.0, 0.0, 0.0);
@@ -159,14 +163,14 @@ namespace _3D_Delta_Kinematics_VS
             }
         }
 
-        // Method to draw 3D Delta Robot
+        // Render PipeLine
         private void Render()
         {
             DrawGrid();
 
             DrawCoordinateAxes();
 
-            DrawRobot();
+            Draw3DDeltaRobot();
 
         }
     
@@ -217,10 +221,10 @@ namespace _3D_Delta_Kinematics_VS
             GL.End();
         }
 
-        // Draw Robot 
-        private void DrawRobot()
+        // Draw 3D Delta Robot 
+        private void Draw3DDeltaRobot()
         {
-            //Move / Translate Robot Position 
+            //Move / Translate Robot Position in x,y,z
             GL.Translate(10, 15, 10);
 
             //Delta Robot Draw
@@ -228,5 +232,16 @@ namespace _3D_Delta_Kinematics_VS
             D3R.DrawDelta3Robot();
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            _moveXDirection += 1.0f;
+            glControl.Invalidate();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            _moveXDirection -= 1.0f;
+            glControl.Invalidate();
+        }
     }
 }

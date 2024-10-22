@@ -38,9 +38,9 @@ namespace _3D_Delta_Kinematics_VS
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.glControl.BackColor = System.Drawing.Color.Black;
-            this.glControl.Location = new System.Drawing.Point(260, 0);
+            this.glControl.Location = new System.Drawing.Point(254, 2);
             this.glControl.Name = "glControl";
-            this.glControl.Size = new System.Drawing.Size(540, 450);
+            this.glControl.Size = new System.Drawing.Size(525, 470);
             this.glControl.TabIndex = 0;
             this.glControl.VSync = false;
             // 
@@ -48,7 +48,7 @@ namespace _3D_Delta_Kinematics_VS
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(800, 494);
             this.Controls.Add(this.glControl);
             this.Name = "MainForm";
             this.Text = "Form1";
