@@ -163,6 +163,45 @@ namespace _3D_Delta_Kinematics_VS
             }
         }
 
+        // Event handler for Move Left View events
+        private void btnMoveLeft_Click(object sender, EventArgs e)
+        {
+            _moveXDirection -= 1.0f;
+            glControl.Invalidate();
+        }
+
+        // Event handler for Move Right View events
+        private void btnMoveRight_Click(object sender, EventArgs e)
+        {
+            _moveXDirection += 1.0f;
+            glControl.Invalidate();
+        }
+
+        // Event handler for Move Up View events
+        private void btnMoveUp_Click(object sender, EventArgs e)
+        {
+            _moveYDirection += 1.0f;
+            glControl.Invalidate();
+        }
+
+        // Event handler for Move Down View events
+        private void btnMoveDown_Click(object sender, EventArgs e)
+        {
+            _moveYDirection -= 1.0f;
+            glControl.Invalidate();
+        }
+
+        // Event handler for Rest View events
+        private void btnReset_Click(object sender, EventArgs e)
+        {
+            _moveXDirection = -15.0f;
+            _moveYDirection = -5.0f;
+            _zoom = 30.0f;
+            _rotationX = 30.0f;
+            _rotationY = 50.0f;
+            glControl.Invalidate();
+        }
+
         // Render PipeLine
         private void Render()
         {
@@ -224,7 +263,7 @@ namespace _3D_Delta_Kinematics_VS
         // Draw 3D Delta Robot 
         private void Draw3DDeltaRobot()
         {
-            //Move / Translate Robot Position in x,y,z
+            //Move Robot Position in x,y,z
             GL.Translate(10, 15, 10);
 
             //Delta Robot Draw
@@ -232,16 +271,5 @@ namespace _3D_Delta_Kinematics_VS
             D3R.DrawDelta3Robot();
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            _moveXDirection += 1.0f;
-            glControl.Invalidate();
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            _moveXDirection -= 1.0f;
-            glControl.Invalidate();
-        }
     }
 }

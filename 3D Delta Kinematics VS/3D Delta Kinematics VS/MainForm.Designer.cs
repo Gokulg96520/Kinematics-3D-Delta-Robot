@@ -60,6 +60,7 @@ namespace _3D_Delta_Kinematics_VS
             this.btnMoveLeft.TabIndex = 1;
             this.btnMoveLeft.Text = "←";
             this.btnMoveLeft.UseVisualStyleBackColor = true;
+            this.btnMoveLeft.Click += new System.EventHandler(this.btnMoveLeft_Click);
             // 
             // btnMoveRight
             // 
@@ -72,6 +73,7 @@ namespace _3D_Delta_Kinematics_VS
             this.btnMoveRight.TabIndex = 1;
             this.btnMoveRight.Text = "→";
             this.btnMoveRight.UseVisualStyleBackColor = true;
+            this.btnMoveRight.Click += new System.EventHandler(this.btnMoveRight_Click);
             // 
             // btnMoveUp
             // 
@@ -84,6 +86,7 @@ namespace _3D_Delta_Kinematics_VS
             this.btnMoveUp.TabIndex = 1;
             this.btnMoveUp.Text = "↑";
             this.btnMoveUp.UseVisualStyleBackColor = true;
+            this.btnMoveUp.Click += new System.EventHandler(this.btnMoveUp_Click);
             // 
             // btnMoveDown
             // 
@@ -96,6 +99,7 @@ namespace _3D_Delta_Kinematics_VS
             this.btnMoveDown.TabIndex = 1;
             this.btnMoveDown.Text = "↓";
             this.btnMoveDown.UseVisualStyleBackColor = true;
+            this.btnMoveDown.Click += new System.EventHandler(this.btnMoveDown_Click);
             // 
             // btnReset
             // 
@@ -108,6 +112,7 @@ namespace _3D_Delta_Kinematics_VS
             this.btnReset.TabIndex = 2;
             this.btnReset.Text = "R";
             this.btnReset.UseVisualStyleBackColor = true;
+            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
             // 
             // MainForm
             // 
