@@ -38,9 +38,9 @@ namespace _3D_Delta_Kinematics_VS
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.glControl.BackColor = System.Drawing.Color.Black;
-            this.glControl.Location = new System.Drawing.Point(211, 0);
+            this.glControl.Location = new System.Drawing.Point(260, 0);
             this.glControl.Name = "glControl";
-            this.glControl.Size = new System.Drawing.Size(589, 450);
+            this.glControl.Size = new System.Drawing.Size(540, 450);
             this.glControl.TabIndex = 0;
             this.glControl.VSync = false;
             // 

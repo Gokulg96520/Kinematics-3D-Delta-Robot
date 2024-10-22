@@ -17,9 +17,9 @@ namespace _3D_Delta_Kinematics_VS
     {
 
         //GL Control Data 
-        private float _zoom = 5.0f; // Initial zoom factor
-        private float _rotationX = 0.0f; // Rotation around X-axis
-        private float _rotationY = 0.0f; // Rotation around Y-axis
+        private float _zoom; // Initial zoom factor
+        private float _rotationX ; // Rotation around X-axis
+        private float _rotationY ; // Rotation around Y-axis
         private bool _isDragging = false; // For mouse dragging
         private Point _lastMousePosition; // Last mouse position for rotation
 
@@ -35,9 +35,9 @@ namespace _3D_Delta_Kinematics_VS
         private void InitializeGLComponent()
         {
             //Initial Camera Position
-            _zoom = 20.0f; 
-            _rotationX = 15.0f; 
-            _rotationY = 45.0f;
+            _zoom = 30.0f; 
+            _rotationX = 30.0f; 
+            _rotationY = 50.0f;
 
             glControl.Load += GLControl_Load; // Subscribe to the Load event
             glControl.Paint += GLControl_Paint; // Subscribe to the Paint event
@@ -72,14 +72,12 @@ namespace _3D_Delta_Kinematics_VS
             // Set up the projection matrix
             GL.MatrixMode(MatrixMode.Projection);
             GL.LoadIdentity();
-            GL.Frustum(-1.0, 1.0, -1.0, 1.0, 1.0, 50.0); // Adjust near and far planes
-
-            // Set up the view matrix
+            GL.Frustum(-1.0, 1.0, -1.0, 1.0, 1.0, 100.0); // Adjust near and far planes
             GL.MatrixMode(MatrixMode.Modelview);
             GL.LoadIdentity();
 
-            // Zoom: Move back along the Z-axis
-            GL.Translate(0.0f, 0.0f, -_zoom);
+            // Zoom: Move back along the Z-axis & also in x,y position
+            GL.Translate(-15.0f, -5.0f, -_zoom);
 
             // Apply rotation transformations for the entire scene
             GL.Rotate(_rotationX, 1.0, 0.0, 0.0);
