@@ -141,7 +141,7 @@ namespace _3D_Delta_Kinematics_VS
             this.gbMCS.Controls.Add(this.lbXCord);
             this.gbMCS.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.gbMCS.ForeColor = System.Drawing.Color.Yellow;
-            this.gbMCS.Location = new System.Drawing.Point(254, 3);
+            this.gbMCS.Location = new System.Drawing.Point(259, 4);
             this.gbMCS.Name = "gbMCS";
             this.gbMCS.Size = new System.Drawing.Size(126, 85);
             this.gbMCS.TabIndex = 3;
@@ -216,7 +216,7 @@ namespace _3D_Delta_Kinematics_VS
             this.gbACS.Controls.Add(this.lbM1Cord);
             this.gbACS.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.gbACS.ForeColor = System.Drawing.Color.Yellow;
-            this.gbACS.Location = new System.Drawing.Point(254, 94);
+            this.gbACS.Location = new System.Drawing.Point(259, 95);
             this.gbACS.Name = "gbACS";
             this.gbACS.Size = new System.Drawing.Size(126, 85);
             this.gbACS.TabIndex = 4;
