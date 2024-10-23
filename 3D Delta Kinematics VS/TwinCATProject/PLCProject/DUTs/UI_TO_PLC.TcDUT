@@ -4,6 +4,7 @@
     <Declaration><![CDATA[TYPE UI_TO_PLC :
 STRUCT
 	EnableAllAxis : BOOL;
+	ResetAllAxis : BOOL;
 	ConfigKinematicGroup :BOOL;
 	ResetKinematicGroup : BOOL;
 	XJogPositive : BOOL;
