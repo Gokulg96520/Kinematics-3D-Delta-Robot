@@ -26,12 +26,11 @@ VAR
 	bUserCartesianMode: BOOL 	:= TRUE;
 	bKinGroupError: BOOL;
 	bResetKinematicGroup: BOOL;
-	
-	(* Interpolation *)
-	in_stItpToPlc	AT %I*		: NCTOPLC_NCICHANNEL_REF;
-	out_stPlcToItp	AT %Q*		: PLCTONC_NCICHANNEL_REF;
+	eKinematicState: E_KINSTATUS;
+	bKinematicsGroupReady: BOOL;
 	
 	(* Jog MCS *)
+	bJogEnable: BOOL;
 	fbJogAxisX					: MC_Jog;
 	fbJogAxisY					: MC_Jog;
 	fbJogAxisZ					: MC_Jog;
@@ -41,16 +40,11 @@ VAR
 	bXJogNegative: BOOL;
 	bYJogNegative: BOOL;
 	bZJogNegative: BOOL;
-
 	
+	(* Interpolation *)
+	in_stItpToPlc	AT %I*		: NCTOPLC_NCICHANNEL_REF;
+	out_stPlcToItp	AT %Q*		: PLCTONC_NCICHANNEL_REF;
 	
-
-	
-	
-	
-
-
-
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -84,22 +78,28 @@ fbEnableAxes(
     <Action Name="JogMCS" Id="{773da444-5073-46a7-a95b-c0c675e8c1cf}">
       <Implementation>
         <ST><![CDATA[// Manual Jogging
+IF bKinematicsGroupReady THEN
+	bJogEnable := TRUE;
+ELSE
+	bJogEnable := FALSE;
+END_IF
+
 fbJogAxisX(
 	Axis						:= io_X, 
-	JogForward					:= bXJogPositive, 
-	JogBackwards				:= bXJogNegative, 
+	JogForward					:= bXJogPositive AND bJogEnable, 
+	JogBackwards				:= bXJogNegative AND bJogEnable, 
 	Mode						:= MC_JOGMODE_STANDARD_SLOW);
 	
 fbJogAxisY(
 	Axis						:= io_Y, 
-	JogForward					:= bYJogPositive, 
-	JogBackwards				:= bYJogNegative, 
+	JogForward					:= bYJogPositive AND bJogEnable, 
+	JogBackwards				:= bYJogNegative AND bJogEnable, 
 	Mode						:= MC_JOGMODE_STANDARD_SLOW);
 
 fbJogAxisZ(
 	Axis						:= io_Z, 
-	JogForward					:= bZJogPositive, 
-	JogBackwards				:= bZJogNegative, 
+	JogForward					:= bZJogPositive AND bJogEnable, 
+	JogBackwards				:= bZJogNegative AND bJogEnable, 
 	Mode						:= MC_JOGMODE_STANDARD_SLOW);	]]></ST>
       </Implementation>
     </Action>
@@ -114,7 +114,13 @@ stAxesConfig.nAxisIdsMcs[1]		:= io_X.NcToPlc.AxisId;
 stAxesConfig.nAxisIdsMcs[2]		:= io_Y.NcToPlc.AxisId;
 stAxesConfig.nAxisIdsMcs[3]		:= io_Z.NcToPlc.AxisId;
 
-//
+//Read Kinematics Status
+eKinematicState := F_KinGetChnOperationState(stKinRefIn:=in_stKinToPlc);
+IF eKinematicState = E_KINSTATUS.KinStatus_Ready THEN
+	bKinematicsGroupReady := TRUE;
+ELSE
+	bKinematicsGroupReady := FALSE;
+END_IF
 
 // Build Kinematic Group
 fbConfigKinGroup(
