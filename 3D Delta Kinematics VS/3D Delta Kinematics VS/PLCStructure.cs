@@ -41,6 +41,8 @@ namespace _3D_Delta_Kinematics_VS
             [MarshalAs(UnmanagedType.I1)]
             public bool EnableAllAxis;
             [MarshalAs(UnmanagedType.I1)]
+            public bool ResetAllAxis;
+            [MarshalAs(UnmanagedType.I1)]
             public bool ConfigKinematicGroup;
             [MarshalAs(UnmanagedType.I1)]
             public bool ResetKinematicGroup;
