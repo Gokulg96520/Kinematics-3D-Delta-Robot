@@ -10,6 +10,8 @@ using System.Windows.Forms;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
+using TwinCAT.Ads;
+using System.Runtime.InteropServices;
 
 namespace _3D_Delta_Kinematics_VS
 {
@@ -28,12 +30,105 @@ namespace _3D_Delta_Kinematics_VS
         //Inital Position of Delta Robot
         public vec3 MovePlatePos = new vec3(0, 0, -340.51800f);
 
+        //TcAds
+        private TcAdsClient tcClient;
+        private Timer timerCtrl;
+        private PLCStructure.InputStructure PLCToUIStructure;
+        private PLCStructure.OutputStructure UIToPLCStructure;
+        private int hStructure;
+
         public MainForm()
         {
             InitializeComponent();
             InitializeGLComponent();
+            InitializeTcAds();
         }
 
+        // Initalize Ads
+        private void InitializeTcAds()
+        {
+            tbAMSNetID.Text = "192.168.1.19.1.1";
+            PLCToUIStructure = new PLCStructure.InputStructure();
+            UIToPLCStructure = new PLCStructure.OutputStructure();
+        }
+
+        // Event Hanlder for Ads Connect
+        private void btnConnect_Click(object sender, EventArgs e)
+        {
+            tcClient = new TcAdsClient();
+            try
+            {
+                tcClient.Connect(tbAMSNetID.Text, 851);
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show(err.Message);
+            }
+            if (tcClient.IsConnected == true)
+            {
+                MessageBox.Show("Connected to Controller");
+                timerCtrl = new Timer();
+                timerCtrl.Interval = 500;
+                timerCtrl.Tick += OnCtrlTimerEvent;
+                timerCtrl.Start();
+            }
+            else if (tcClient.IsConnected == false)
+            {
+                MessageBox.Show("Controller 1 Not Connected");
+            }
+        }
+
+        // Event Hanlder for 500ms Timer
+        private void OnCtrlTimerEvent(object sender, EventArgs e)
+        {
+
+            try
+            {
+                hStructure = tcClient.CreateVariableHandle("UIData.stPLC_TO_UI");
+                PLCToUIStructure = (PLCStructure.InputStructure)tcClient.ReadAny(hStructure, typeof(PLCStructure.InputStructure));
+                //UpdateFrontEnd();
+
+                hStructure = tcClient.CreateVariableHandle("UIData.stUI_TO_PLC");
+                tcClient.WriteAny(hStructure, UIToPLCStructure);
+
+            }
+            catch (Exception err)
+            {
+                if (timerCtrl != null)
+                {
+                    timerCtrl.Stop();
+                    timerCtrl.Dispose();
+                }
+                MessageBox.Show(err.Message);
+            }
+
+
+        }
+
+        // Event Hanlder for Ads Connect
+        private void btnDisconnect_Click(object sender, EventArgs e)
+        {
+            if (timerCtrl != null)
+            {
+                timerCtrl.Stop();
+                timerCtrl.Dispose();
+            }
+
+            try
+            {
+                tcClient.Dispose();
+                if (tcClient.IsConnected == false)
+                {
+                    MessageBox.Show("Controller Disconneted");
+                }
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show(err.Message);
+            }
+        }
+
+        // Initalize GL Components
         private void InitializeGLComponent()
         {
             //Initial Camera Position
@@ -252,5 +347,7 @@ namespace _3D_Delta_Kinematics_VS
             Delta_3_Robot D3R = new Delta_3_Robot(new vec3(MovePlatePos.x, MovePlatePos.y, MovePlatePos.z));
             D3R.DrawDelta3Robot();
         }
+
+
     }
 }

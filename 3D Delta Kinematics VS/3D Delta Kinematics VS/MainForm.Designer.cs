@@ -317,6 +317,7 @@ namespace _3D_Delta_Kinematics_VS
             this.btnConnect.TabIndex = 7;
             this.btnConnect.Text = "Connect";
             this.btnConnect.UseVisualStyleBackColor = true;
+            this.btnConnect.Click += new System.EventHandler(this.btnConnect_Click);
             // 
             // btnDisconnect
             // 
@@ -327,6 +328,7 @@ namespace _3D_Delta_Kinematics_VS
             this.btnDisconnect.TabIndex = 8;
             this.btnDisconnect.Text = "Disconnect";
             this.btnDisconnect.UseVisualStyleBackColor = true;
+            this.btnDisconnect.Click += new System.EventHandler(this.btnDisconnect_Click);
             // 
             // MainForm
             // 
