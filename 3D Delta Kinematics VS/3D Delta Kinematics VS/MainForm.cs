@@ -70,7 +70,7 @@ namespace _3D_Delta_Kinematics_VS
             {
                 MessageBox.Show("Connected to Controller");
                 timerCtrl = new Timer();
-                timerCtrl.Interval = 500;
+                timerCtrl.Interval = 200;
                 timerCtrl.Tick += OnCtrlTimerEvent;
                 timerCtrl.Start();
             }
