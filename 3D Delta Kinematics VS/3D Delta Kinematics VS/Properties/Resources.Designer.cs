@@ -63,39 +63,9 @@ namespace _3D_Delta_Kinematics_VS.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap DI {
+        internal static System.Drawing.Bitmap CoOrdinate {
             get {
-                object obj = ResourceManager.GetObject("DI", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap LI {
-            get {
-                object obj = ResourceManager.GetObject("LI", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap RI {
-            get {
-                object obj = ResourceManager.GetObject("RI", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap UI {
-            get {
-                object obj = ResourceManager.GetObject("UI", resourceCulture);
+                object obj = ResourceManager.GetObject("CoOrdinate", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

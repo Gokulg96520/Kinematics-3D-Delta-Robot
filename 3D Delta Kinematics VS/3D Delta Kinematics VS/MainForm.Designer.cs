@@ -53,8 +53,22 @@ namespace _3D_Delta_Kinematics_VS
             this.tbAMSNetID = new System.Windows.Forms.TextBox();
             this.btnConnect = new System.Windows.Forms.Button();
             this.btnDisconnect = new System.Windows.Forms.Button();
+            this.btnEnableAxis = new System.Windows.Forms.Button();
+            this.btnConfKinGroup = new System.Windows.Forms.Button();
+            this.btnResetAxis = new System.Windows.Forms.Button();
+            this.btnResetKinGroup = new System.Windows.Forms.Button();
+            this.gbJog = new System.Windows.Forms.GroupBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.btnZPos = new System.Windows.Forms.Button();
+            this.btnZNeg = new System.Windows.Forms.Button();
+            this.btnYNeg = new System.Windows.Forms.Button();
+            this.btnYPos = new System.Windows.Forms.Button();
+            this.btnXPos = new System.Windows.Forms.Button();
+            this.btnXNeg = new System.Windows.Forms.Button();
             this.gbMCS.SuspendLayout();
             this.gbACS.SuspendLayout();
+            this.gbJog.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // glControl
@@ -156,7 +170,7 @@ namespace _3D_Delta_Kinematics_VS
             // 
             this.tbZCord.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
             this.tbZCord.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.tbZCord.ForeColor = System.Drawing.Color.Lime;
+            this.tbZCord.ForeColor = System.Drawing.Color.Blue;
             this.tbZCord.Location = new System.Drawing.Point(46, 61);
             this.tbZCord.Name = "tbZCord";
             this.tbZCord.Size = new System.Drawing.Size(66, 17);
@@ -166,7 +180,7 @@ namespace _3D_Delta_Kinematics_VS
             // 
             this.tbYCord.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
             this.tbYCord.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.tbYCord.ForeColor = System.Drawing.Color.Red;
+            this.tbYCord.ForeColor = System.Drawing.Color.DarkMagenta;
             this.tbYCord.Location = new System.Drawing.Point(46, 41);
             this.tbYCord.Name = "tbYCord";
             this.tbYCord.Size = new System.Drawing.Size(66, 17);
@@ -176,7 +190,7 @@ namespace _3D_Delta_Kinematics_VS
             // 
             this.tbXCord.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
             this.tbXCord.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.tbXCord.ForeColor = System.Drawing.Color.Blue;
+            this.tbXCord.ForeColor = System.Drawing.Color.Yellow;
             this.tbXCord.Location = new System.Drawing.Point(46, 21);
             this.tbXCord.Name = "tbXCord";
             this.tbXCord.Size = new System.Drawing.Size(66, 17);
@@ -185,7 +199,7 @@ namespace _3D_Delta_Kinematics_VS
             // lbZCord
             // 
             this.lbZCord.AutoSize = true;
-            this.lbZCord.ForeColor = System.Drawing.Color.Chartreuse;
+            this.lbZCord.ForeColor = System.Drawing.Color.Blue;
             this.lbZCord.Location = new System.Drawing.Point(11, 61);
             this.lbZCord.Name = "lbZCord";
             this.lbZCord.Size = new System.Drawing.Size(33, 18);
@@ -195,7 +209,7 @@ namespace _3D_Delta_Kinematics_VS
             // lbYCord
             // 
             this.lbYCord.AutoSize = true;
-            this.lbYCord.ForeColor = System.Drawing.Color.Red;
+            this.lbYCord.ForeColor = System.Drawing.Color.DarkMagenta;
             this.lbYCord.Location = new System.Drawing.Point(11, 40);
             this.lbYCord.Name = "lbYCord";
             this.lbYCord.Size = new System.Drawing.Size(33, 18);
@@ -205,7 +219,7 @@ namespace _3D_Delta_Kinematics_VS
             // lbXCord
             // 
             this.lbXCord.AutoSize = true;
-            this.lbXCord.ForeColor = System.Drawing.Color.Blue;
+            this.lbXCord.ForeColor = System.Drawing.Color.Yellow;
             this.lbXCord.Location = new System.Drawing.Point(10, 20);
             this.lbXCord.Name = "lbXCord";
             this.lbXCord.Size = new System.Drawing.Size(34, 18);
@@ -330,11 +344,175 @@ namespace _3D_Delta_Kinematics_VS
             this.btnDisconnect.UseVisualStyleBackColor = true;
             this.btnDisconnect.Click += new System.EventHandler(this.btnDisconnect_Click);
             // 
+            // btnEnableAxis
+            // 
+            this.btnEnableAxis.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnEnableAxis.Location = new System.Drawing.Point(14, 81);
+            this.btnEnableAxis.Name = "btnEnableAxis";
+            this.btnEnableAxis.Size = new System.Drawing.Size(110, 23);
+            this.btnEnableAxis.TabIndex = 9;
+            this.btnEnableAxis.Text = "Enable Axis";
+            this.btnEnableAxis.UseVisualStyleBackColor = true;
+            this.btnEnableAxis.Click += new System.EventHandler(this.btnEnableAxis_Click);
+            // 
+            // btnConfKinGroup
+            // 
+            this.btnConfKinGroup.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnConfKinGroup.Location = new System.Drawing.Point(14, 111);
+            this.btnConfKinGroup.Name = "btnConfKinGroup";
+            this.btnConfKinGroup.Size = new System.Drawing.Size(226, 23);
+            this.btnConfKinGroup.TabIndex = 10;
+            this.btnConfKinGroup.Text = "Configure Kinematic Group ";
+            this.btnConfKinGroup.UseVisualStyleBackColor = true;
+            this.btnConfKinGroup.Click += new System.EventHandler(this.btnConfKinGroup_Click);
+            // 
+            // btnResetAxis
+            // 
+            this.btnResetAxis.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnResetAxis.Location = new System.Drawing.Point(130, 81);
+            this.btnResetAxis.Name = "btnResetAxis";
+            this.btnResetAxis.Size = new System.Drawing.Size(110, 23);
+            this.btnResetAxis.TabIndex = 11;
+            this.btnResetAxis.Text = "Reset Axis";
+            this.btnResetAxis.UseVisualStyleBackColor = true;
+            this.btnResetAxis.Click += new System.EventHandler(this.btnResetAxis_Click);
+            // 
+            // btnResetKinGroup
+            // 
+            this.btnResetKinGroup.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnResetKinGroup.Location = new System.Drawing.Point(14, 140);
+            this.btnResetKinGroup.Name = "btnResetKinGroup";
+            this.btnResetKinGroup.Size = new System.Drawing.Size(226, 23);
+            this.btnResetKinGroup.TabIndex = 12;
+            this.btnResetKinGroup.Text = "Reset Kinematic Group ";
+            this.btnResetKinGroup.UseVisualStyleBackColor = true;
+            this.btnResetKinGroup.Click += new System.EventHandler(this.btnResetKinGroup_Click);
+            // 
+            // gbJog
+            // 
+            this.gbJog.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.gbJog.BackColor = System.Drawing.SystemColors.Control;
+            this.gbJog.Controls.Add(this.btnZPos);
+            this.gbJog.Controls.Add(this.btnZNeg);
+            this.gbJog.Controls.Add(this.btnYNeg);
+            this.gbJog.Controls.Add(this.btnYPos);
+            this.gbJog.Controls.Add(this.btnXPos);
+            this.gbJog.Controls.Add(this.btnXNeg);
+            this.gbJog.Controls.Add(this.pictureBox1);
+            this.gbJog.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gbJog.ForeColor = System.Drawing.Color.Black;
+            this.gbJog.Location = new System.Drawing.Point(14, 222);
+            this.gbJog.Name = "gbJog";
+            this.gbJog.Size = new System.Drawing.Size(225, 264);
+            this.gbJog.TabIndex = 6;
+            this.gbJog.TabStop = false;
+            this.gbJog.Text = "Jog MCS";
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.pictureBox1.Image = global::_3D_Delta_Kinematics_VS.Properties.Resources.CoOrdinate;
+            this.pictureBox1.Location = new System.Drawing.Point(18, 25);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(188, 215);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 20;
+            this.pictureBox1.TabStop = false;
+            // 
+            // btnZPos
+            // 
+            this.btnZPos.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnZPos.AutoSize = true;
+            this.btnZPos.BackColor = System.Drawing.Color.Blue;
+            this.btnZPos.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnZPos.ForeColor = System.Drawing.Color.White;
+            this.btnZPos.Location = new System.Drawing.Point(10, 87);
+            this.btnZPos.Name = "btnZPos";
+            this.btnZPos.Size = new System.Drawing.Size(37, 30);
+            this.btnZPos.TabIndex = 39;
+            this.btnZPos.Text = "Z ↑";
+            this.btnZPos.UseVisualStyleBackColor = false;
+            // 
+            // btnZNeg
+            // 
+            this.btnZNeg.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnZNeg.AutoSize = true;
+            this.btnZNeg.BackColor = System.Drawing.Color.Blue;
+            this.btnZNeg.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnZNeg.ForeColor = System.Drawing.Color.White;
+            this.btnZNeg.Location = new System.Drawing.Point(10, 123);
+            this.btnZNeg.Name = "btnZNeg";
+            this.btnZNeg.Size = new System.Drawing.Size(37, 30);
+            this.btnZNeg.TabIndex = 38;
+            this.btnZNeg.Text = "Z ↓";
+            this.btnZNeg.UseVisualStyleBackColor = false;
+            // 
+            // btnYNeg
+            // 
+            this.btnYNeg.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnYNeg.AutoSize = true;
+            this.btnYNeg.BackColor = System.Drawing.Color.DarkMagenta;
+            this.btnYNeg.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnYNeg.ForeColor = System.Drawing.Color.White;
+            this.btnYNeg.Location = new System.Drawing.Point(61, 146);
+            this.btnYNeg.Name = "btnYNeg";
+            this.btnYNeg.Size = new System.Drawing.Size(38, 30);
+            this.btnYNeg.TabIndex = 37;
+            this.btnYNeg.Text = "↙ Y";
+            this.btnYNeg.UseVisualStyleBackColor = false;
+            // 
+            // btnYPos
+            // 
+            this.btnYPos.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnYPos.AutoSize = true;
+            this.btnYPos.BackColor = System.Drawing.Color.DarkMagenta;
+            this.btnYPos.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnYPos.ForeColor = System.Drawing.Color.White;
+            this.btnYPos.Location = new System.Drawing.Point(120, 123);
+            this.btnYPos.Name = "btnYPos";
+            this.btnYPos.Size = new System.Drawing.Size(38, 30);
+            this.btnYPos.TabIndex = 36;
+            this.btnYPos.Text = "Y ↗";
+            this.btnYPos.UseVisualStyleBackColor = false;
+            // 
+            // btnXPos
+            // 
+            this.btnXPos.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnXPos.AutoSize = true;
+            this.btnXPos.BackColor = System.Drawing.Color.Yellow;
+            this.btnXPos.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnXPos.ForeColor = System.Drawing.Color.Black;
+            this.btnXPos.Location = new System.Drawing.Point(120, 198);
+            this.btnXPos.Name = "btnXPos";
+            this.btnXPos.Size = new System.Drawing.Size(38, 30);
+            this.btnXPos.TabIndex = 35;
+            this.btnXPos.Text = "X ↘";
+            this.btnXPos.UseVisualStyleBackColor = false;
+            // 
+            // btnXNeg
+            // 
+            this.btnXNeg.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnXNeg.AutoSize = true;
+            this.btnXNeg.BackColor = System.Drawing.Color.Yellow;
+            this.btnXNeg.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnXNeg.ForeColor = System.Drawing.Color.Black;
+            this.btnXNeg.Location = new System.Drawing.Point(61, 182);
+            this.btnXNeg.Name = "btnXNeg";
+            this.btnXNeg.Size = new System.Drawing.Size(38, 30);
+            this.btnXNeg.TabIndex = 34;
+            this.btnXNeg.Text = "↖ X";
+            this.btnXNeg.UseVisualStyleBackColor = false;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 494);
+            this.Controls.Add(this.gbJog);
+            this.Controls.Add(this.btnResetKinGroup);
+            this.Controls.Add(this.btnResetAxis);
+            this.Controls.Add(this.btnConfKinGroup);
+            this.Controls.Add(this.btnEnableAxis);
             this.Controls.Add(this.btnDisconnect);
             this.Controls.Add(this.btnConnect);
             this.Controls.Add(this.tbAMSNetID);
@@ -353,6 +531,9 @@ namespace _3D_Delta_Kinematics_VS
             this.gbMCS.PerformLayout();
             this.gbACS.ResumeLayout(false);
             this.gbACS.PerformLayout();
+            this.gbJog.ResumeLayout(false);
+            this.gbJog.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -384,6 +565,18 @@ namespace _3D_Delta_Kinematics_VS
         private System.Windows.Forms.TextBox tbAMSNetID;
         private System.Windows.Forms.Button btnConnect;
         private System.Windows.Forms.Button btnDisconnect;
+        private System.Windows.Forms.Button btnEnableAxis;
+        private System.Windows.Forms.Button btnConfKinGroup;
+        private System.Windows.Forms.Button btnResetAxis;
+        private System.Windows.Forms.Button btnResetKinGroup;
+        private System.Windows.Forms.GroupBox gbJog;
+        private System.Windows.Forms.Button btnZPos;
+        private System.Windows.Forms.Button btnZNeg;
+        private System.Windows.Forms.Button btnYNeg;
+        private System.Windows.Forms.Button btnYPos;
+        private System.Windows.Forms.Button btnXPos;
+        private System.Windows.Forms.Button btnXNeg;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
 

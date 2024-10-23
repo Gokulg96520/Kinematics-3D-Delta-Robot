@@ -90,7 +90,7 @@ fbJogAxisX(
 fbJogAxisY(
 	Axis						:= io_Y, 
 	JogForward					:= bYJogPositive, 
-	JogBackwards				:= bYJogPositive, 
+	JogBackwards				:= bYJogNegative, 
 	Mode						:= MC_JOGMODE_STANDARD_SLOW);
 
 fbJogAxisZ(

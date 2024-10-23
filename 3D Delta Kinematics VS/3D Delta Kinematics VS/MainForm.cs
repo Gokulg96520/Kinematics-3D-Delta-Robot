@@ -133,7 +133,7 @@ namespace _3D_Delta_Kinematics_VS
 
         #endregion
 
-        #region UI Update 
+        #region UI & Render Update 
 
         private void UpdateUI()
         {
@@ -145,8 +145,20 @@ namespace _3D_Delta_Kinematics_VS
             tbM2Cord.Text = PLCToUIStructure.M2_ACSPos.ToString("F3");
             tbM3Cord.Text = PLCToUIStructure.M3_ACSPos.ToString("F3");
 
-            //Status
-
+            //Axis Enable Status
+            if (PLCToUIStructure.AllAxisEnabled == true && PLCToUIStructure.AxisError == false)
+            {
+                btnEnableAxis.BackColor = Color.GreenYellow;
+            }
+            else if (PLCToUIStructure.AxisError == true)
+            {
+                btnEnableAxis.BackColor = Color.Red;
+            }
+            else
+            {
+                btnEnableAxis.BackColor = Color.Yellow;
+            }
+           
 
             //3D Delta Robot XYZ Update
             MovePlatePos.x = PLCToUIStructure.X_MCSPos;
@@ -156,6 +168,73 @@ namespace _3D_Delta_Kinematics_VS
             //Redraw Render 
             glControl.Invalidate();
         }
+
+        #endregion
+
+        #region UI Event
+
+        #region XYZ Jog Mouse Down & Up Event Handler
+
+        private void btnZPos_MouseDown(object sender, MouseEventArgs e)
+        {
+            UIToPLCStructure.ZJogPositive = true;
+        }
+
+        private void btnZPos_MouseUp(object sender, MouseEventArgs e)
+        {
+            UIToPLCStructure.ZJogPositive = false;
+        }
+
+        private void btnZNeg_MouseDown(object sender, MouseEventArgs e)
+        {
+            UIToPLCStructure.ZJogNegative = true;
+        }
+
+        private void btnZNeg_MouseUp(object sender, MouseEventArgs e)
+        {
+            UIToPLCStructure.ZJogNegative = false;
+        }
+
+        private void btnYNeg_MouseDown(object sender, MouseEventArgs e)
+        {
+            UIToPLCStructure.YJogNegative = true;
+        }
+
+        private void btnYNeg_MouseUp(object sender, MouseEventArgs e)
+        {
+            UIToPLCStructure.YJogNegative = false;
+        }
+
+        private void btnYPos_MouseDown(object sender, MouseEventArgs e)
+        {
+            UIToPLCStructure.YJogPositive = true;
+        }
+
+        private void btnYPos_MouseUp(object sender, MouseEventArgs e)
+        {
+            UIToPLCStructure.YJogPositive = false;
+        }
+
+        private void btnXNeg_MouseDown(object sender, MouseEventArgs e)
+        {
+            UIToPLCStructure.XJogNegative = true;
+        }
+
+        private void btnXNeg_MouseUp(object sender, MouseEventArgs e)
+        {
+            UIToPLCStructure.XJogNegative = false;
+        }
+
+        private void btnXPos_MouseDown(object sender, MouseEventArgs e)
+        {
+            UIToPLCStructure.XJogPositive = true;
+        }
+
+        private void btnXPos_MouseUp(object sender, MouseEventArgs e)
+        {
+            UIToPLCStructure.XJogPositive = false;
+        }
+        #endregion
 
         #endregion
 
@@ -395,5 +474,51 @@ namespace _3D_Delta_Kinematics_VS
 
         #endregion
 
+        //Enable Axis
+        private void btnEnableAxis_Click(object sender, EventArgs e)
+        {
+            if (UIToPLCStructure.EnableAllAxis == false)
+            {
+                UIToPLCStructure.EnableAllAxis = true;
+            }
+            else
+            {
+                UIToPLCStructure.EnableAllAxis = false;
+            }
+        }
+
+        //Reset Axis
+        private void btnResetAxis_Click(object sender, EventArgs e)
+        {
+            //
+        }
+
+        //Configure Kinematics Group
+        private void btnConfKinGroup_Click(object sender, EventArgs e)
+        {
+            if (UIToPLCStructure.ConfigKinematicGroup == false)
+            {
+                UIToPLCStructure.ConfigKinematicGroup = true;
+            }
+            else
+            {
+                UIToPLCStructure.ConfigKinematicGroup = false;
+            }
+        }
+
+        //Reset Kinematics Group
+        private void btnResetKinGroup_Click(object sender, EventArgs e)
+        {
+            if (UIToPLCStructure.ResetKinematicGroup == false)
+            {
+                UIToPLCStructure.ResetKinematicGroup = true;
+            }
+            else
+            {
+                UIToPLCStructure.ResetKinematicGroup = false;
+            }
+        }
+
+        
     }
 }
