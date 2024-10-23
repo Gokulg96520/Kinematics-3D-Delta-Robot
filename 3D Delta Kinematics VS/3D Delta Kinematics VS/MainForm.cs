@@ -64,10 +64,12 @@ namespace _3D_Delta_Kinematics_VS
             }
             catch (Exception err)
             {
+                btnConnect.BackColor = Color.Red;
                 MessageBox.Show(err.Message);
             }
             if (tcClient.IsConnected == true)
             {
+                btnConnect.BackColor = Color.GreenYellow;
                 MessageBox.Show("Connected to Controller");
                 timerCtrl = new Timer();
                 timerCtrl.Interval = 200;
@@ -76,6 +78,7 @@ namespace _3D_Delta_Kinematics_VS
             }
             else if (tcClient.IsConnected == false)
             {
+                btnConnect.BackColor = Color.Red;
                 MessageBox.Show("Controller 1 Not Connected");
             }
         }
@@ -102,6 +105,7 @@ namespace _3D_Delta_Kinematics_VS
                     timerCtrl.Stop();
                     timerCtrl.Dispose();
                 }
+                btnConnect.BackColor = Color.Red;
                 MessageBox.Show(err.Message);
             }
 
@@ -122,11 +126,13 @@ namespace _3D_Delta_Kinematics_VS
                 tcClient.Dispose();
                 if (tcClient.IsConnected == false)
                 {
+                    btnConnect.BackColor = SystemColors.Control;
                     MessageBox.Show("Controller Disconneted");
                 }
             }
             catch (Exception err)
             {
+                btnConnect.BackColor = Color.Red;
                 MessageBox.Show(err.Message);
             }
         }
