@@ -252,6 +252,5 @@ namespace _3D_Delta_Kinematics_VS
             Delta_3_Robot D3R = new Delta_3_Robot(new vec3(MovePlatePos.x, MovePlatePos.y, MovePlatePos.z));
             D3R.DrawDelta3Robot();
         }
-
     }
 }

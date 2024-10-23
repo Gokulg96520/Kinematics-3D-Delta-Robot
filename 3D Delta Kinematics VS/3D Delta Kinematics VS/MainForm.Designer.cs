@@ -35,6 +35,22 @@ namespace _3D_Delta_Kinematics_VS
             this.btnMoveUp = new System.Windows.Forms.Button();
             this.btnMoveDown = new System.Windows.Forms.Button();
             this.btnReset = new System.Windows.Forms.Button();
+            this.gbMCS = new System.Windows.Forms.GroupBox();
+            this.lbXCord = new System.Windows.Forms.Label();
+            this.lbYCord = new System.Windows.Forms.Label();
+            this.lbZCord = new System.Windows.Forms.Label();
+            this.tbXCord = new System.Windows.Forms.TextBox();
+            this.tbYCord = new System.Windows.Forms.TextBox();
+            this.tbZCord = new System.Windows.Forms.TextBox();
+            this.gbACS = new System.Windows.Forms.GroupBox();
+            this.tbM3Cord = new System.Windows.Forms.TextBox();
+            this.tbM2Cord = new System.Windows.Forms.TextBox();
+            this.tbM1Cord = new System.Windows.Forms.TextBox();
+            this.lbM3Cord = new System.Windows.Forms.Label();
+            this.lbM2Cord = new System.Windows.Forms.Label();
+            this.lbM1Cord = new System.Windows.Forms.Label();
+            this.gbMCS.SuspendLayout();
+            this.gbACS.SuspendLayout();
             this.SuspendLayout();
             // 
             // glControl
@@ -110,15 +126,161 @@ namespace _3D_Delta_Kinematics_VS
             this.btnReset.Name = "btnReset";
             this.btnReset.Size = new System.Drawing.Size(35, 35);
             this.btnReset.TabIndex = 2;
-            this.btnReset.Text = "R";
+            this.btnReset.Text = "s";
             this.btnReset.UseVisualStyleBackColor = true;
             this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
+            // 
+            // gbMCS
+            // 
+            this.gbMCS.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.gbMCS.Controls.Add(this.tbZCord);
+            this.gbMCS.Controls.Add(this.tbYCord);
+            this.gbMCS.Controls.Add(this.tbXCord);
+            this.gbMCS.Controls.Add(this.lbZCord);
+            this.gbMCS.Controls.Add(this.lbYCord);
+            this.gbMCS.Controls.Add(this.lbXCord);
+            this.gbMCS.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gbMCS.ForeColor = System.Drawing.Color.Yellow;
+            this.gbMCS.Location = new System.Drawing.Point(254, 3);
+            this.gbMCS.Name = "gbMCS";
+            this.gbMCS.Size = new System.Drawing.Size(126, 85);
+            this.gbMCS.TabIndex = 3;
+            this.gbMCS.TabStop = false;
+            this.gbMCS.Text = "MCS Position";
+            // 
+            // lbXCord
+            // 
+            this.lbXCord.AutoSize = true;
+            this.lbXCord.Location = new System.Drawing.Point(10, 20);
+            this.lbXCord.Name = "lbXCord";
+            this.lbXCord.Size = new System.Drawing.Size(34, 18);
+            this.lbXCord.TabIndex = 0;
+            this.lbXCord.Text = "X  :";
+            // 
+            // lbYCord
+            // 
+            this.lbYCord.AutoSize = true;
+            this.lbYCord.Location = new System.Drawing.Point(11, 40);
+            this.lbYCord.Name = "lbYCord";
+            this.lbYCord.Size = new System.Drawing.Size(33, 18);
+            this.lbYCord.TabIndex = 1;
+            this.lbYCord.Text = "Y  :";
+            // 
+            // lbZCord
+            // 
+            this.lbZCord.AutoSize = true;
+            this.lbZCord.Location = new System.Drawing.Point(11, 61);
+            this.lbZCord.Name = "lbZCord";
+            this.lbZCord.Size = new System.Drawing.Size(33, 18);
+            this.lbZCord.TabIndex = 2;
+            this.lbZCord.Text = "Z  :";
+            // 
+            // tbXCord
+            // 
+            this.tbXCord.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.tbXCord.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tbXCord.Location = new System.Drawing.Point(46, 21);
+            this.tbXCord.Name = "tbXCord";
+            this.tbXCord.Size = new System.Drawing.Size(66, 17);
+            this.tbXCord.TabIndex = 3;
+            // 
+            // tbYCord
+            // 
+            this.tbYCord.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.tbYCord.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tbYCord.Location = new System.Drawing.Point(46, 41);
+            this.tbYCord.Name = "tbYCord";
+            this.tbYCord.Size = new System.Drawing.Size(66, 17);
+            this.tbYCord.TabIndex = 4;
+            // 
+            // tbZCord
+            // 
+            this.tbZCord.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.tbZCord.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tbZCord.Location = new System.Drawing.Point(46, 61);
+            this.tbZCord.Name = "tbZCord";
+            this.tbZCord.Size = new System.Drawing.Size(66, 17);
+            this.tbZCord.TabIndex = 5;
+            // 
+            // gbACS
+            // 
+            this.gbACS.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.gbACS.Controls.Add(this.tbM3Cord);
+            this.gbACS.Controls.Add(this.tbM2Cord);
+            this.gbACS.Controls.Add(this.tbM1Cord);
+            this.gbACS.Controls.Add(this.lbM3Cord);
+            this.gbACS.Controls.Add(this.lbM2Cord);
+            this.gbACS.Controls.Add(this.lbM1Cord);
+            this.gbACS.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gbACS.ForeColor = System.Drawing.Color.Yellow;
+            this.gbACS.Location = new System.Drawing.Point(254, 94);
+            this.gbACS.Name = "gbACS";
+            this.gbACS.Size = new System.Drawing.Size(126, 85);
+            this.gbACS.TabIndex = 4;
+            this.gbACS.TabStop = false;
+            this.gbACS.Text = "ACS Position";
+            // 
+            // tbM3Cord
+            // 
+            this.tbM3Cord.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.tbM3Cord.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tbM3Cord.Location = new System.Drawing.Point(46, 61);
+            this.tbM3Cord.Name = "tbM3Cord";
+            this.tbM3Cord.Size = new System.Drawing.Size(66, 17);
+            this.tbM3Cord.TabIndex = 5;
+            // 
+            // tbM2Cord
+            // 
+            this.tbM2Cord.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.tbM2Cord.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tbM2Cord.Location = new System.Drawing.Point(46, 41);
+            this.tbM2Cord.Name = "tbM2Cord";
+            this.tbM2Cord.Size = new System.Drawing.Size(66, 17);
+            this.tbM2Cord.TabIndex = 4;
+            // 
+            // tbM1Cord
+            // 
+            this.tbM1Cord.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.tbM1Cord.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tbM1Cord.Location = new System.Drawing.Point(46, 21);
+            this.tbM1Cord.Name = "tbM1Cord";
+            this.tbM1Cord.Size = new System.Drawing.Size(66, 17);
+            this.tbM1Cord.TabIndex = 3;
+            // 
+            // lbM3Cord
+            // 
+            this.lbM3Cord.AutoSize = true;
+            this.lbM3Cord.Location = new System.Drawing.Point(4, 61);
+            this.lbM3Cord.Name = "lbM3Cord";
+            this.lbM3Cord.Size = new System.Drawing.Size(41, 18);
+            this.lbM3Cord.TabIndex = 2;
+            this.lbM3Cord.Text = "M3 :";
+            // 
+            // lbM2Cord
+            // 
+            this.lbM2Cord.AutoSize = true;
+            this.lbM2Cord.Location = new System.Drawing.Point(4, 40);
+            this.lbM2Cord.Name = "lbM2Cord";
+            this.lbM2Cord.Size = new System.Drawing.Size(41, 18);
+            this.lbM2Cord.TabIndex = 1;
+            this.lbM2Cord.Text = "M2 :";
+            // 
+            // lbM1Cord
+            // 
+            this.lbM1Cord.AutoSize = true;
+            this.lbM1Cord.Location = new System.Drawing.Point(4, 20);
+            this.lbM1Cord.Name = "lbM1Cord";
+            this.lbM1Cord.Size = new System.Drawing.Size(41, 18);
+            this.lbM1Cord.TabIndex = 0;
+            this.lbM1Cord.Text = "M1 :";
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 494);
+            this.Controls.Add(this.gbACS);
+            this.Controls.Add(this.gbMCS);
             this.Controls.Add(this.btnReset);
             this.Controls.Add(this.btnMoveDown);
             this.Controls.Add(this.btnMoveUp);
@@ -127,6 +289,10 @@ namespace _3D_Delta_Kinematics_VS
             this.Controls.Add(this.glControl);
             this.Name = "MainForm";
             this.Text = "Form1";
+            this.gbMCS.ResumeLayout(false);
+            this.gbMCS.PerformLayout();
+            this.gbACS.ResumeLayout(false);
+            this.gbACS.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -140,6 +306,20 @@ namespace _3D_Delta_Kinematics_VS
         private System.Windows.Forms.Button btnMoveUp;
         private System.Windows.Forms.Button btnMoveDown;
         private System.Windows.Forms.Button btnReset;
+        private System.Windows.Forms.GroupBox gbMCS;
+        private System.Windows.Forms.TextBox tbZCord;
+        private System.Windows.Forms.TextBox tbYCord;
+        private System.Windows.Forms.TextBox tbXCord;
+        private System.Windows.Forms.Label lbZCord;
+        private System.Windows.Forms.Label lbYCord;
+        private System.Windows.Forms.Label lbXCord;
+        private System.Windows.Forms.GroupBox gbACS;
+        private System.Windows.Forms.TextBox tbM3Cord;
+        private System.Windows.Forms.TextBox tbM2Cord;
+        private System.Windows.Forms.TextBox tbM1Cord;
+        private System.Windows.Forms.Label lbM3Cord;
+        private System.Windows.Forms.Label lbM2Cord;
+        private System.Windows.Forms.Label lbM1Cord;
     }
 }
 

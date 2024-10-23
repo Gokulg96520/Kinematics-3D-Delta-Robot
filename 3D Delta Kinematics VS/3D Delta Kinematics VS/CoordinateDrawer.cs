@@ -14,7 +14,6 @@ namespace _3D_Delta_Kinematics_VS
 {
     class CoordinateDrawer
     {
-        
         public void DrawCoordinateAxes(float length = 5.0f, float width = 4.0f)
         {
             GL.PushAttrib(AttribMask.LineBit);
