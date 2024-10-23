@@ -537,7 +537,5 @@ namespace _3D_Delta_Kinematics_VS
             }
         }
 
-
- 
     }
 }

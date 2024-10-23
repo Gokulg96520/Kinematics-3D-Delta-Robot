@@ -422,6 +422,8 @@ namespace _3D_Delta_Kinematics_VS
             this.btnZPos.TabIndex = 39;
             this.btnZPos.Text = "Z ↑";
             this.btnZPos.UseVisualStyleBackColor = false;
+            this.btnZPos.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnZPos_MouseDown);
+            this.btnZPos.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btnZPos_MouseUp);
             // 
             // btnZNeg
             // 
@@ -436,6 +438,8 @@ namespace _3D_Delta_Kinematics_VS
             this.btnZNeg.TabIndex = 38;
             this.btnZNeg.Text = "Z ↓";
             this.btnZNeg.UseVisualStyleBackColor = false;
+            this.btnZNeg.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnZNeg_MouseDown);
+            this.btnZNeg.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btnZNeg_MouseUp);
             // 
             // btnYNeg
             // 
@@ -450,6 +454,8 @@ namespace _3D_Delta_Kinematics_VS
             this.btnYNeg.TabIndex = 37;
             this.btnYNeg.Text = "↙ Y";
             this.btnYNeg.UseVisualStyleBackColor = false;
+            this.btnYPos.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnYPos_MouseDown);
+            this.btnYPos.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btnYPos_MouseUp);
             // 
             // btnYPos
             // 
@@ -464,6 +470,8 @@ namespace _3D_Delta_Kinematics_VS
             this.btnYPos.TabIndex = 36;
             this.btnYPos.Text = "Y ↗";
             this.btnYPos.UseVisualStyleBackColor = false;
+            this.btnYNeg.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnYNeg_MouseDown);
+            this.btnYNeg.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btnYNeg_MouseUp);
             // 
             // btnXPos
             // 
@@ -478,6 +486,8 @@ namespace _3D_Delta_Kinematics_VS
             this.btnXPos.TabIndex = 35;
             this.btnXPos.Text = "X ↘";
             this.btnXPos.UseVisualStyleBackColor = false;
+            this.btnXPos.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnXPos_MouseDown);
+            this.btnXPos.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btnXPos_MouseUp);
             // 
             // btnXNeg
             // 
@@ -492,6 +502,8 @@ namespace _3D_Delta_Kinematics_VS
             this.btnXNeg.TabIndex = 34;
             this.btnXNeg.Text = "↖ X";
             this.btnXNeg.UseVisualStyleBackColor = false;
+            this.btnXNeg.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnXNeg_MouseDown);
+            this.btnXNeg.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btnXNeg_MouseUp);
             // 
             // pictureBox1
             // 
