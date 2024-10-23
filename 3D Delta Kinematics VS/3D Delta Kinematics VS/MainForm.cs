@@ -242,6 +242,34 @@ namespace _3D_Delta_Kinematics_VS
         }
         #endregion
 
+        #region Axis Enable & reset
+
+        //Enable Axis
+        private void btnEnableAxis_Click(object sender, EventArgs e)
+        {
+            if (UIToPLCStructure.EnableAllAxis == false)
+            {
+                UIToPLCStructure.EnableAllAxis = true;
+            }
+            else
+            {
+                UIToPLCStructure.EnableAllAxis = false;
+            }
+        }
+
+        //Reset Axis
+        private void btnResetAxis_MouseDown(object sender, MouseEventArgs e)
+        {
+            UIToPLCStructure.ResetAllAxis = true;
+        }
+
+        private void btnResetAxis_MouseUp(object sender, MouseEventArgs e)
+        {
+            UIToPLCStructure.ResetAllAxis = false;
+        }
+
+        #endregion
+
         #endregion
 
         #region OpenGL GL Control & Render 
@@ -480,24 +508,8 @@ namespace _3D_Delta_Kinematics_VS
 
         #endregion
 
-        //Enable Axis
-        private void btnEnableAxis_Click(object sender, EventArgs e)
-        {
-            if (UIToPLCStructure.EnableAllAxis == false)
-            {
-                UIToPLCStructure.EnableAllAxis = true;
-            }
-            else
-            {
-                UIToPLCStructure.EnableAllAxis = false;
-            }
-        }
 
-        //Reset Axis
-        private void btnResetAxis_Click(object sender, EventArgs e)
-        {
-            //
-        }
+
 
         //Configure Kinematics Group
         private void btnConfKinGroup_Click(object sender, EventArgs e)
@@ -525,6 +537,7 @@ namespace _3D_Delta_Kinematics_VS
             }
         }
 
-        
+
+ 
     }
 }

@@ -58,13 +58,13 @@ namespace _3D_Delta_Kinematics_VS
             this.btnResetAxis = new System.Windows.Forms.Button();
             this.btnResetKinGroup = new System.Windows.Forms.Button();
             this.gbJog = new System.Windows.Forms.GroupBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btnZPos = new System.Windows.Forms.Button();
             this.btnZNeg = new System.Windows.Forms.Button();
             this.btnYNeg = new System.Windows.Forms.Button();
             this.btnYPos = new System.Windows.Forms.Button();
             this.btnXPos = new System.Windows.Forms.Button();
             this.btnXNeg = new System.Windows.Forms.Button();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.gbMCS.SuspendLayout();
             this.gbACS.SuspendLayout();
             this.gbJog.SuspendLayout();
@@ -308,7 +308,7 @@ namespace _3D_Delta_Kinematics_VS
             // 
             this.lblAMSNetID.AutoSize = true;
             this.lblAMSNetID.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAMSNetID.Location = new System.Drawing.Point(4, 9);
+            this.lblAMSNetID.Location = new System.Drawing.Point(4, 12);
             this.lblAMSNetID.Name = "lblAMSNetID";
             this.lblAMSNetID.Size = new System.Drawing.Size(85, 18);
             this.lblAMSNetID.TabIndex = 5;
@@ -317,7 +317,7 @@ namespace _3D_Delta_Kinematics_VS
             // tbAMSNetID
             // 
             this.tbAMSNetID.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbAMSNetID.Location = new System.Drawing.Point(90, 6);
+            this.tbAMSNetID.Location = new System.Drawing.Point(90, 9);
             this.tbAMSNetID.Name = "tbAMSNetID";
             this.tbAMSNetID.Size = new System.Drawing.Size(158, 24);
             this.tbAMSNetID.TabIndex = 6;
@@ -325,7 +325,7 @@ namespace _3D_Delta_Kinematics_VS
             // btnConnect
             // 
             this.btnConnect.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnConnect.Location = new System.Drawing.Point(38, 36);
+            this.btnConnect.Location = new System.Drawing.Point(38, 39);
             this.btnConnect.Name = "btnConnect";
             this.btnConnect.Size = new System.Drawing.Size(86, 23);
             this.btnConnect.TabIndex = 7;
@@ -336,7 +336,7 @@ namespace _3D_Delta_Kinematics_VS
             // btnDisconnect
             // 
             this.btnDisconnect.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDisconnect.Location = new System.Drawing.Point(130, 36);
+            this.btnDisconnect.Location = new System.Drawing.Point(130, 39);
             this.btnDisconnect.Name = "btnDisconnect";
             this.btnDisconnect.Size = new System.Drawing.Size(86, 23);
             this.btnDisconnect.TabIndex = 8;
@@ -347,11 +347,11 @@ namespace _3D_Delta_Kinematics_VS
             // btnEnableAxis
             // 
             this.btnEnableAxis.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnEnableAxis.Location = new System.Drawing.Point(14, 81);
+            this.btnEnableAxis.Location = new System.Drawing.Point(6, 74);
             this.btnEnableAxis.Name = "btnEnableAxis";
-            this.btnEnableAxis.Size = new System.Drawing.Size(110, 23);
+            this.btnEnableAxis.Size = new System.Drawing.Size(158, 23);
             this.btnEnableAxis.TabIndex = 9;
-            this.btnEnableAxis.Text = "Enable Axis";
+            this.btnEnableAxis.Text = "Enable / Disable  Axis";
             this.btnEnableAxis.UseVisualStyleBackColor = true;
             this.btnEnableAxis.Click += new System.EventHandler(this.btnEnableAxis_Click);
             // 
@@ -369,13 +369,14 @@ namespace _3D_Delta_Kinematics_VS
             // btnResetAxis
             // 
             this.btnResetAxis.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnResetAxis.Location = new System.Drawing.Point(130, 81);
+            this.btnResetAxis.Location = new System.Drawing.Point(168, 74);
             this.btnResetAxis.Name = "btnResetAxis";
-            this.btnResetAxis.Size = new System.Drawing.Size(110, 23);
+            this.btnResetAxis.Size = new System.Drawing.Size(80, 23);
             this.btnResetAxis.TabIndex = 11;
             this.btnResetAxis.Text = "Reset Axis";
             this.btnResetAxis.UseVisualStyleBackColor = true;
-            this.btnResetAxis.Click += new System.EventHandler(this.btnResetAxis_Click);
+            this.btnResetAxis.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnResetAxis_MouseDown);
+            this.btnResetAxis.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btnResetAxis_MouseUp);
             // 
             // btnResetKinGroup
             // 
@@ -407,17 +408,6 @@ namespace _3D_Delta_Kinematics_VS
             this.gbJog.TabIndex = 6;
             this.gbJog.TabStop = false;
             this.gbJog.Text = "Jog MCS";
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.pictureBox1.Image = global::_3D_Delta_Kinematics_VS.Properties.Resources.CoOrdinate;
-            this.pictureBox1.Location = new System.Drawing.Point(18, 25);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(188, 215);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 20;
-            this.pictureBox1.TabStop = false;
             // 
             // btnZPos
             // 
@@ -502,6 +492,17 @@ namespace _3D_Delta_Kinematics_VS
             this.btnXNeg.TabIndex = 34;
             this.btnXNeg.Text = "↖ X";
             this.btnXNeg.UseVisualStyleBackColor = false;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.pictureBox1.Image = global::_3D_Delta_Kinematics_VS.Properties.Resources.CoOrdinate;
+            this.pictureBox1.Location = new System.Drawing.Point(18, 25);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(188, 215);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 20;
+            this.pictureBox1.TabStop = false;
             // 
             // MainForm
             // 
