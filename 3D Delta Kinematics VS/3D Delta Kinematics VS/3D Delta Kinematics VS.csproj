@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CoordinateDrawer.cs" />
     <Compile Include="Delta_3_Robot.cs" />
     <Compile Include="InverseKinematic.cs" />
     <Compile Include="MainForm.cs">

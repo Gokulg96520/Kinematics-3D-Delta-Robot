@@ -216,26 +216,8 @@ namespace _3D_Delta_Kinematics_VS
         // Method to draw XYZ axis
         private void DrawCoordinateAxes()
         {
-            // Draw X-axis in red
-            GL.Color3(Color.Red);
-            GL.Begin(PrimitiveType.Lines);
-            GL.Vertex3(0, 0, 0); // Start point
-            GL.Vertex3(10, 0, 0);  // End point
-            GL.End();
-
-            // Draw Z-axis in green (pointing upwards)
-            GL.Color3(Color.Green);
-            GL.Begin(PrimitiveType.Lines);
-            GL.Vertex3(0, 0, 0); // Start point
-            GL.Vertex3(0, 0, 10);  // End point
-            GL.End();
-
-            // Draw Y-axis in blue (pointing into the screen)
-            GL.Color3(Color.Blue);
-            GL.Begin(PrimitiveType.Lines);
-            GL.Vertex3(0, 0, 0); // Start point
-            GL.Vertex3(0, 10, 0);  // End point
-            GL.End();
+            CoordinateDrawer CoDrw = new CoordinateDrawer();
+            CoDrw.DrawCoordinateAxes();
         }
 
         // Method to Draw Grid
