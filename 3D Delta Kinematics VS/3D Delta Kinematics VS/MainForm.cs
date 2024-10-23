@@ -28,7 +28,7 @@ namespace _3D_Delta_Kinematics_VS
         private Point _lastMousePosition; // Last mouse position for rotation
 
         //Inital Position of Delta Robot
-        public vec3 MovePlatePos = new vec3(0, 0, -340.51800f);
+        public vec3 MovePlatePos = new vec3(0, 0, -376.0f);
 
         //TcAds
         private TcAdsClient tcClient;
@@ -43,6 +43,8 @@ namespace _3D_Delta_Kinematics_VS
             InitializeGLComponent();
             InitializeTcAds();
         }
+
+        #region TwinCAT ADS Communication
 
         // Initalize Ads
         private void InitializeTcAds()
@@ -86,10 +88,11 @@ namespace _3D_Delta_Kinematics_VS
             {
                 hStructure = tcClient.CreateVariableHandle("UIData.stPLC_TO_UI");
                 PLCToUIStructure = (PLCStructure.InputStructure)tcClient.ReadAny(hStructure, typeof(PLCStructure.InputStructure));
-                //UpdateFrontEnd();
 
                 hStructure = tcClient.CreateVariableHandle("UIData.stUI_TO_PLC");
                 tcClient.WriteAny(hStructure, UIToPLCStructure);
+
+                UpdateUI();
 
             }
             catch (Exception err)
@@ -127,6 +130,38 @@ namespace _3D_Delta_Kinematics_VS
                 MessageBox.Show(err.Message);
             }
         }
+
+        #endregion
+
+        #region UI Update 
+
+        private void UpdateUI()
+        {
+            //MCS & ACS Position
+            tbXCord.Text = PLCToUIStructure.X_MCSPos.ToString();
+            tbYCord.Text = PLCToUIStructure.Y_MCSPos.ToString();
+            tbZCord.Text = PLCToUIStructure.Z_MCSPos.ToString();
+            tbM1Cord.Text = PLCToUIStructure.M1_ACSPos.ToString();
+            tbM2Cord.Text = PLCToUIStructure.M2_ACSPos.ToString();
+            tbM3Cord.Text = PLCToUIStructure.M3_ACSPos.ToString();
+
+            //Status
+
+
+            //3D Delta Robot XYZ Update
+            MovePlatePos.x = PLCToUIStructure.X_MCSPos;
+            MovePlatePos.y = PLCToUIStructure.Y_MCSPos;
+            MovePlatePos.z = PLCToUIStructure.Z_MCSPos;
+            
+            //Redraw Render 
+            glControl.Invalidate();
+        }
+
+        #endregion
+
+        #region OpenGL GL Control & Render 
+
+        #region GLControl Initialize, Load, Paint & Resize
 
         // Initalize GL Components
         private void InitializeGLComponent()
@@ -208,6 +243,10 @@ namespace _3D_Delta_Kinematics_VS
 
             }
         }
+
+        #endregion
+
+        #region GLControl Mouse Events
 
         // Event handler for mouse wheel moves events
         private void GlControl_MouseWheel(object sender, MouseEventArgs e) 
@@ -297,6 +336,10 @@ namespace _3D_Delta_Kinematics_VS
             glControl.Invalidate();
         }
 
+        #endregion
+
+        #region User Defined Render Code
+
         // Render PipeLine
         private void Render()
         {
@@ -348,6 +391,9 @@ namespace _3D_Delta_Kinematics_VS
             D3R.DrawDelta3Robot();
         }
 
+        #endregion
+
+        #endregion
 
     }
 }
