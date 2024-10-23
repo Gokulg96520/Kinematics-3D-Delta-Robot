@@ -3,7 +3,8 @@
   <POU Name="FB_EnableAxes" Id="{fc6e8a5e-b6f3-4ab5-ab02-994e81ac6123}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_EnableAxes
 VAR_INPUT
-	bEnableAxes: BOOL:= TRUE;
+	bEnableAxes: BOOL;
+	bResetAxes : BOOL;
 END_VAR
 VAR_OUTPUT
 	bAllAxesReady:	BOOL:= FALSE;
@@ -25,6 +26,16 @@ VAR
 	fbPowerM1:	MC_Power;
 	fbPowerM2:	MC_Power;
 	fbPowerM3:	MC_Power;
+	
+	fbResetX:	MC_Reset;
+	fbResetY:	MC_Reset;
+	fbResetZ:	MC_Reset;
+	fbResetM1:	MC_Reset;
+	fbResetM2:	MC_Reset;
+	fbResetM3:	MC_Reset;
+	
+	
+	m: MC_Reset;
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[io_X.ReadStatus();
@@ -82,6 +93,54 @@ fbPowerM3(
 	Override			:= fOverride,
 	BufferMode			:= MC_Aborting,
 	Axis				:= io_M3);
+	
+fbResetX(
+	Axis:=io_X, 
+	Execute:=bResetAxes, 
+	Done=> , 
+	Busy=> , 
+	Error=> , 
+	ErrorID=> );
+	
+fbResetY(
+	Axis:=io_Y, 
+	Execute:=bResetAxes, 
+	Done=> , 
+	Busy=> , 
+	Error=> , 
+	ErrorID=> );
+	
+fbResetZ(
+	Axis:=io_Z, 
+	Execute:=bResetAxes, 
+	Done=> , 
+	Busy=> , 
+	Error=> , 
+	ErrorID=> );
+	
+fbResetM1(
+	Axis:=io_M1, 
+	Execute:=bResetAxes, 
+	Done=> , 
+	Busy=> , 
+	Error=> , 
+	ErrorID=> );
+	
+fbResetM2(
+	Axis:=io_M2, 
+	Execute:=bResetAxes, 
+	Done=> , 
+	Busy=> , 
+	Error=> , 
+	ErrorID=> );
+	
+fbResetM3(
+	Axis:=io_M3, 
+	Execute:=bResetAxes, 
+	Done=> , 
+	Busy=> , 
+	Error=> , 
+	ErrorID=> );
 	
 bAllAxesReady	:=	fbPowerX.Status AND fbPowerY.Status AND fbPowerZ.Status
 					AND	fbPowerM1.Status AND fbPowerM2.Status AND fbPowerM3.Status;

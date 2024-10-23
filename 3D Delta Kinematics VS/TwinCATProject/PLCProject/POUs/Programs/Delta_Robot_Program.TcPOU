@@ -14,6 +14,7 @@ VAR
 	bEnableAxes: BOOL;
 	bAllAxesReady: BOOL;
 	bAxisError: BOOL;
+	bResetAxes: BOOL;
 	
 	(* Kinematics *)
 	in_stKinToPlc	AT %I*		: NCTOPLC_NCICHANNEL_REF;
@@ -49,6 +50,7 @@ VAR
 	
 
 
+
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -64,7 +66,8 @@ JogMCS();
       <Implementation>
         <ST><![CDATA[// Enable Axes
 fbEnableAxes(
-	bEnableAxes					:= bEnableAxes, 
+	bEnableAxes					:= bEnableAxes,
+	bResetAxes					:= bResetAxes, 
 	io_X						:= io_X , 
 	io_Y						:= io_Y , 
 	io_Z						:= io_Z , 
@@ -151,8 +154,8 @@ UIData.stPLC_TO_UI.KinematicGroupError := bKinGroupError;
 
 
 (*UI to PLC*)
-
 bEnableAxes := UIData.stUI_TO_PLC.EnableAllAxis;
+bResetAxes := UIData.stUI_TO_PLC.ResetAllAxis;
 bConfigKinematicGroup := UIData.stUI_TO_PLC.ConfigKinematicGroup;
 bResetKinematicGroup := UIData.stUI_TO_PLC.ResetKinematicGroup;
 bXJogPositive := UIData.stUI_TO_PLC.XJogPositive;
