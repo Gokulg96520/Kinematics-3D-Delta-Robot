@@ -270,6 +270,30 @@ namespace _3D_Delta_Kinematics_VS
 
         #endregion
 
+        #region Kinematics Group & reset
+
+        //Configure Kinematics Group
+        private void btnConfKinGroup_MouseDown(object sender, MouseEventArgs e)
+        {
+            UIToPLCStructure.ConfigKinematicGroup = true;
+        }
+
+        private void btnConfKinGroup_MouseUp(object sender, MouseEventArgs e)
+        {
+            UIToPLCStructure.ConfigKinematicGroup = false;
+        }
+
+        //Reset Kinematics Group
+        private void btnResetKinGroup_MouseDown(object sender, MouseEventArgs e)
+        {
+            UIToPLCStructure.ResetKinematicGroup = true;
+        }
+        private void btnResetKinGroup_MouseUp(object sender, MouseEventArgs e)
+        {
+            UIToPLCStructure.ResetKinematicGroup = false;
+        }
+        #endregion
+
         #endregion
 
         #region OpenGL GL Control & Render 
@@ -507,35 +531,6 @@ namespace _3D_Delta_Kinematics_VS
         #endregion
 
         #endregion
-
-
-
-
-        //Configure Kinematics Group
-        private void btnConfKinGroup_Click(object sender, EventArgs e)
-        {
-            if (UIToPLCStructure.ConfigKinematicGroup == false)
-            {
-                UIToPLCStructure.ConfigKinematicGroup = true;
-            }
-            else
-            {
-                UIToPLCStructure.ConfigKinematicGroup = false;
-            }
-        }
-
-        //Reset Kinematics Group
-        private void btnResetKinGroup_Click(object sender, EventArgs e)
-        {
-            if (UIToPLCStructure.ResetKinematicGroup == false)
-            {
-                UIToPLCStructure.ResetKinematicGroup = true;
-            }
-            else
-            {
-                UIToPLCStructure.ResetKinematicGroup = false;
-            }
-        }
 
     }
 }

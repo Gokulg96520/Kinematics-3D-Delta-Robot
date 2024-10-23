@@ -364,7 +364,8 @@ namespace _3D_Delta_Kinematics_VS
             this.btnConfKinGroup.TabIndex = 10;
             this.btnConfKinGroup.Text = "Configure Kinematic Group ";
             this.btnConfKinGroup.UseVisualStyleBackColor = true;
-            this.btnConfKinGroup.Click += new System.EventHandler(this.btnConfKinGroup_Click);
+            this.btnConfKinGroup.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnConfKinGroup_MouseDown);
+            this.btnConfKinGroup.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btnConfKinGroup_MouseUp);
             // 
             // btnResetAxis
             // 
@@ -387,7 +388,8 @@ namespace _3D_Delta_Kinematics_VS
             this.btnResetKinGroup.TabIndex = 12;
             this.btnResetKinGroup.Text = "Reset Kinematic Group ";
             this.btnResetKinGroup.UseVisualStyleBackColor = true;
-            this.btnResetKinGroup.Click += new System.EventHandler(this.btnResetKinGroup_Click);
+            this.btnResetKinGroup.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnResetKinGroup_MouseDown);
+            this.btnResetKinGroup.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btnResetKinGroup_MouseUp);
             // 
             // gbJog
             // 
@@ -454,8 +456,8 @@ namespace _3D_Delta_Kinematics_VS
             this.btnYNeg.TabIndex = 37;
             this.btnYNeg.Text = "↙ Y";
             this.btnYNeg.UseVisualStyleBackColor = false;
-            this.btnYPos.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnYPos_MouseDown);
-            this.btnYPos.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btnYPos_MouseUp);
+            this.btnYNeg.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnYNeg_MouseDown);
+            this.btnYNeg.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btnYNeg_MouseUp);
             // 
             // btnYPos
             // 
@@ -470,8 +472,8 @@ namespace _3D_Delta_Kinematics_VS
             this.btnYPos.TabIndex = 36;
             this.btnYPos.Text = "Y ↗";
             this.btnYPos.UseVisualStyleBackColor = false;
-            this.btnYNeg.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnYNeg_MouseDown);
-            this.btnYNeg.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btnYNeg_MouseUp);
+            this.btnYPos.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnYPos_MouseDown);
+            this.btnYPos.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btnYPos_MouseUp);
             // 
             // btnXPos
             // 

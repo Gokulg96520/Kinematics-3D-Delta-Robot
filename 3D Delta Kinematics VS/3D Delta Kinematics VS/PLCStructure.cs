@@ -31,7 +31,7 @@ namespace _3D_Delta_Kinematics_VS
             [MarshalAs(UnmanagedType.I1)]
             public Boolean KinematicGroupError;
             [MarshalAs(UnmanagedType.I1)]
-            public Boolean KinematicGroupingDone;
+            public Boolean KinematicGroupingReady;
 
         }
 

@@ -12,7 +12,7 @@ STRUCT
 	AllAxisEnabled : BOOL;
 	AxisError : BOOL;
 	KinematicGroupError : BOOL;	
-	KinematicGroupingDone : BOOL;
+	KinematicGroupingReady : BOOL;
 END_STRUCT
 END_TYPE
 ]]></Declaration>
