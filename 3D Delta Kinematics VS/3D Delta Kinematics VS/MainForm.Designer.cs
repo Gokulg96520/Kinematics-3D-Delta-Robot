@@ -49,6 +49,10 @@ namespace _3D_Delta_Kinematics_VS
             this.lbM3Cord = new System.Windows.Forms.Label();
             this.lbM2Cord = new System.Windows.Forms.Label();
             this.lbM1Cord = new System.Windows.Forms.Label();
+            this.lblAMSNetID = new System.Windows.Forms.Label();
+            this.tbAMSNetID = new System.Windows.Forms.TextBox();
+            this.btnConnect = new System.Windows.Forms.Button();
+            this.btnDisconnect = new System.Windows.Forms.Button();
             this.gbMCS.SuspendLayout();
             this.gbACS.SuspendLayout();
             this.SuspendLayout();
@@ -140,7 +144,7 @@ namespace _3D_Delta_Kinematics_VS
             this.gbMCS.Controls.Add(this.lbYCord);
             this.gbMCS.Controls.Add(this.lbXCord);
             this.gbMCS.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gbMCS.ForeColor = System.Drawing.Color.Yellow;
+            this.gbMCS.ForeColor = System.Drawing.Color.White;
             this.gbMCS.Location = new System.Drawing.Point(259, 4);
             this.gbMCS.Name = "gbMCS";
             this.gbMCS.Size = new System.Drawing.Size(126, 85);
@@ -152,35 +156,36 @@ namespace _3D_Delta_Kinematics_VS
             // 
             this.tbZCord.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
             this.tbZCord.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tbZCord.ForeColor = System.Drawing.Color.Lime;
             this.tbZCord.Location = new System.Drawing.Point(46, 61);
             this.tbZCord.Name = "tbZCord";
             this.tbZCord.Size = new System.Drawing.Size(66, 17);
             this.tbZCord.TabIndex = 5;
-            this.tbZCord.Text = "3D Delta Robot Simulator";
             // 
             // tbYCord
             // 
             this.tbYCord.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
             this.tbYCord.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tbYCord.ForeColor = System.Drawing.Color.Red;
             this.tbYCord.Location = new System.Drawing.Point(46, 41);
             this.tbYCord.Name = "tbYCord";
             this.tbYCord.Size = new System.Drawing.Size(66, 17);
             this.tbYCord.TabIndex = 4;
-            this.tbYCord.Text = "3D Delta Robot Simulator";
             // 
             // tbXCord
             // 
             this.tbXCord.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
             this.tbXCord.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tbXCord.ForeColor = System.Drawing.Color.Blue;
             this.tbXCord.Location = new System.Drawing.Point(46, 21);
             this.tbXCord.Name = "tbXCord";
             this.tbXCord.Size = new System.Drawing.Size(66, 17);
             this.tbXCord.TabIndex = 3;
-            this.tbXCord.Text = "3D Delta Robot Simulator";
             // 
             // lbZCord
             // 
             this.lbZCord.AutoSize = true;
+            this.lbZCord.ForeColor = System.Drawing.Color.Chartreuse;
             this.lbZCord.Location = new System.Drawing.Point(11, 61);
             this.lbZCord.Name = "lbZCord";
             this.lbZCord.Size = new System.Drawing.Size(33, 18);
@@ -190,6 +195,7 @@ namespace _3D_Delta_Kinematics_VS
             // lbYCord
             // 
             this.lbYCord.AutoSize = true;
+            this.lbYCord.ForeColor = System.Drawing.Color.Red;
             this.lbYCord.Location = new System.Drawing.Point(11, 40);
             this.lbYCord.Name = "lbYCord";
             this.lbYCord.Size = new System.Drawing.Size(33, 18);
@@ -199,6 +205,7 @@ namespace _3D_Delta_Kinematics_VS
             // lbXCord
             // 
             this.lbXCord.AutoSize = true;
+            this.lbXCord.ForeColor = System.Drawing.Color.Blue;
             this.lbXCord.Location = new System.Drawing.Point(10, 20);
             this.lbXCord.Name = "lbXCord";
             this.lbXCord.Size = new System.Drawing.Size(34, 18);
@@ -215,8 +222,8 @@ namespace _3D_Delta_Kinematics_VS
             this.gbACS.Controls.Add(this.lbM2Cord);
             this.gbACS.Controls.Add(this.lbM1Cord);
             this.gbACS.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gbACS.ForeColor = System.Drawing.Color.Yellow;
-            this.gbACS.Location = new System.Drawing.Point(259, 95);
+            this.gbACS.ForeColor = System.Drawing.Color.White;
+            this.gbACS.Location = new System.Drawing.Point(259, 90);
             this.gbACS.Name = "gbACS";
             this.gbACS.Size = new System.Drawing.Size(126, 85);
             this.gbACS.TabIndex = 4;
@@ -227,35 +234,36 @@ namespace _3D_Delta_Kinematics_VS
             // 
             this.tbM3Cord.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
             this.tbM3Cord.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tbM3Cord.ForeColor = System.Drawing.Color.White;
             this.tbM3Cord.Location = new System.Drawing.Point(46, 61);
             this.tbM3Cord.Name = "tbM3Cord";
             this.tbM3Cord.Size = new System.Drawing.Size(66, 17);
             this.tbM3Cord.TabIndex = 5;
-            this.tbM3Cord.Text = "3D Delta Robot Simulator";
             // 
             // tbM2Cord
             // 
             this.tbM2Cord.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
             this.tbM2Cord.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tbM2Cord.ForeColor = System.Drawing.Color.White;
             this.tbM2Cord.Location = new System.Drawing.Point(46, 41);
             this.tbM2Cord.Name = "tbM2Cord";
             this.tbM2Cord.Size = new System.Drawing.Size(66, 17);
             this.tbM2Cord.TabIndex = 4;
-            this.tbM2Cord.Text = "3D Delta Robot Simulator";
             // 
             // tbM1Cord
             // 
             this.tbM1Cord.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
             this.tbM1Cord.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tbM1Cord.ForeColor = System.Drawing.Color.White;
             this.tbM1Cord.Location = new System.Drawing.Point(46, 21);
             this.tbM1Cord.Name = "tbM1Cord";
             this.tbM1Cord.Size = new System.Drawing.Size(66, 17);
             this.tbM1Cord.TabIndex = 3;
-            this.tbM1Cord.Text = "3D Delta Robot Simulator";
             // 
             // lbM3Cord
             // 
             this.lbM3Cord.AutoSize = true;
+            this.lbM3Cord.ForeColor = System.Drawing.Color.White;
             this.lbM3Cord.Location = new System.Drawing.Point(4, 61);
             this.lbM3Cord.Name = "lbM3Cord";
             this.lbM3Cord.Size = new System.Drawing.Size(41, 18);
@@ -265,6 +273,7 @@ namespace _3D_Delta_Kinematics_VS
             // lbM2Cord
             // 
             this.lbM2Cord.AutoSize = true;
+            this.lbM2Cord.ForeColor = System.Drawing.Color.White;
             this.lbM2Cord.Location = new System.Drawing.Point(4, 40);
             this.lbM2Cord.Name = "lbM2Cord";
             this.lbM2Cord.Size = new System.Drawing.Size(41, 18);
@@ -274,17 +283,60 @@ namespace _3D_Delta_Kinematics_VS
             // lbM1Cord
             // 
             this.lbM1Cord.AutoSize = true;
+            this.lbM1Cord.ForeColor = System.Drawing.Color.White;
             this.lbM1Cord.Location = new System.Drawing.Point(4, 20);
             this.lbM1Cord.Name = "lbM1Cord";
             this.lbM1Cord.Size = new System.Drawing.Size(41, 18);
             this.lbM1Cord.TabIndex = 0;
             this.lbM1Cord.Text = "M1 :";
             // 
+            // lblAMSNetID
+            // 
+            this.lblAMSNetID.AutoSize = true;
+            this.lblAMSNetID.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAMSNetID.Location = new System.Drawing.Point(4, 9);
+            this.lblAMSNetID.Name = "lblAMSNetID";
+            this.lblAMSNetID.Size = new System.Drawing.Size(85, 18);
+            this.lblAMSNetID.TabIndex = 5;
+            this.lblAMSNetID.Text = "AMS Net ID";
+            // 
+            // tbAMSNetID
+            // 
+            this.tbAMSNetID.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbAMSNetID.Location = new System.Drawing.Point(90, 6);
+            this.tbAMSNetID.Name = "tbAMSNetID";
+            this.tbAMSNetID.Size = new System.Drawing.Size(158, 24);
+            this.tbAMSNetID.TabIndex = 6;
+            // 
+            // btnConnect
+            // 
+            this.btnConnect.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnConnect.Location = new System.Drawing.Point(38, 36);
+            this.btnConnect.Name = "btnConnect";
+            this.btnConnect.Size = new System.Drawing.Size(86, 23);
+            this.btnConnect.TabIndex = 7;
+            this.btnConnect.Text = "Connect";
+            this.btnConnect.UseVisualStyleBackColor = true;
+            // 
+            // btnDisconnect
+            // 
+            this.btnDisconnect.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDisconnect.Location = new System.Drawing.Point(130, 36);
+            this.btnDisconnect.Name = "btnDisconnect";
+            this.btnDisconnect.Size = new System.Drawing.Size(86, 23);
+            this.btnDisconnect.TabIndex = 8;
+            this.btnDisconnect.Text = "Disconnect";
+            this.btnDisconnect.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 494);
+            this.Controls.Add(this.btnDisconnect);
+            this.Controls.Add(this.btnConnect);
+            this.Controls.Add(this.tbAMSNetID);
+            this.Controls.Add(this.lblAMSNetID);
             this.Controls.Add(this.gbACS);
             this.Controls.Add(this.gbMCS);
             this.Controls.Add(this.btnReset);
@@ -326,6 +378,10 @@ namespace _3D_Delta_Kinematics_VS
         private System.Windows.Forms.Label lbM3Cord;
         private System.Windows.Forms.Label lbM2Cord;
         private System.Windows.Forms.Label lbM1Cord;
+        private System.Windows.Forms.Label lblAMSNetID;
+        private System.Windows.Forms.TextBox tbAMSNetID;
+        private System.Windows.Forms.Button btnConnect;
+        private System.Windows.Forms.Button btnDisconnect;
     }
 }
 
