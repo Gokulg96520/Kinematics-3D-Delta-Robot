@@ -138,12 +138,12 @@ namespace _3D_Delta_Kinematics_VS
         private void UpdateUI()
         {
             //MCS & ACS Position
-            tbXCord.Text = PLCToUIStructure.X_MCSPos.ToString();
-            tbYCord.Text = PLCToUIStructure.Y_MCSPos.ToString();
-            tbZCord.Text = PLCToUIStructure.Z_MCSPos.ToString();
-            tbM1Cord.Text = PLCToUIStructure.M1_ACSPos.ToString();
-            tbM2Cord.Text = PLCToUIStructure.M2_ACSPos.ToString();
-            tbM3Cord.Text = PLCToUIStructure.M3_ACSPos.ToString();
+            tbXCord.Text = PLCToUIStructure.X_MCSPos.ToString("F3");
+            tbYCord.Text = PLCToUIStructure.Y_MCSPos.ToString("F3");
+            tbZCord.Text = PLCToUIStructure.Z_MCSPos.ToString("F3");
+            tbM1Cord.Text = PLCToUIStructure.M1_ACSPos.ToString("F3");
+            tbM2Cord.Text = PLCToUIStructure.M2_ACSPos.ToString("F3");
+            tbM3Cord.Text = PLCToUIStructure.M3_ACSPos.ToString("F3");
 
             //Status
 
