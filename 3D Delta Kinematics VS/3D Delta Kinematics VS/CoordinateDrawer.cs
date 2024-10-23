@@ -23,18 +23,18 @@ namespace _3D_Delta_Kinematics_VS
 
             GL.Begin(PrimitiveType.Lines);
 
-            // X-Axis (Red)
-            GL.Color3(1.0f, 0.0f, 0.0f);  // Red
+            // Y-Axis (Dark Magenta)
+            GL.Color3(0.545f, 0.0f, 0.545f);
             GL.Vertex3(0.0f, 0.0f, 0.0f); // Origin
             GL.Vertex3(length, 0.0f, 0.0f); // +X direction
 
-            // Y-Axis (Green)
-            GL.Color3(0.0f, 1.0f, 0.0f);  // Green
+            // Z-Axis (Blue)
+            GL.Color3(0.0f, 0.0f, 1.0f);  // Blue
             GL.Vertex3(0.0f, 0.0f, 0.0f); // Origin
             GL.Vertex3(0.0f, length, 0.0f); // +Y direction
 
-            // Z-Axis (Blue)
-            GL.Color3(0.0f, 0.0f, 1.0f);  // Blue
+            // X-Axis (Yellow)
+            GL.Color3(1.0f, 1.0f, 0.0f);  // Yellow
             GL.Vertex3(0.0f, 0.0f, 0.0f); // Origin
             GL.Vertex3(0.0f, 0.0f, length); // +Z direction
 
