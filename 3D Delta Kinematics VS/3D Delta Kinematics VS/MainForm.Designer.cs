@@ -36,12 +36,12 @@ namespace _3D_Delta_Kinematics_VS
             this.btnMoveDown = new System.Windows.Forms.Button();
             this.btnReset = new System.Windows.Forms.Button();
             this.gbMCS = new System.Windows.Forms.GroupBox();
-            this.lbXCord = new System.Windows.Forms.Label();
-            this.lbYCord = new System.Windows.Forms.Label();
-            this.lbZCord = new System.Windows.Forms.Label();
-            this.tbXCord = new System.Windows.Forms.TextBox();
-            this.tbYCord = new System.Windows.Forms.TextBox();
             this.tbZCord = new System.Windows.Forms.TextBox();
+            this.tbYCord = new System.Windows.Forms.TextBox();
+            this.tbXCord = new System.Windows.Forms.TextBox();
+            this.lbZCord = new System.Windows.Forms.Label();
+            this.lbYCord = new System.Windows.Forms.Label();
+            this.lbXCord = new System.Windows.Forms.Label();
             this.gbACS = new System.Windows.Forms.GroupBox();
             this.tbM3Cord = new System.Windows.Forms.TextBox();
             this.tbM2Cord = new System.Windows.Forms.TextBox();
@@ -126,7 +126,7 @@ namespace _3D_Delta_Kinematics_VS
             this.btnReset.Name = "btnReset";
             this.btnReset.Size = new System.Drawing.Size(35, 35);
             this.btnReset.TabIndex = 2;
-            this.btnReset.Text = "s";
+            this.btnReset.Text = "R";
             this.btnReset.UseVisualStyleBackColor = true;
             this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
             // 
@@ -148,23 +148,35 @@ namespace _3D_Delta_Kinematics_VS
             this.gbMCS.TabStop = false;
             this.gbMCS.Text = "MCS Position";
             // 
-            // lbXCord
+            // tbZCord
             // 
-            this.lbXCord.AutoSize = true;
-            this.lbXCord.Location = new System.Drawing.Point(10, 20);
-            this.lbXCord.Name = "lbXCord";
-            this.lbXCord.Size = new System.Drawing.Size(34, 18);
-            this.lbXCord.TabIndex = 0;
-            this.lbXCord.Text = "X  :";
+            this.tbZCord.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.tbZCord.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tbZCord.Location = new System.Drawing.Point(46, 61);
+            this.tbZCord.Name = "tbZCord";
+            this.tbZCord.Size = new System.Drawing.Size(66, 17);
+            this.tbZCord.TabIndex = 5;
+            this.tbZCord.Text = "3D Delta Robot Simulator";
             // 
-            // lbYCord
+            // tbYCord
             // 
-            this.lbYCord.AutoSize = true;
-            this.lbYCord.Location = new System.Drawing.Point(11, 40);
-            this.lbYCord.Name = "lbYCord";
-            this.lbYCord.Size = new System.Drawing.Size(33, 18);
-            this.lbYCord.TabIndex = 1;
-            this.lbYCord.Text = "Y  :";
+            this.tbYCord.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.tbYCord.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tbYCord.Location = new System.Drawing.Point(46, 41);
+            this.tbYCord.Name = "tbYCord";
+            this.tbYCord.Size = new System.Drawing.Size(66, 17);
+            this.tbYCord.TabIndex = 4;
+            this.tbYCord.Text = "3D Delta Robot Simulator";
+            // 
+            // tbXCord
+            // 
+            this.tbXCord.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.tbXCord.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tbXCord.Location = new System.Drawing.Point(46, 21);
+            this.tbXCord.Name = "tbXCord";
+            this.tbXCord.Size = new System.Drawing.Size(66, 17);
+            this.tbXCord.TabIndex = 3;
+            this.tbXCord.Text = "3D Delta Robot Simulator";
             // 
             // lbZCord
             // 
@@ -175,32 +187,23 @@ namespace _3D_Delta_Kinematics_VS
             this.lbZCord.TabIndex = 2;
             this.lbZCord.Text = "Z  :";
             // 
-            // tbXCord
+            // lbYCord
             // 
-            this.tbXCord.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
-            this.tbXCord.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.tbXCord.Location = new System.Drawing.Point(46, 21);
-            this.tbXCord.Name = "tbXCord";
-            this.tbXCord.Size = new System.Drawing.Size(66, 17);
-            this.tbXCord.TabIndex = 3;
+            this.lbYCord.AutoSize = true;
+            this.lbYCord.Location = new System.Drawing.Point(11, 40);
+            this.lbYCord.Name = "lbYCord";
+            this.lbYCord.Size = new System.Drawing.Size(33, 18);
+            this.lbYCord.TabIndex = 1;
+            this.lbYCord.Text = "Y  :";
             // 
-            // tbYCord
+            // lbXCord
             // 
-            this.tbYCord.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
-            this.tbYCord.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.tbYCord.Location = new System.Drawing.Point(46, 41);
-            this.tbYCord.Name = "tbYCord";
-            this.tbYCord.Size = new System.Drawing.Size(66, 17);
-            this.tbYCord.TabIndex = 4;
-            // 
-            // tbZCord
-            // 
-            this.tbZCord.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
-            this.tbZCord.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.tbZCord.Location = new System.Drawing.Point(46, 61);
-            this.tbZCord.Name = "tbZCord";
-            this.tbZCord.Size = new System.Drawing.Size(66, 17);
-            this.tbZCord.TabIndex = 5;
+            this.lbXCord.AutoSize = true;
+            this.lbXCord.Location = new System.Drawing.Point(10, 20);
+            this.lbXCord.Name = "lbXCord";
+            this.lbXCord.Size = new System.Drawing.Size(34, 18);
+            this.lbXCord.TabIndex = 0;
+            this.lbXCord.Text = "X  :";
             // 
             // gbACS
             // 
@@ -228,6 +231,7 @@ namespace _3D_Delta_Kinematics_VS
             this.tbM3Cord.Name = "tbM3Cord";
             this.tbM3Cord.Size = new System.Drawing.Size(66, 17);
             this.tbM3Cord.TabIndex = 5;
+            this.tbM3Cord.Text = "3D Delta Robot Simulator";
             // 
             // tbM2Cord
             // 
@@ -237,6 +241,7 @@ namespace _3D_Delta_Kinematics_VS
             this.tbM2Cord.Name = "tbM2Cord";
             this.tbM2Cord.Size = new System.Drawing.Size(66, 17);
             this.tbM2Cord.TabIndex = 4;
+            this.tbM2Cord.Text = "3D Delta Robot Simulator";
             // 
             // tbM1Cord
             // 
@@ -246,6 +251,7 @@ namespace _3D_Delta_Kinematics_VS
             this.tbM1Cord.Name = "tbM1Cord";
             this.tbM1Cord.Size = new System.Drawing.Size(66, 17);
             this.tbM1Cord.TabIndex = 3;
+            this.tbM1Cord.Text = "3D Delta Robot Simulator";
             // 
             // lbM3Cord
             // 
@@ -288,7 +294,7 @@ namespace _3D_Delta_Kinematics_VS
             this.Controls.Add(this.btnMoveLeft);
             this.Controls.Add(this.glControl);
             this.Name = "MainForm";
-            this.Text = "Form1";
+            this.Text = "3D Delta Robot Simulator";
             this.gbMCS.ResumeLayout(false);
             this.gbMCS.PerformLayout();
             this.gbACS.ResumeLayout(false);
