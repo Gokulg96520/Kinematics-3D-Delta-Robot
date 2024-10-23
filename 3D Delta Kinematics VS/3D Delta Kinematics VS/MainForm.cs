@@ -166,28 +166,28 @@ namespace _3D_Delta_Kinematics_VS
         // Event handler for Move Left View events
         private void btnMoveLeft_Click(object sender, EventArgs e)
         {
-            _moveXDirection -= 1.0f;
+            _moveXDirection -= 2.0f;
             glControl.Invalidate();
         }
 
         // Event handler for Move Right View events
         private void btnMoveRight_Click(object sender, EventArgs e)
         {
-            _moveXDirection += 1.0f;
+            _moveXDirection += 2.0f;
             glControl.Invalidate();
         }
 
         // Event handler for Move Up View events
         private void btnMoveUp_Click(object sender, EventArgs e)
         {
-            _moveYDirection += 1.0f;
+            _moveYDirection += 2.0f;
             glControl.Invalidate();
         }
 
         // Event handler for Move Down View events
         private void btnMoveDown_Click(object sender, EventArgs e)
         {
-            _moveYDirection -= 1.0f;
+            _moveYDirection -= 2.0f;
             glControl.Invalidate();
         }
 
