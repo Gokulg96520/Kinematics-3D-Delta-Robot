@@ -118,17 +118,22 @@ stAxesConfig.nAxisIdsMcs[3]		:= io_Z.NcToPlc.AxisId;
 eKinematicState := F_KinGetChnOperationState(stKinRefIn:=in_stKinToPlc);
 IF eKinematicState = E_KINSTATUS.KinStatus_Ready THEN
 	bKinematicsGroupReady := TRUE;
+	bKinGroupError := FALSE;
+ELSIF eKinematicState = E_KINSTATUS.KinStatus_Error THEN 
+	bKinGroupError := TRUE;
+	bKinematicsGroupReady := FALSE;
 ELSE
 	bKinematicsGroupReady := FALSE;
+	bKinGroupError := FALSE	;
 END_IF
+
 
 // Build Kinematic Group
 fbConfigKinGroup(
 	bExecute					:= bConfigKinematicGroup AND bAllAxesReady AND NOT bAxisError , 
 	bCartesianMode				:= bUserCartesianMode, 
 	stAxesList					:= stAxesConfig, 
-	stKinRefIn					:= in_stKinToPlc,
-	bError						=> bKinGroupError);
+	stKinRefIn					:= in_stKinToPlc);
 
 //Reset Kinematic Group
 fbResetKinGroup(
@@ -156,6 +161,10 @@ UIData.stPLC_TO_UI.M3_ACSPos := io_M3.NcToPlc.ActPos;
 //Axis Status
 UIData.stPLC_TO_UI.AllAxisEnabled := bAllAxesReady; 
 UIData.stPLC_TO_UI.AxisError := bAxisError; 
+UIData.stPLC_TO_UI.KinematicGroupError := bKinGroupError;
+
+//Kinematic Status
+UIData.stPLC_TO_UI.KinematicGroupingReady := bKinematicsGroupReady;
 UIData.stPLC_TO_UI.KinematicGroupError := bKinGroupError;
 
 

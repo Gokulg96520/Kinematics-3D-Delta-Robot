@@ -127,6 +127,8 @@ namespace _3D_Delta_Kinematics_VS
                 if (tcClient.IsConnected == false)
                 {
                     btnConnect.BackColor = SystemColors.Control;
+                    btnEnableAxis.BackColor = SystemColors.Control;
+                    btnConfKinGroup.BackColor = SystemColors.Control;
                     MessageBox.Show("Controller Disconneted");
                 }
             }
@@ -163,6 +165,20 @@ namespace _3D_Delta_Kinematics_VS
             else
             {
                 btnEnableAxis.BackColor = Color.Yellow;
+            }
+
+            //Kinematic Group Status
+            if (PLCToUIStructure.KinematicGroupingReady == true)
+            {
+                btnConfKinGroup.BackColor = Color.GreenYellow;
+
+            }else if (PLCToUIStructure.KinematicGroupError == true )
+            {
+                btnConfKinGroup.BackColor = Color.Red;
+            }
+            else
+            {
+                btnConfKinGroup.BackColor = Color.Yellow;
             }
            
 
