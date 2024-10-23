@@ -1,0 +1,169 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="Delta_Robot_Program" Id="{ec9c67e2-5b7f-42f3-9848-db5938141bd5}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM Delta_Robot_Program
+VAR	
+	(* Axis Enable *)
+	fbEnableAxes				: FB_EnableAxes;
+	io_X						: AXIS_REF;
+	io_Y						: AXIS_REF;
+	io_Z						: AXIS_REF;
+	io_M1						: AXIS_REF;
+	io_M2						: AXIS_REF;
+	io_M3						: AXIS_REF;
+	bEnableAxes: BOOL;
+	bAllAxesReady: BOOL;
+	bAxisError: BOOL;
+	
+	(* Kinematics *)
+	in_stKinToPlc	AT %I*		: NCTOPLC_NCICHANNEL_REF;
+	out_stPlcToKin	AT %Q*		: PLCTONC_NCICHANNEL_REF;
+	fbConfigKinGroup      		: FB_KinConfigGroup;
+    stAxesConfig          		: ST_KinAxes;
+	fbResetKinGroup				: FB_KinResetGroup;
+	bConfigKinematicGroup: BOOL;
+	bUserCartesianMode: BOOL 	:= TRUE;
+	bKinGroupError: BOOL;
+	bResetKinematicGroup: BOOL;
+	
+	(* Interpolation *)
+	in_stItpToPlc	AT %I*		: NCTOPLC_NCICHANNEL_REF;
+	out_stPlcToItp	AT %Q*		: PLCTONC_NCICHANNEL_REF;
+	
+	(* Jog MCS *)
+	fbJogAxisX					: MC_Jog;
+	fbJogAxisY					: MC_Jog;
+	fbJogAxisZ					: MC_Jog;
+	bXJogPositive: BOOL;
+	bYJogPositive: BOOL;
+	bZJogPositive: BOOL;
+	bXJogNegative: BOOL;
+	bYJogNegative: BOOL;
+	bZJogNegative: BOOL;
+
+	
+	
+
+	
+	
+	
+
+
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[UI();
+AxisEnable();
+Kinematics();
+JogMCS();
+	
+	
+]]></ST>
+    </Implementation>
+    <Action Name="AxisEnable" Id="{19d5fb57-971b-4542-8d41-9f4bffbdae44}">
+      <Implementation>
+        <ST><![CDATA[// Enable Axes
+fbEnableAxes(
+	bEnableAxes					:= bEnableAxes, 
+	io_X						:= io_X , 
+	io_Y						:= io_Y , 
+	io_Z						:= io_Z , 
+	io_M1						:= io_M1 , 
+	io_M2						:= io_M2 , 
+	io_M3						:= io_M3 , 
+	bAllAxesReady				=> bAllAxesReady,
+	bAxisError					=> bAxisError );
+	
+
+	]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="JogMCS" Id="{773da444-5073-46a7-a95b-c0c675e8c1cf}">
+      <Implementation>
+        <ST><![CDATA[// Manual Jogging
+fbJogAxisX(
+	Axis						:= io_X, 
+	JogForward					:= bXJogPositive, 
+	JogBackwards				:= bXJogNegative, 
+	Mode						:= MC_JOGMODE_STANDARD_SLOW);
+	
+fbJogAxisY(
+	Axis						:= io_Y, 
+	JogForward					:= bYJogPositive, 
+	JogBackwards				:= bYJogPositive, 
+	Mode						:= MC_JOGMODE_STANDARD_SLOW);
+
+fbJogAxisZ(
+	Axis						:= io_Z, 
+	JogForward					:= bZJogPositive, 
+	JogBackwards				:= bZJogNegative, 
+	Mode						:= MC_JOGMODE_STANDARD_SLOW);	]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="Kinematics" Id="{df827e87-35b7-4c3a-95a4-782f5599478c}">
+      <Implementation>
+        <ST><![CDATA[// Read axes id's from cylic interface
+// so they can be mapped later to the kinematic group
+stAxesConfig.nAxisIdsAcs[1]		:= io_M1.NcToPlc.AxisId;
+stAxesConfig.nAxisIdsAcs[2]		:= io_M2.NcToPlc.AxisId;
+stAxesConfig.nAxisIdsAcs[3]		:= io_M3.NcToPlc.AxisId;
+stAxesConfig.nAxisIdsMcs[1]		:= io_X.NcToPlc.AxisId;
+stAxesConfig.nAxisIdsMcs[2]		:= io_Y.NcToPlc.AxisId;
+stAxesConfig.nAxisIdsMcs[3]		:= io_Z.NcToPlc.AxisId;
+
+//
+
+// Build Kinematic Group
+fbConfigKinGroup(
+	bExecute					:= bConfigKinematicGroup AND bAllAxesReady AND NOT bAxisError , 
+	bCartesianMode				:= bUserCartesianMode, 
+	stAxesList					:= stAxesConfig, 
+	stKinRefIn					:= in_stKinToPlc,
+	bError						=> bKinGroupError);
+
+//Reset Kinematic Group
+fbResetKinGroup(
+	bExecute					:= bResetKinematicGroup , 
+	nItpChannelId				:= in_stKinToPlc.ChnId, 
+	stKinRefIn					:= in_stKinToPlc, 
+	stAxesList					:= stAxesConfig);
+
+
+]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="UI" Id="{62a58446-a97c-4afd-920b-3f96fac39f08}">
+      <Implementation>
+        <ST><![CDATA[(*PLC to UI*)
+
+//Position Data
+UIData.stPLC_TO_UI.X_MCSPos := io_X.NcToPlc.ActPos;
+UIData.stPLC_TO_UI.Y_MCSPos := io_Y.NcToPlc.ActPos;
+UIData.stPLC_TO_UI.Z_MCSPos := io_Z.NcToPlc.ActPos;
+UIData.stPLC_TO_UI.M1_ACSPos := io_M1.NcToPlc.ActPos;
+UIData.stPLC_TO_UI.M2_ACSPos := io_M2.NcToPlc.ActPos;
+UIData.stPLC_TO_UI.M3_ACSPos := io_M3.NcToPlc.ActPos;
+
+//Axis Status
+UIData.stPLC_TO_UI.AllAxisEnabled := bAllAxesReady; 
+UIData.stPLC_TO_UI.AxisError := bAxisError; 
+UIData.stPLC_TO_UI.KinematicGroupError := bKinGroupError;
+
+
+(*UI to PLC*)
+
+bEnableAxes := UIData.stUI_TO_PLC.EnableAllAxis;
+bConfigKinematicGroup := UIData.stUI_TO_PLC.ConfigKinematicGroup;
+bResetKinematicGroup := UIData.stUI_TO_PLC.ResetKinematicGroup;
+bXJogPositive := UIData.stUI_TO_PLC.XJogPositive;
+bYJogPositive := UIData.stUI_TO_PLC.YJogPositive;
+bZJogPositive := UIData.stUI_TO_PLC.ZJogPositive;
+bXJogNegative := UIData.stUI_TO_PLC.XJogNegative;
+bYJogNegative := UIData.stUI_TO_PLC.YJogNegative;
+bZJogNegative := UIData.stUI_TO_PLC.ZJogNegative;
+
+]]></ST>
+      </Implementation>
+    </Action>
+  </POU>
+</TcPlcObject>

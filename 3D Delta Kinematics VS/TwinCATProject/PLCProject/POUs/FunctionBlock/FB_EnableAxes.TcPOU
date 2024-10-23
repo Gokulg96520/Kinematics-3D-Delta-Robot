@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="FB_EnableAxes" Id="{fc6e8a5e-b6f3-4ab5-ab02-994e81ac6123}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_EnableAxes
+VAR_INPUT
+	bEnableAxes: BOOL:= TRUE;
+END_VAR
+VAR_OUTPUT
+	bAllAxesReady:	BOOL:= FALSE;
+	bAxisError : BOOL := FALSE;
+END_VAR
+VAR_IN_OUT
+	io_X:	AXIS_REF;
+	io_Y:	AXIS_REF;
+	io_Z:	AXIS_REF;
+	io_M1:	AXIS_REF;
+	io_M2:	AXIS_REF;
+	io_M3:	AXIS_REF;
+END_VAR
+VAR
+	fOverride:	LREAL	:= 100.0;
+	fbPowerX:	MC_Power;
+	fbPowerY:	MC_Power;
+	fbPowerZ:	MC_Power;
+	fbPowerM1:	MC_Power;
+	fbPowerM2:	MC_Power;
+	fbPowerM3:	MC_Power;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[io_X.ReadStatus();
+io_Y.ReadStatus();
+io_Z.ReadStatus();
+io_M1.ReadStatus();
+io_M2.ReadStatus();
+io_M3.ReadStatus();
+
+
+fbPowerX(
+	Enable				:= bEnableAxes, 
+	Enable_Positive		:= bEnableAxes, 
+	Enable_Negative		:= bEnableAxes, 
+	Override			:= fOverride,
+	BufferMode			:= MC_Aborting,
+	Axis				:= io_X);
+
+fbPowerY(
+	Enable				:= bEnableAxes, 
+	Enable_Positive		:= bEnableAxes, 
+	Enable_Negative		:= bEnableAxes, 
+	Override			:= fOverride,
+	BufferMode			:= MC_Aborting,
+	Axis				:= io_Y);
+	
+fbPowerZ(
+	Enable				:= bEnableAxes, 
+	Enable_Positive		:= bEnableAxes, 
+	Enable_Negative		:= bEnableAxes, 
+	Override			:= fOverride,
+	BufferMode			:= MC_Aborting,
+	Axis				:= io_Z);
+	
+fbPowerM1(
+	Enable				:= bEnableAxes, 
+	Enable_Positive		:= bEnableAxes, 
+	Enable_Negative		:= bEnableAxes, 
+	Override			:= fOverride,
+	BufferMode			:= MC_Aborting,
+	Axis				:= io_M1);
+	
+fbPowerM2(
+	Enable				:= bEnableAxes, 
+	Enable_Positive		:= bEnableAxes, 
+	Enable_Negative		:= bEnableAxes, 
+	Override			:= fOverride,
+	BufferMode			:= MC_Aborting,
+	Axis				:= io_M2);
+	
+fbPowerM3(
+	Enable				:= bEnableAxes, 
+	Enable_Positive		:= bEnableAxes, 
+	Enable_Negative		:= bEnableAxes, 
+	Override			:= fOverride,
+	BufferMode			:= MC_Aborting,
+	Axis				:= io_M3);
+	
+bAllAxesReady	:=	fbPowerX.Status AND fbPowerY.Status AND fbPowerZ.Status
+					AND	fbPowerM1.Status AND fbPowerM2.Status AND fbPowerM3.Status;
+					
+bAxisError      := fbPowerX.Error OR fbPowerY.Error OR fbPowerZ.Error 
+				   OR fbPowerM1.Error OR fbPowerM2.Error OR fbPowerM3.Error;
+
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

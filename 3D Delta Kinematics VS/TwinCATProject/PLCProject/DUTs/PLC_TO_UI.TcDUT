@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <DUT Name="PLC_TO_UI" Id="{f9012504-93dc-4be8-a8ba-76d0ce4261c0}">
+    <Declaration><![CDATA[TYPE PLC_TO_UI :
+STRUCT
+	X_MCSPos : REAL;
+	Y_MCSPos : REAL;
+	Z_MCSPos : REAL;
+	M1_ACSPos : REAL;
+	M2_ACSPos : REAL;
+	M3_ACSPos : REAL;
+	AllAxisEnabled : BOOL;
+	AxisError : BOOL;
+	KinematicGroupError : BOOL;	
+	KinematicGroupingDone : BOOL;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

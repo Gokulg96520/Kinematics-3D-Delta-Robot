@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <GVL Name="UIData" Id="{a4e4e5ae-ee97-4fc7-b527-c11554b5931c}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL
+	stUI_TO_PLC : UI_TO_PLC;
+	stPLC_TO_UI : PLC_TO_UI;
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>
