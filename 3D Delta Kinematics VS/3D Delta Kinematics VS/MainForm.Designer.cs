@@ -70,6 +70,7 @@ namespace _3D_Delta_Kinematics_VS
             this.lblJogSpeed = new System.Windows.Forms.Label();
             this.tbJogSpeed = new System.Windows.Forms.TextBox();
             this.tbNCI = new System.Windows.Forms.TabPage();
+            this.lblmms = new System.Windows.Forms.Label();
             this.gbMCS.SuspendLayout();
             this.gbACS.SuspendLayout();
             this.gbJog.SuspendLayout();
@@ -540,6 +541,7 @@ namespace _3D_Delta_Kinematics_VS
             // 
             this.tbJog.BackColor = System.Drawing.SystemColors.Control;
             this.tbJog.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tbJog.Controls.Add(this.lblmms);
             this.tbJog.Controls.Add(this.tbJogSpeed);
             this.tbJog.Controls.Add(this.lblJogSpeed);
             this.tbJog.Controls.Add(this.gbJog);
@@ -557,17 +559,18 @@ namespace _3D_Delta_Kinematics_VS
             this.lblJogSpeed.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblJogSpeed.Location = new System.Drawing.Point(17, 10);
             this.lblJogSpeed.Name = "lblJogSpeed";
-            this.lblJogSpeed.Size = new System.Drawing.Size(50, 18);
+            this.lblJogSpeed.Size = new System.Drawing.Size(54, 18);
             this.lblJogSpeed.TabIndex = 7;
-            this.lblJogSpeed.Text = "Speed";
+            this.lblJogSpeed.Text = "Speed ";
             // 
             // tbJogSpeed
             // 
             this.tbJogSpeed.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbJogSpeed.Location = new System.Drawing.Point(71, 7);
+            this.tbJogSpeed.Location = new System.Drawing.Point(70, 7);
             this.tbJogSpeed.Name = "tbJogSpeed";
-            this.tbJogSpeed.Size = new System.Drawing.Size(145, 24);
+            this.tbJogSpeed.Size = new System.Drawing.Size(107, 24);
             this.tbJogSpeed.TabIndex = 8;
+            this.tbJogSpeed.TextChanged += new System.EventHandler(this.tbJogSpeed_TextChanged);
             // 
             // tbNCI
             // 
@@ -577,6 +580,16 @@ namespace _3D_Delta_Kinematics_VS
             this.tbNCI.Size = new System.Drawing.Size(238, 292);
             this.tbNCI.TabIndex = 1;
             this.tbNCI.Text = "  NCI";
+            // 
+            // lblmms
+            // 
+            this.lblmms.AutoSize = true;
+            this.lblmms.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblmms.Location = new System.Drawing.Point(179, 9);
+            this.lblmms.Name = "lblmms";
+            this.lblmms.Size = new System.Drawing.Size(46, 18);
+            this.lblmms.TabIndex = 9;
+            this.lblmms.Text = "mm/s";
             // 
             // MainForm
             // 
@@ -660,6 +673,7 @@ namespace _3D_Delta_Kinematics_VS
         private System.Windows.Forms.Label lblJogSpeed;
         private System.Windows.Forms.TextBox tbJogSpeed;
         private System.Windows.Forms.TabPage tbNCI;
+        private System.Windows.Forms.Label lblmms;
     }
 }
 

@@ -40,8 +40,9 @@ namespace _3D_Delta_Kinematics_VS
         public MainForm()
         {
             InitializeComponent();
-            InitializeGLComponent();
             InitializeTcAds();
+            InitializeGLComponent();
+            
         }
 
         #region TwinCAT ADS Communication
@@ -49,9 +50,10 @@ namespace _3D_Delta_Kinematics_VS
         // Initalize Ads
         private void InitializeTcAds()
         {
-            tbAMSNetID.Text = "192.168.1.19.1.1";
             PLCToUIStructure = new PLCStructure.InputStructure();
             UIToPLCStructure = new PLCStructure.OutputStructure();
+            tbAMSNetID.Text = "192.168.1.19.1.1";
+            tbJogSpeed.Text = "100.0";
         }
 
         // Event Hanlder for Ads Connect
@@ -548,5 +550,18 @@ namespace _3D_Delta_Kinematics_VS
 
         #endregion
 
+        private void tbJogSpeed_TextChanged(object sender, EventArgs e)
+        {
+        float.TryParse(tbJogSpeed.Text, out float speed);
+            if ((speed >= 0 && speed <= 100))
+            {
+                UIToPLCStructure.JogSpeed = speed;
+            }
+            else
+            {
+                UIToPLCStructure.JogSpeed = 10.0f;
+                tbJogSpeed.Text = "10.0";
+            }
+        }
     }
 }
