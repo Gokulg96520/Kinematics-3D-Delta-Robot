@@ -53,7 +53,7 @@ namespace _3D_Delta_Kinematics_VS
             PLCToUIStructure = new PLCStructure.InputStructure();
             UIToPLCStructure = new PLCStructure.OutputStructure();
             tbAMSNetID.Text = "192.168.1.19.1.1";
-            tbJogSpeed.Text = "100.0";
+            tbJogSpeed.Text = "50";
         }
 
         // Event Hanlder for Ads Connect
@@ -314,17 +314,27 @@ namespace _3D_Delta_Kinematics_VS
 
         #region Jog Speed
 
-        private void tbJogSpeed_TextChanged(object sender, EventArgs e)
+        private void tbJogSpeed_KeyPress(object sender, System.Windows.Forms.KeyPressEventArgs e)
         {
-            float.TryParse(tbJogSpeed.Text, out float speed);
-            if ((speed >= 0 && speed <= 100))
+            if (e.KeyChar == (char)Keys.Enter)
             {
-                UIToPLCStructure.JogSpeed = speed;
-            }
-            else
-            {
-                UIToPLCStructure.JogSpeed = 10.0f;
-                tbJogSpeed.Text = "10.0";
+                float.TryParse(tbJogSpeed.Text, out float speed);
+                if ((speed > 1 && speed <= 200))
+                {
+                    UIToPLCStructure.JogSpeed = speed;
+                }
+                else
+                {
+                    UIToPLCStructure.JogSpeed = 10.0f;
+                    tbJogSpeed.Text = "50.0";
+                }
+
+                // Set focus to some other Control
+                btnZPos.Focus();
+
+                // Prevent the ding sound on Enter key press
+                e.Handled = true; 
+
             }
         }
 
@@ -567,6 +577,7 @@ namespace _3D_Delta_Kinematics_VS
         #endregion
 
         #endregion
+
 
     }
 }

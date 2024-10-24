@@ -67,10 +67,10 @@ namespace _3D_Delta_Kinematics_VS
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.tbCtrl = new System.Windows.Forms.TabControl();
             this.tbJog = new System.Windows.Forms.TabPage();
-            this.lblJogSpeed = new System.Windows.Forms.Label();
-            this.tbJogSpeed = new System.Windows.Forms.TextBox();
-            this.tbNCI = new System.Windows.Forms.TabPage();
             this.lblmms = new System.Windows.Forms.Label();
+            this.tbJogSpeed = new System.Windows.Forms.TextBox();
+            this.lblJogSpeed = new System.Windows.Forms.Label();
+            this.tbNCI = new System.Windows.Forms.TabPage();
             this.gbMCS.SuspendLayout();
             this.gbACS.SuspendLayout();
             this.gbJog.SuspendLayout();
@@ -329,6 +329,7 @@ namespace _3D_Delta_Kinematics_VS
             this.tbAMSNetID.Name = "tbAMSNetID";
             this.tbAMSNetID.Size = new System.Drawing.Size(158, 24);
             this.tbAMSNetID.TabIndex = 6;
+            this.tbAMSNetID.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // btnConnect
             // 
@@ -553,6 +554,26 @@ namespace _3D_Delta_Kinematics_VS
             this.tbJog.TabIndex = 0;
             this.tbJog.Text = "  Jog";
             // 
+            // lblmms
+            // 
+            this.lblmms.AutoSize = true;
+            this.lblmms.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblmms.Location = new System.Drawing.Point(179, 9);
+            this.lblmms.Name = "lblmms";
+            this.lblmms.Size = new System.Drawing.Size(46, 18);
+            this.lblmms.TabIndex = 9;
+            this.lblmms.Text = "mm/s";
+            // 
+            // tbJogSpeed
+            // 
+            this.tbJogSpeed.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbJogSpeed.Location = new System.Drawing.Point(70, 7);
+            this.tbJogSpeed.Name = "tbJogSpeed";
+            this.tbJogSpeed.Size = new System.Drawing.Size(107, 24);
+            this.tbJogSpeed.TabIndex = 8;
+            this.tbJogSpeed.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.tbJogSpeed.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbJogSpeed_KeyPress);
+            // 
             // lblJogSpeed
             // 
             this.lblJogSpeed.AutoSize = true;
@@ -563,15 +584,6 @@ namespace _3D_Delta_Kinematics_VS
             this.lblJogSpeed.TabIndex = 7;
             this.lblJogSpeed.Text = "Speed ";
             // 
-            // tbJogSpeed
-            // 
-            this.tbJogSpeed.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbJogSpeed.Location = new System.Drawing.Point(70, 7);
-            this.tbJogSpeed.Name = "tbJogSpeed";
-            this.tbJogSpeed.Size = new System.Drawing.Size(107, 24);
-            this.tbJogSpeed.TabIndex = 8;
-            this.tbJogSpeed.TextChanged += new System.EventHandler(this.tbJogSpeed_TextChanged);
-            // 
             // tbNCI
             // 
             this.tbNCI.BackColor = System.Drawing.SystemColors.Control;
@@ -580,16 +592,6 @@ namespace _3D_Delta_Kinematics_VS
             this.tbNCI.Size = new System.Drawing.Size(238, 292);
             this.tbNCI.TabIndex = 1;
             this.tbNCI.Text = "  NCI";
-            // 
-            // lblmms
-            // 
-            this.lblmms.AutoSize = true;
-            this.lblmms.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblmms.Location = new System.Drawing.Point(179, 9);
-            this.lblmms.Name = "lblmms";
-            this.lblmms.Size = new System.Drawing.Size(46, 18);
-            this.lblmms.TabIndex = 9;
-            this.lblmms.Text = "mm/s";
             // 
             // MainForm
             // 
