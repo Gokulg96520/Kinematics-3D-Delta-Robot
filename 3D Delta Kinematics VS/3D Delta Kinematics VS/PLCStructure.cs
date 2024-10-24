@@ -58,6 +58,8 @@ namespace _3D_Delta_Kinematics_VS
             public bool YJogNegative;
             [MarshalAs(UnmanagedType.I1)]
             public bool ZJogNegative;
+            [MarshalAs(UnmanagedType.R4)]
+            public float JogSpeed;
         }
 
     }

@@ -13,6 +13,7 @@ STRUCT
 	XJogNegative : BOOL;
 	YJogNegative : BOOL;
 	ZJogNegative : BOOL;
+	JogSpeed     : REAL;
 END_STRUCT
 END_TYPE
 ]]></Declaration>
