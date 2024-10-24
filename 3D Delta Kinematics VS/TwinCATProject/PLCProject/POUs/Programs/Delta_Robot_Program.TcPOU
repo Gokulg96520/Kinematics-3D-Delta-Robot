@@ -40,6 +40,7 @@ VAR
 	bXJogNegative: BOOL;
 	bYJogNegative: BOOL;
 	bZJogNegative: BOOL;
+	rJogSpeed 	 : REAL;
 	
 	(* Interpolation *)
 	in_stItpToPlc	AT %I*		: NCTOPLC_NCICHANNEL_REF;
@@ -88,19 +89,22 @@ fbJogAxisX(
 	Axis						:= io_X, 
 	JogForward					:= bXJogPositive AND bJogEnable, 
 	JogBackwards				:= bXJogNegative AND bJogEnable, 
-	Mode						:= MC_JOGMODE_STANDARD_SLOW);
+	Mode						:= MC_JOGMODE_CONTINOUS,
+	Velocity					:= rJogSpeed);
 	
 fbJogAxisY(
 	Axis						:= io_Y, 
 	JogForward					:= bYJogPositive AND bJogEnable, 
 	JogBackwards				:= bYJogNegative AND bJogEnable, 
-	Mode						:= MC_JOGMODE_STANDARD_SLOW);
+	Mode						:= MC_JOGMODE_CONTINOUS,
+	Velocity					:= rJogSpeed);
 
 fbJogAxisZ(
 	Axis						:= io_Z, 
 	JogForward					:= bZJogPositive AND bJogEnable, 
 	JogBackwards				:= bZJogNegative AND bJogEnable, 
-	Mode						:= MC_JOGMODE_STANDARD_SLOW);	]]></ST>
+	Mode						:= MC_JOGMODE_CONTINOUS,
+	Velocity					:= rJogSpeed);]]></ST>
       </Implementation>
     </Action>
     <Action Name="Kinematics" Id="{df827e87-35b7-4c3a-95a4-782f5599478c}">
@@ -179,6 +183,7 @@ bZJogPositive := UIData.stUI_TO_PLC.ZJogPositive;
 bXJogNegative := UIData.stUI_TO_PLC.XJogNegative;
 bYJogNegative := UIData.stUI_TO_PLC.YJogNegative;
 bZJogNegative := UIData.stUI_TO_PLC.ZJogNegative;
+rJogSpeed     := UIData.stUI_TO_PLC.JogSpeed;
 
 ]]></ST>
       </Implementation>
