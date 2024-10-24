@@ -78,6 +78,8 @@ namespace _3D_Delta_Kinematics_VS
             public bool StopPartProgram  = false;
             [MarshalAs(UnmanagedType.R4)]
             public float NCIOverRidePer  = 0.0f;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 81)]
+            public string PartProgramName = "testProgram.nc";
         }
 
     }
