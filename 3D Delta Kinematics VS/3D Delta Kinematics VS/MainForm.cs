@@ -11,6 +11,7 @@ using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using TwinCAT.Ads;
+using System.IO;
 using System.Runtime.InteropServices;
 
 namespace _3D_Delta_Kinematics_VS
@@ -45,15 +46,26 @@ namespace _3D_Delta_Kinematics_VS
             
         }
 
+
+
         #region TwinCAT ADS Communication
 
-        // Initalize Ads
+        //Initalize UI to TcAds Communication Data
         private void InitializeTcAds()
         {
+
+            //Create PLCStructure Object
             PLCToUIStructure = new PLCStructure.InputStructure();
             UIToPLCStructure = new PLCStructure.OutputStructure();
+
+            //UI Data 
             tbAMSNetID.Text = "192.168.1.19.1.1";
             tbJogSpeed.Text = "50";
+            tbNCIOvrridePer.Text = "100";
+
+            //TcADS Communication Data
+            UIToPLCStructure.JogSpeed = 50.0f;
+            UIToPLCStructure.NCIOverRidePer = 100.0f;
         }
 
         // Event Hanlder for Ads Connect
@@ -85,7 +97,7 @@ namespace _3D_Delta_Kinematics_VS
             }
         }
 
-        // Event Hanlder for 500ms Timer
+        // Event Hanlder for 200ms Timer
         private void OnCtrlTimerEvent(object sender, EventArgs e)
         {
 
@@ -131,6 +143,7 @@ namespace _3D_Delta_Kinematics_VS
                     btnConnect.BackColor = SystemColors.Control;
                     btnEnableAxis.BackColor = SystemColors.Control;
                     btnConfKinGroup.BackColor = SystemColors.Control;
+                    btnNCIAxisGrp.BackColor = SystemColors.Control;
                     MessageBox.Show("Controller Disconneted");
                 }
             }
@@ -183,6 +196,37 @@ namespace _3D_Delta_Kinematics_VS
                 btnConfKinGroup.BackColor = Color.Yellow;
             }
            
+            //NCI Status
+            if (PLCToUIStructure.NCIAxisGrouped == true && PLCToUIStructure.NCIAXisError == false)
+            {
+                btnNCIAxisGrp.BackColor = Color.GreenYellow;
+            }
+            else if (PLCToUIStructure.NCIAXisError == true)
+            {
+                btnNCIAxisGrp.BackColor = Color.Red;
+            }
+            else
+            {
+                btnNCIAxisGrp.BackColor = Color.Yellow;
+            }
+
+            //NCI Inteperator Status
+            switch (PLCToUIStructure.NCIInterpreterState)
+            {
+                case 1:
+                    tbIntrpState.Text = "Idle";
+                    break;
+                case 2:
+                    tbIntrpState.Text = "Ready";
+                    break;
+                case 5:
+                    tbIntrpState.Text = "Running";
+                    break;
+                default:
+                    tbIntrpState.Text = "UnKnown";
+                    break;
+            }
+            
 
             //3D Delta Robot XYZ Update
             MovePlatePos.x = PLCToUIStructure.X_MCSPos;
@@ -246,6 +290,38 @@ namespace _3D_Delta_Kinematics_VS
         private void btnResetKinGroup_MouseUp(object sender, MouseEventArgs e)
         {
             UIToPLCStructure.ResetKinematicGroup = false;
+        }
+        #endregion
+
+        #region NCI Group & Reset
+        private void btnNCIAxisGrp_MouseDown(object sender, MouseEventArgs e)
+        {
+            UIToPLCStructure.NCIAxisGroup = true;
+        }
+
+        private void btnNCIAxisGrp_MouseUp(object sender, MouseEventArgs e)
+        {
+            UIToPLCStructure.NCIAxisGroup = false;
+        }
+
+        private void btnNCIAxisUnGrp_MouseDown(object sender, MouseEventArgs e)
+        {
+            UIToPLCStructure.NCIAxisUnGroup = true;
+        }
+
+        private void btnNCIAxisUnGrp_MouseUp(object sender, MouseEventArgs e)
+        {
+            UIToPLCStructure.NCIAxisUnGroup = false;
+        }
+
+        private void btnNCIIntrReset_MouseDown(object sender, MouseEventArgs e)
+        {
+            UIToPLCStructure.NCIInteperatorReset = true;
+        }
+
+        private void btnNCIIntrReset_MouseUp(object sender, MouseEventArgs e)
+        {
+            UIToPLCStructure.NCIInteperatorReset = false;
         }
         #endregion
 
@@ -329,7 +405,7 @@ namespace _3D_Delta_Kinematics_VS
                 }
                 else
                 {
-                    UIToPLCStructure.JogSpeed = 10.0f;
+                    UIToPLCStructure.JogSpeed = 50.0f;
                     tbJogSpeed.Text = "50.0";
                 }
 
@@ -348,8 +424,94 @@ namespace _3D_Delta_Kinematics_VS
 
         #region NCI Tab
 
+        #region Override Percentage
+        private void tbNCIOvrridePer_KeyPress(object sender, System.Windows.Forms.KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                float.TryParse(tbNCIOvrridePer.Text, out float overridePer);
+                if ((overridePer > 1 && overridePer <= 100))
+                {
+                    UIToPLCStructure.NCIOverRidePer = overridePer;
+                }
+                else
+                {
+                    UIToPLCStructure.NCIOverRidePer = 100.0f;
+                    tbNCIOvrridePer.Text = "100.0";
+                }
 
+                // Set focus to some other Control
+                btnFileExp.Focus();
 
+                // Prevent the ding sound on Enter key press
+                e.Handled = true;
+            }
+        }
+
+        #endregion
+
+        #region File Selection
+
+        private void btnFileExp_Click(object sender, EventArgs e)
+        {
+            string selectedFilePath = OpenFileAndReturnFileName();
+
+            if (!string.IsNullOrEmpty(selectedFilePath))
+            {
+                tbNCProgramName.Text = selectedFilePath;
+                UIToPLCStructure.PartProgramName = selectedFilePath;
+            }
+            else
+            {
+                MessageBox.Show("No file was selected.", "Selection Canceled");
+            }
+        }
+
+        // Method to open File Explorer and return the selected file path
+        private string OpenFileAndReturnFileName()
+        {
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.InitialDirectory = "C:\\TwinCAT\\Mc\\Nci"; // Default starting directory
+                openFileDialog.Filter = "NC Files (*.nc)|*.nc|All Files (*.*)|*.*";
+                openFileDialog.FilterIndex = 1;
+                openFileDialog.RestoreDirectory = true;
+
+                // Show the dialog and return the selected file path if one is chosen
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    return Path.GetFileName(openFileDialog.FileName); // Return the selected file path
+                }
+            }
+
+            return string.Empty; // Return empty string if no file was selected
+        }
+
+        #endregion
+
+        #region NCI start & stop
+
+        private void btnStartPartprg_MouseDown(object sender, MouseEventArgs e)
+        {
+            UIToPLCStructure.RunPartProgram = true;
+        }
+
+        private void btnStartPartprg_MouseUp(object sender, MouseEventArgs e)
+        {
+            UIToPLCStructure.RunPartProgram = false;
+        }
+
+        private void btnStopPartprg_MouseDown(object sender, MouseEventArgs e)
+        {
+            UIToPLCStructure.StopPartProgram = true;
+        }
+
+        private void btnStopPartprg_MouseUp(object sender, MouseEventArgs e)
+        {
+            UIToPLCStructure.StopPartProgram = false;
+        }
+
+        #endregion
 
         #endregion
 
@@ -589,10 +751,14 @@ namespace _3D_Delta_Kinematics_VS
             D3R.DrawDelta3Robot();
         }
 
-        #endregion
+
+
+
 
         #endregion
 
+        #endregion
 
+  
     }
 }

@@ -1376,7 +1376,7 @@ External Setpoint Generation:
 		</DataType>
 	</DataTypes>
 	<Project GUID="{E2034226-0BBD-4CEA-8B40-A1B336554C18}" Name="PLCProject" PrjFilePath="..\..\PLCProject\PLCProject.plcproj" TmcFilePath="..\..\PLCProject\PLCProject.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
-		<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="PLCProject\PLCProject.tmc" TmcHash="{E541E479-57E5-15B7-99EC-7E2E29A9CCFD}">
+		<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="PLCProject\PLCProject.tmc" TmcHash="{A2C73362-2009-59D5-0BFC-BAC1674E81CE}">
 			<Name>PLCProject Instance</Name>
 			<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 			<Vars VarGrpType="1">

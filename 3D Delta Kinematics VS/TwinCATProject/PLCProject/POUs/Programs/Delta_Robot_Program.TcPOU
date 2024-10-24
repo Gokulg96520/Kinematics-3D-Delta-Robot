@@ -58,7 +58,7 @@ VAR
 	fbLoadRunStop: FB_LoadFileRun;
 	bRunPRogram: BOOL;
 	bStopProgram: BOOL;
-	sProgramName: STRING(84):='testProgram.nc';
+	sProgramName: STRING(80):='testProgram.nc';
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -235,7 +235,9 @@ UIData.stPLC_TO_UI.KinematicGroupError := bKinGroupError;
 //Kinematic Status
 UIData.stPLC_TO_UI.KinematicGroupingReady := bKinematicsGroupReady;
 UIData.stPLC_TO_UI.KinematicGroupError := bKinGroupError;
-
+UIData.stPLC_TO_UI.NCIAxisGrouped := bNCIAxisGrouped;
+UIData.stPLC_TO_UI.NCIAXisError := bNCIInteperatorError;
+UIData.stPLC_TO_UI.NCIInterpreterState := nItpState;
 
 (*UI to PLC*)
 bEnableAxes := UIData.stUI_TO_PLC.EnableAllAxis;
@@ -249,7 +251,13 @@ bXJogNegative := UIData.stUI_TO_PLC.XJogNegative;
 bYJogNegative := UIData.stUI_TO_PLC.YJogNegative;
 bZJogNegative := UIData.stUI_TO_PLC.ZJogNegative;
 rJogSpeed     := UIData.stUI_TO_PLC.JogSpeed;
-
+bGroupAxes 	  := UIData.stUI_TO_PLC.NCIAxisGroup;
+bUnGroupAxes  := UIData.stUI_TO_PLC.NCIAxisUnGroup;
+bResetInteperator := UIData.stUI_TO_PLC.NCIInteperatorReset;
+bRunPRogram 	  := UIData.stUI_TO_PLC.RunPartProgram;
+bStopProgram 	  := UIData.stUI_TO_PLC.StopPartProgram;
+fUserOverRide 	:= UIData.stUI_TO_PLC.NCIOverRidePer;
+sProgramName := UIData.stUI_TO_PLC.PartProgramName;
 ]]></ST>
       </Implementation>
     </Action>
