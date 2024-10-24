@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="FB_NCIChannelGrouping" Id="{078d2eb6-2087-4b42-a6c8-821068c89d2c}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_NCIChannelGrouping
+VAR_INPUT
+	bGroupChannel : BOOL;
+	bUnGroupChannel: BOOL;
+END_VAR
+VAR_IN_OUT
+	stX	: AXIS_REF;
+	stY	: AXIS_REF;
+	stZ	: AXIS_REF;
+	stItpToPlc : NCTOPLC_NCICHANNEL_REF;
+	stPlcToItp : PLCTONC_NCICHANNEL_REF;
+END_VAR
+VAR_OUTPUT
+	bBusy : BOOL;
+	bError : BOOL;
+	bDone : BOOL;
+	
+END_VAR
+VAR
+	nState: INT;
+	nErrorState: INT;
+	fbBuildNCIGroup: CfgBuild3DGroup;
+
+	fbDeGroupNCI: CfgReconfigGroup;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[CASE nState OF
+	0:
+		IF bGroupChannel AND NOT bDone THEN
+			bBusy := FALSE;
+			bError := FALSE;
+			bDone := FALSE;
+			nErrorState := nState;
+			nState := 10;
+		END_IF
+		IF bUnGroupChannel THEN
+			bBusy := FALSE;
+			bError := FALSE;
+			bDone := FALSE;
+			nErrorState := nState;
+			nState := 110;
+		END_IF
+	
+	10:
+	
+		fbBuildNCIGroup(
+			bExecute:= TRUE, 
+			nGroupId:= ItpGetGroupId(sNciToPlc:=stItpToPlc), 
+			nXAxisId:=stX.NcToPlc.AxisId, 
+			nYAxisId:=stY.NcToPlc.AxisId, 
+			nZAxisId:=stZ.NcToPlc.AxisId,
+			tTimeOut:= , 
+			bBusy=> , 
+			bErr=> , 
+			nErrId=> );
+		IF NOT fbBuildNCIGroup.bBusy THEN
+			IF NOT fbBuildNCIGroup.bErr THEN
+				nState	:= 20;
+			ELSE
+				(* add error handling *)
+				nErrorState	:= nState;
+				bBusy	:= FALSE;
+				bError	:= TRUE;
+				nState	:= 9000;
+			END_IF
+			fbBuildNCIGroup(bExecute:=FALSE); 
+		END_IF
+	20:
+		bDone := TRUE;
+		nState	:= 9000;
+	
+	110:
+	
+		fbDeGroupNCI(
+			bExecute:= TRUE , 
+			nGroupId:=ItpGetGroupId(sNciToPlc:=stItpToPlc), 
+			tTimeOut:= , 
+			bBusy=> , 
+			bErr=> , 
+			nErrId=> );
+		IF NOT fbDeGroupNCI.bBusy THEN
+			IF NOT fbDeGroupNCI.bErr THEN
+				nState := 120;
+			ELSE
+				(* ADD error handling *)
+				nErrorState	:= nState;
+				bBusy	:= FALSE;
+				bError	:= TRUE;
+				nState	:= 9500;
+			END_IF
+			fbDeGroupNCI(bExecute:=FALSE);
+		END_IF
+		
+	120:
+		bDone := FALSE;
+		nState	:= 9500;	
+	
+	9000:
+	// error state 
+	IF NOT bGroupChannel THEN
+		nState	:= 0;
+		bError	:= FALSE;
+	END_IF
+	
+	9500:
+	// error state 
+	IF NOT bUnGroupChannel THEN
+		nState	:= 0;
+		bError	:= FALSE;
+	END_IF
+	
+	
+END_CASE]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

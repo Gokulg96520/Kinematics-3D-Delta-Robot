@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="FB_MachineCodeHandling" Id="{4aa5c24a-ee39-426d-8837-f78d36cf019f}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_MachineCodeHandling
+VAR_INPUT
+	
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR_IN_OUT
+	 sNciToPlc      : NCTOPLC_NCICHANNEL_REF;
+	 sPlcToNci      : PLCTONC_NCICHANNEL_REF;
+END_VAR
+VAR
+	 bMFuncRequest: BOOL;
+	 nMCode: INT;
+	 bM100Requested: BOOL;
+	 bM100Done: BOOL;
+	 MCodeConfirm: ItpConfirmHsk;
+	 bModeConfirm: BOOL;
+	 bMCodeConfirmError: BOOL;
+	 nErrorID: UDINT;
+	 bResetMCodeConfirm: BOOL;
+	 nToolNumber: UINT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[(*
+Sample NC Program
+G00 X5 Y5                
+G01 X0 Y20 F200  
+M100 T5        M100 is Tool Change Code & T5 is the Tool Number
+G01 X20 Y0               
+M30          
+*)
+
+(* Check M-Code Present *)
+bMFuncRequest := ItpIsHskMFunc(sNciToPlc ); 
+
+(* Get M-Code Number *)
+IF bMFuncRequest THEN
+	nMCode := ItpGetHskMFunc(sNciToPlc);
+ELSE
+	nMCode := 0;
+END_IF
+
+(* Get Tool Number *)
+nToolNumber := ItpGetTParam(sNciToPlc);
+
+(* MCode M100 *)
+IF bMFuncRequest AND nMCode = 100 THEN
+	bM100Requested := TRUE; 
+END_IF
+//User Defined M Code Program
+IF bM100Requested THEN
+	//Your logic
+END_IF
+//User Defined M Code Confirm
+IF  bM100Done THEN
+	bM100Requested := FALSE; 
+	bModeConfirm := TRUE;
+	bM100Done := FALSE;
+END_IF
+
+//Confirm M-Code Common for all M-Code
+MCodeConfirm(
+		bExecute:=bModeConfirm AND NOT bMCodeConfirmError , 
+		sNciToPlc:=sNciToPlc, 
+		sPlcToNci:=sPlcToNci, 
+		bBusy=> , 
+		bErr=> , 
+		nErrId=> );
+
+IF bModeConfirm THEN
+	IF NOT MCodeConfirm.bBusy THEN
+		IF MCodeConfirm.bErr THEN
+			bMCodeConfirmError := TRUE;
+			nErrorID := MCodeConfirm.nErrId ;
+		ELSE
+			bModeConfirm := FALSE;
+		END_IF
+	END_IF
+END_IF
+
+IF bResetMCodeConfirm THEN
+	bResetMCodeConfirm := FALSE;
+	bMCodeConfirmError := FALSE;
+	nErrorID := 0 ;
+END_IF
+
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

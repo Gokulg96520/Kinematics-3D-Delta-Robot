@@ -45,7 +45,20 @@ VAR
 	(* Interpolation *)
 	in_stItpToPlc	AT %I*		: NCTOPLC_NCICHANNEL_REF;
 	out_stPlcToItp	AT %Q*		: PLCTONC_NCICHANNEL_REF;
-	
+	fUserOverRide: LREAL := 100.0;	
+	fbNCIChannelGrouping: FB_NCIChannelGrouping;
+	bGroupAxes: BOOL;
+	bUnGroupAxes: BOOL;
+	nItpState: UDINT;
+	bItpError: BOOL;
+	fbIntprReset : ItpResetEx2;
+	bResetInteperator: BOOL;
+	bNCIAxisGrouped: BOOL;
+	bNCIInteperatorError: BOOL;
+	fbLoadRunStop: FB_LoadFileRun;
+	bRunPRogram: BOOL;
+	bStopProgram: BOOL;
+	sProgramName: STRING(84):='testProgram.nc';
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -53,6 +66,7 @@ END_VAR
 AxisEnable();
 Kinematics();
 JogMCS();
+NCI();
 	
 	
 ]]></ST>
@@ -145,6 +159,57 @@ fbResetKinGroup(
 	nItpChannelId				:= in_stKinToPlc.ChnId, 
 	stKinRefIn					:= in_stKinToPlc, 
 	stAxesList					:= stAxesConfig);
+
+
+]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="NCI" Id="{6a955fd0-4f1a-4d83-9d56-fe86d51094c4}">
+      <Implementation>
+        <ST><![CDATA[(* Set OverRide % *)
+ItpSetOverridePercent(fOverridePercent := fUserOverRide,sPlcToNci:=out_stPlcToItp);
+
+(* Grouping Axis *)
+fbNCIChannelGrouping(
+	bGroupChannel:= bGroupAxes AND bKinematicsGroupReady AND bAllAxesReady AND NOT bAxisError AND NOT bItpError, 
+	bUnGroupChannel:= bUnGroupAxes, 
+	stX:=io_X, 
+	stY:=io_Y, 
+	stZ:=io_Z, 
+	stItpToPlc:=in_stItpToPlc, 
+	stPlcToItp:=out_stPlcToItp, 
+	bBusy=> , 
+	bError=> , 
+	bDone=>bNCIAxisGrouped);
+	
+(* Inteperator State *)
+nItpState := ItpGetStateInterpreter( in_stItpToPlc ); 
+
+(* Inteperator Error *)
+bNCIInteperatorError := bItpError := ItpHasError( in_stItpToPlc ); 
+
+(* Reset Inteperator *)
+fbIntprReset(
+	bExecute:=bResetInteperator, 
+	tTimeOut:= , 
+	sNciToPlc:=in_stItpToPlc, 
+	bBusy=> , 
+	bErr=> , 
+	nErrId=> );
+	
+(* Program Run & Stop NCI Program from File *)
+fbLoadRunStop(
+	bRun:=bRunPRogram,
+	bStop :=bStopProgram,
+	sPrgName:=sProgramName, 
+	stItpToPlc:=in_stItpToPlc, 
+	stPlcToItp:=out_stPlcToItp, 
+	bBusy=> , 
+	bDone=> , 
+	bError=> , 
+	nInterpreterState=> );
+	
+
 
 
 ]]></ST>

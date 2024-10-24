@@ -1,0 +1,181 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="FB_LoadFileRun" Id="{919bfd36-4e66-417d-9a71-3ad84a266a00}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_LoadFileRun
+VAR_INPUT
+	bRun: BOOL;
+	sPrgName : STRING(255);
+	bStop : BOOL;
+END_VAR
+VAR_IN_OUT
+	stItpToPlc			: NCTOPLC_NCICHANNEL_REF;
+	stPlcToItp			: PLCTONC_NCICHANNEL_REF;
+END_VAR
+VAR_OUTPUT
+	bBusy: BOOL;
+	bDone: BOOL;
+	bError: BOOL;
+	nInterpreterState	: UDINT	:= 0;
+END_VAR
+VAR
+	fbLoadGCode			: ItpLoadProgEx;
+	fbStartGCode		: ItpStartStopEx;
+	nState: INT;
+	nErrorState: INT;
+	stopRisingEdge : R_TRIG;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[stopRisingEdge(CLK:=bStop);
+IF stopRisingEdge.Q THEN
+	bBusy:= TRUE;
+	bDone:= FALSE;
+	nState := 80;
+END_IF
+
+CASE nState OF
+	0:
+		IF bRun AND NOT bStop THEN
+			bBusy	:= TRUE;
+			bDone	:= FALSE;
+			bError	:= FALSE;
+			nErrorState	:= nState;
+			nState	:= 20;
+		END_IF
+	
+	20:
+	// load g-code file 
+	// pls. ensure that first.nc is available in TwinCAT\MC\NCI-folder 
+	fbLoadGCode(
+		sNciToPlc:=stItpToPlc, 
+		bExecute:=TRUE, 
+		sPrg:= sPrgName, 
+		nLength:= INT_TO_UDINT(LEN(sPrgName)), 
+		tTimeOut:= , 
+		bBusy=> , 
+		bErr=> , 
+		nErrId=> );
+	IF NOT fbLoadGCode.bBusy THEN
+		IF NOT fbLoadGCode.bErr THEN
+			nState	:= 30;
+		ELSE
+			(* add error handling *)
+			nErrorState	:= nState;
+			bBusy	:= FALSE;
+			bError	:= TRUE;
+			nState	:= 9999;				
+		END_IF
+		fbLoadGCode(sNciToPlc:=stItpToPlc, bExecute:=FALSE); 
+	END_IF
+	
+	30:
+		// we have to check the status of the interpreter. It has to be in ready state, in case of loading the program successfully.
+		nInterpreterState	:= ItpGetStateInterpreter(sNciToPlc:=stItpToPlc);
+		IF nInterpreterState = Tc2_NCI.NCI_INTERPRETER_READY THEN
+			nState	:= 40;
+		ELSE
+			(* add error handling *)
+			nErrorState	:= nState;
+			bBusy	:= FALSE;
+			bError	:= TRUE;
+			nState	:= 9999;				
+		END_IF
+		
+	40:
+		// start g-code file
+		fbStartGCode(
+			bStart:=TRUE, 
+			bStop:=FALSE, 
+			tTimeOut:= , 
+			sNciToPlc:= stItpToPlc, 
+			bBusy=> , 
+			bErr=> , 
+			nErrId=> );
+		IF NOT fbStartGCode.bBusy THEN
+			IF NOT fbStartGCode.bErr THEN
+				nState	:= 50;
+			ELSE	
+				(* add error handling *)
+				nErrorState	:= nState;
+				bBusy	:= FALSE;
+				bError	:= TRUE;
+				nState	:= 9999;				
+			END_IF
+			fbStartGCode( bStop:=FALSE, sNciToPlc:= stItpToPlc ); 
+		END_IF
+		
+	50:
+		// check state, again - we are at least not in ready state for several ticks
+		// this is to ensure that we don't indicate program has finished, before we have started 
+		nInterpreterState	:= ItpGetStateInterpreter(sNciToPlc:=stItpToPlc);
+		IF nInterpreterState <> Tc2_NCI.NCI_INTERPRETER_READY THEN
+			// nci is running
+			nState	:= 60;
+		END_IF
+	
+	60:
+		nInterpreterState	:= ItpGetStateInterpreter(sNciToPlc:=stItpToPlc);
+		IF	nInterpreterState = Tc2_NCI.NCI_INTERPRETER_READY THEN
+			// program has finished
+			nState	:= 70;
+		ELSIF nInterpreterState = Tc2_NCI.NCI_INTERPRETER_ABORTED THEN
+			// a run-time error occured - this could be a lag error or something else... 
+			// add error handling
+			;
+		END_IF	
+	70:
+		bDone	:= TRUE;
+		bBusy	:= FALSE;
+		IF NOT bRun THEN
+			nState	:= 0;
+		END_IF
+	80:
+		fbLoadGCode(
+			sNciToPlc:=stItpToPlc, 
+			bExecute:=FALSE);
+		fbStartGCode(
+			bStart:=FALSE, 
+			bStop:=FALSE, 
+			tTimeOut:= , 
+			sNciToPlc:= stItpToPlc);
+		IF NOT fbLoadGCode.bBusy AND NOT fbStartGCode.bBusy THEN
+			nState := 90;
+		ELSE
+			nState := 9999;
+		END_IF
+	90:
+		// Stop g-code file
+		fbStartGCode(
+			bStart:=FALSE, 
+			bStop:=TRUE, 
+			tTimeOut:= , 
+			sNciToPlc:= stItpToPlc, 
+			bBusy=> , 
+			bErr=> , 
+			nErrId=> );
+		IF NOT fbStartGCode.bBusy THEN
+			IF NOT fbStartGCode.bErr THEN
+				nState	:= 0;
+			ELSE	
+				(* add error handling *)
+				nErrorState	:= nState;
+				bBusy	:= FALSE;
+				bError	:= TRUE;
+				nState	:= 9999;				
+			END_IF
+			fbStartGCode( bStop:=FALSE, sNciToPlc:= stItpToPlc );
+			bBusy := FALSE; 
+		END_IF
+	9999:
+		// error state 
+		IF NOT bRun THEN
+			nState	:= 0;
+			bError	:= FALSE;
+		END_IF
+END_CASE
+
+
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

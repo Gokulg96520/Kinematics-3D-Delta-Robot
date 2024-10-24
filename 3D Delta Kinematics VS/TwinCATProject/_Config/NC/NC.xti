@@ -23,5 +23,6 @@
 		<Axis File="M2_ACS.xti" Id="5"/>
 		<Axis File="M3_ACS.xti" Id="6"/>
 		<Channel File="KinematicChannel.xti"/>
+		<Channel File="NCIChannel.xti"/>
 	</NC>
 </TcSmItem>
