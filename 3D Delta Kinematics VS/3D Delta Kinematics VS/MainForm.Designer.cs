@@ -65,10 +65,17 @@ namespace _3D_Delta_Kinematics_VS
             this.btnXPos = new System.Windows.Forms.Button();
             this.btnXNeg = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.tbCtrl = new System.Windows.Forms.TabControl();
+            this.tbJog = new System.Windows.Forms.TabPage();
+            this.lblJogSpeed = new System.Windows.Forms.Label();
+            this.tbJogSpeed = new System.Windows.Forms.TextBox();
+            this.tbNCI = new System.Windows.Forms.TabPage();
             this.gbMCS.SuspendLayout();
             this.gbACS.SuspendLayout();
             this.gbJog.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.tbCtrl.SuspendLayout();
+            this.tbJog.SuspendLayout();
             this.SuspendLayout();
             // 
             // glControl
@@ -404,12 +411,12 @@ namespace _3D_Delta_Kinematics_VS
             this.gbJog.Controls.Add(this.pictureBox1);
             this.gbJog.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.gbJog.ForeColor = System.Drawing.Color.Black;
-            this.gbJog.Location = new System.Drawing.Point(14, 222);
+            this.gbJog.Location = new System.Drawing.Point(6, 38);
             this.gbJog.Name = "gbJog";
-            this.gbJog.Size = new System.Drawing.Size(225, 264);
+            this.gbJog.Size = new System.Drawing.Size(225, 249);
             this.gbJog.TabIndex = 6;
             this.gbJog.TabStop = false;
-            this.gbJog.Text = "Jog MCS";
+            this.gbJog.Text = "MCS - Cordinates";
             // 
             // btnZPos
             // 
@@ -418,7 +425,7 @@ namespace _3D_Delta_Kinematics_VS
             this.btnZPos.BackColor = System.Drawing.Color.Blue;
             this.btnZPos.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnZPos.ForeColor = System.Drawing.Color.White;
-            this.btnZPos.Location = new System.Drawing.Point(10, 87);
+            this.btnZPos.Location = new System.Drawing.Point(10, 86);
             this.btnZPos.Name = "btnZPos";
             this.btnZPos.Size = new System.Drawing.Size(37, 30);
             this.btnZPos.TabIndex = 39;
@@ -434,7 +441,7 @@ namespace _3D_Delta_Kinematics_VS
             this.btnZNeg.BackColor = System.Drawing.Color.Blue;
             this.btnZNeg.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnZNeg.ForeColor = System.Drawing.Color.White;
-            this.btnZNeg.Location = new System.Drawing.Point(10, 123);
+            this.btnZNeg.Location = new System.Drawing.Point(10, 122);
             this.btnZNeg.Name = "btnZNeg";
             this.btnZNeg.Size = new System.Drawing.Size(37, 30);
             this.btnZNeg.TabIndex = 38;
@@ -450,7 +457,7 @@ namespace _3D_Delta_Kinematics_VS
             this.btnYNeg.BackColor = System.Drawing.Color.DarkMagenta;
             this.btnYNeg.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnYNeg.ForeColor = System.Drawing.Color.White;
-            this.btnYNeg.Location = new System.Drawing.Point(61, 146);
+            this.btnYNeg.Location = new System.Drawing.Point(61, 145);
             this.btnYNeg.Name = "btnYNeg";
             this.btnYNeg.Size = new System.Drawing.Size(38, 30);
             this.btnYNeg.TabIndex = 37;
@@ -466,7 +473,7 @@ namespace _3D_Delta_Kinematics_VS
             this.btnYPos.BackColor = System.Drawing.Color.DarkMagenta;
             this.btnYPos.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnYPos.ForeColor = System.Drawing.Color.White;
-            this.btnYPos.Location = new System.Drawing.Point(120, 123);
+            this.btnYPos.Location = new System.Drawing.Point(120, 122);
             this.btnYPos.Name = "btnYPos";
             this.btnYPos.Size = new System.Drawing.Size(38, 30);
             this.btnYPos.TabIndex = 36;
@@ -482,7 +489,7 @@ namespace _3D_Delta_Kinematics_VS
             this.btnXPos.BackColor = System.Drawing.Color.Yellow;
             this.btnXPos.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnXPos.ForeColor = System.Drawing.Color.Black;
-            this.btnXPos.Location = new System.Drawing.Point(120, 198);
+            this.btnXPos.Location = new System.Drawing.Point(120, 197);
             this.btnXPos.Name = "btnXPos";
             this.btnXPos.Size = new System.Drawing.Size(38, 30);
             this.btnXPos.TabIndex = 35;
@@ -498,7 +505,7 @@ namespace _3D_Delta_Kinematics_VS
             this.btnXNeg.BackColor = System.Drawing.Color.Yellow;
             this.btnXNeg.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnXNeg.ForeColor = System.Drawing.Color.Black;
-            this.btnXNeg.Location = new System.Drawing.Point(61, 182);
+            this.btnXNeg.Location = new System.Drawing.Point(61, 181);
             this.btnXNeg.Name = "btnXNeg";
             this.btnXNeg.Size = new System.Drawing.Size(38, 30);
             this.btnXNeg.TabIndex = 34;
@@ -511,19 +518,72 @@ namespace _3D_Delta_Kinematics_VS
             // 
             this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.pictureBox1.Image = global::_3D_Delta_Kinematics_VS.Properties.Resources.CoOrdinate;
-            this.pictureBox1.Location = new System.Drawing.Point(18, 25);
+            this.pictureBox1.Location = new System.Drawing.Point(18, 24);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(188, 215);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 20;
             this.pictureBox1.TabStop = false;
             // 
+            // tbCtrl
+            // 
+            this.tbCtrl.Controls.Add(this.tbJog);
+            this.tbCtrl.Controls.Add(this.tbNCI);
+            this.tbCtrl.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbCtrl.Location = new System.Drawing.Point(5, 170);
+            this.tbCtrl.Name = "tbCtrl";
+            this.tbCtrl.SelectedIndex = 0;
+            this.tbCtrl.Size = new System.Drawing.Size(246, 323);
+            this.tbCtrl.TabIndex = 13;
+            // 
+            // tbJog
+            // 
+            this.tbJog.BackColor = System.Drawing.SystemColors.Control;
+            this.tbJog.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tbJog.Controls.Add(this.tbJogSpeed);
+            this.tbJog.Controls.Add(this.lblJogSpeed);
+            this.tbJog.Controls.Add(this.gbJog);
+            this.tbJog.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbJog.Location = new System.Drawing.Point(4, 27);
+            this.tbJog.Name = "tbJog";
+            this.tbJog.Padding = new System.Windows.Forms.Padding(3);
+            this.tbJog.Size = new System.Drawing.Size(238, 292);
+            this.tbJog.TabIndex = 0;
+            this.tbJog.Text = "  Jog";
+            // 
+            // lblJogSpeed
+            // 
+            this.lblJogSpeed.AutoSize = true;
+            this.lblJogSpeed.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblJogSpeed.Location = new System.Drawing.Point(17, 10);
+            this.lblJogSpeed.Name = "lblJogSpeed";
+            this.lblJogSpeed.Size = new System.Drawing.Size(50, 18);
+            this.lblJogSpeed.TabIndex = 7;
+            this.lblJogSpeed.Text = "Speed";
+            // 
+            // tbJogSpeed
+            // 
+            this.tbJogSpeed.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbJogSpeed.Location = new System.Drawing.Point(71, 7);
+            this.tbJogSpeed.Name = "tbJogSpeed";
+            this.tbJogSpeed.Size = new System.Drawing.Size(145, 24);
+            this.tbJogSpeed.TabIndex = 8;
+            // 
+            // tbNCI
+            // 
+            this.tbNCI.BackColor = System.Drawing.SystemColors.Control;
+            this.tbNCI.Location = new System.Drawing.Point(4, 27);
+            this.tbNCI.Name = "tbNCI";
+            this.tbNCI.Size = new System.Drawing.Size(238, 292);
+            this.tbNCI.TabIndex = 1;
+            this.tbNCI.Text = "  NCI";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 494);
-            this.Controls.Add(this.gbJog);
+            this.Controls.Add(this.tbCtrl);
             this.Controls.Add(this.btnResetKinGroup);
             this.Controls.Add(this.btnResetAxis);
             this.Controls.Add(this.btnConfKinGroup);
@@ -549,6 +609,9 @@ namespace _3D_Delta_Kinematics_VS
             this.gbJog.ResumeLayout(false);
             this.gbJog.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.tbCtrl.ResumeLayout(false);
+            this.tbJog.ResumeLayout(false);
+            this.tbJog.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -592,6 +655,11 @@ namespace _3D_Delta_Kinematics_VS
         private System.Windows.Forms.Button btnXPos;
         private System.Windows.Forms.Button btnXNeg;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.TabControl tbCtrl;
+        private System.Windows.Forms.TabPage tbJog;
+        private System.Windows.Forms.Label lblJogSpeed;
+        private System.Windows.Forms.TextBox tbJogSpeed;
+        private System.Windows.Forms.TabPage tbNCI;
     }
 }
 
