@@ -13,25 +13,25 @@ namespace _3D_Delta_Kinematics_VS
         public class InputStructure
         {
             [MarshalAs(UnmanagedType.R4)]
-            public float X_MCSPos;
+            public float X_MCSPos = 0.0f;
             [MarshalAs(UnmanagedType.R4)]
-            public float Y_MCSPos;
+            public float Y_MCSPos = 0.0f;
             [MarshalAs(UnmanagedType.R4)]
-            public float Z_MCSPos;
+            public float Z_MCSPos = 0.0f;
             [MarshalAs(UnmanagedType.R4)]
-            public float M1_ACSPos;
+            public float M1_ACSPos = 0.0f;
             [MarshalAs(UnmanagedType.R4)]
-            public float M2_ACSPos;
+            public float M2_ACSPos = 0.0f;
             [MarshalAs(UnmanagedType.R4)]
-            public float M3_ACSPos;
+            public float M3_ACSPos = 0.0f;
             [MarshalAs(UnmanagedType.I1)]
-            public Boolean AllAxisEnabled;
+            public Boolean AllAxisEnabled = false;
             [MarshalAs(UnmanagedType.I1)]
-            public Boolean AxisError;
+            public Boolean AxisError = false;
             [MarshalAs(UnmanagedType.I1)]
-            public Boolean KinematicGroupError;
+            public Boolean KinematicGroupError = false;
             [MarshalAs(UnmanagedType.I1)]
-            public Boolean KinematicGroupingReady;
+            public Boolean KinematicGroupingReady = false;
 
         }
 
@@ -39,27 +39,27 @@ namespace _3D_Delta_Kinematics_VS
         public class OutputStructure
         {
             [MarshalAs(UnmanagedType.I1)]
-            public bool EnableAllAxis;
+            public bool EnableAllAxis = false;
             [MarshalAs(UnmanagedType.I1)]
-            public bool ResetAllAxis;
+            public bool ResetAllAxis = false;
             [MarshalAs(UnmanagedType.I1)]
-            public bool ConfigKinematicGroup;
+            public bool ConfigKinematicGroup = false;
             [MarshalAs(UnmanagedType.I1)]
-            public bool ResetKinematicGroup;
+            public bool ResetKinematicGroup = false;
             [MarshalAs(UnmanagedType.I1)]
-            public bool XJogPositive;
+            public bool XJogPositive = false;
             [MarshalAs(UnmanagedType.I1)]
-            public bool YJogPositive;
+            public bool YJogPositive = false;
             [MarshalAs(UnmanagedType.I1)]
-            public bool ZJogPositive;
+            public bool ZJogPositive = false;
             [MarshalAs(UnmanagedType.I1)]
-            public bool XJogNegative;
+            public bool XJogNegative = false;
             [MarshalAs(UnmanagedType.I1)]
-            public bool YJogNegative;
+            public bool YJogNegative = false;
             [MarshalAs(UnmanagedType.I1)]
-            public bool ZJogNegative;
+            public bool ZJogNegative = false;
             [MarshalAs(UnmanagedType.R4)]
-            public float JogSpeed;
+            public float JogSpeed = 0.0f;
         }
 
     }
