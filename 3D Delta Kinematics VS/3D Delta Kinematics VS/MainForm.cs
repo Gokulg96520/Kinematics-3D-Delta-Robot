@@ -312,6 +312,24 @@ namespace _3D_Delta_Kinematics_VS
         }
         #endregion
 
+        #region Jog Speed
+
+        private void tbJogSpeed_TextChanged(object sender, EventArgs e)
+        {
+            float.TryParse(tbJogSpeed.Text, out float speed);
+            if ((speed >= 0 && speed <= 100))
+            {
+                UIToPLCStructure.JogSpeed = speed;
+            }
+            else
+            {
+                UIToPLCStructure.JogSpeed = 10.0f;
+                tbJogSpeed.Text = "10.0";
+            }
+        }
+
+        #endregion
+
         #endregion
 
         #region OpenGL GL Control & Render 
@@ -550,18 +568,5 @@ namespace _3D_Delta_Kinematics_VS
 
         #endregion
 
-        private void tbJogSpeed_TextChanged(object sender, EventArgs e)
-        {
-        float.TryParse(tbJogSpeed.Text, out float speed);
-            if ((speed >= 0 && speed <= 100))
-            {
-                UIToPLCStructure.JogSpeed = speed;
-            }
-            else
-            {
-                UIToPLCStructure.JogSpeed = 10.0f;
-                tbJogSpeed.Text = "10.0";
-            }
-        }
     }
 }
