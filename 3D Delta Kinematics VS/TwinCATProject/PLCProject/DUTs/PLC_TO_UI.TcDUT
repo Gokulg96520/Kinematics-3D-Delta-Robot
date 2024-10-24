@@ -13,6 +13,9 @@ STRUCT
 	AxisError : BOOL;
 	KinematicGroupError : BOOL;	
 	KinematicGroupingReady : BOOL;
+	NCIAxisGrouped : BOOL;
+	NCIAXisError : BOOL;
+	NCIInterpreterState : UDINT;
 END_STRUCT
 END_TYPE
 ]]></Declaration>

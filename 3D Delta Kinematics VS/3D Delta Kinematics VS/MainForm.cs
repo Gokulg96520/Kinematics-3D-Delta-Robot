@@ -355,6 +355,8 @@ namespace _3D_Delta_Kinematics_VS
 
         #endregion
 
+        #endregion
+
         #region OpenGL GL Control & Render 
 
         #region GLControl Initialize, Load, Paint & Resize

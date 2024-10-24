@@ -25,13 +25,19 @@ namespace _3D_Delta_Kinematics_VS
             [MarshalAs(UnmanagedType.R4)]
             public float M3_ACSPos = 0.0f;
             [MarshalAs(UnmanagedType.I1)]
-            public Boolean AllAxisEnabled = false;
+            public bool AllAxisEnabled = false;
             [MarshalAs(UnmanagedType.I1)]
-            public Boolean AxisError = false;
+            public bool AxisError = false;
             [MarshalAs(UnmanagedType.I1)]
-            public Boolean KinematicGroupError = false;
+            public bool KinematicGroupError = false;
             [MarshalAs(UnmanagedType.I1)]
-            public Boolean KinematicGroupingReady = false;
+            public bool KinematicGroupingReady = false;
+            [MarshalAs(UnmanagedType.I1)]
+            public bool NCIAxisGrouped = false;
+            [MarshalAs(UnmanagedType.I1)]
+            public bool NCIAXisError = false;
+            [MarshalAs(UnmanagedType.U4)]
+            public Int32 NCIInterpreterState = 0;
 
         }
 
@@ -60,6 +66,18 @@ namespace _3D_Delta_Kinematics_VS
             public bool ZJogNegative = false;
             [MarshalAs(UnmanagedType.R4)]
             public float JogSpeed = 0.0f;
+            [MarshalAs(UnmanagedType.I1)]
+            public bool NCIAxisGroup  = false;
+            [MarshalAs(UnmanagedType.I1)]
+            public bool NCIAxisUnGroup = false;
+            [MarshalAs(UnmanagedType.I1)]
+            public bool NCIInteperatorReset  = false;
+            [MarshalAs(UnmanagedType.I1)]
+            public bool RunPartProgram  = false;
+            [MarshalAs(UnmanagedType.I1)]
+            public bool StopPartProgram  = false;
+            [MarshalAs(UnmanagedType.R4)]
+            public float NCIOverRidePer  = 0.0f;
         }
 
     }
