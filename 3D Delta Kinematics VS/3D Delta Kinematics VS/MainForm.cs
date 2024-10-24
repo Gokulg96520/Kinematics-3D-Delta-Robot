@@ -197,6 +197,62 @@ namespace _3D_Delta_Kinematics_VS
 
         #region UI Event
 
+        #region Axis Enable & reset
+
+        //Enable Axis
+        private void btnEnableAxis_Click(object sender, EventArgs e)
+        {
+            if (UIToPLCStructure.EnableAllAxis == false)
+            {
+                UIToPLCStructure.EnableAllAxis = true;
+            }
+            else
+            {
+                UIToPLCStructure.EnableAllAxis = false;
+            }
+        }
+
+        //Reset Axis
+        private void btnResetAxis_MouseDown(object sender, MouseEventArgs e)
+        {
+            UIToPLCStructure.ResetAllAxis = true;
+        }
+
+        private void btnResetAxis_MouseUp(object sender, MouseEventArgs e)
+        {
+            UIToPLCStructure.ResetAllAxis = false;
+        }
+
+        #endregion
+
+        #region Kinematics Group & reset
+
+        //Configure Kinematics Group
+        private void btnConfKinGroup_MouseDown(object sender, MouseEventArgs e)
+        {
+            UIToPLCStructure.ConfigKinematicGroup = true;
+        }
+
+        private void btnConfKinGroup_MouseUp(object sender, MouseEventArgs e)
+        {
+            UIToPLCStructure.ConfigKinematicGroup = false;
+        }
+
+        //Reset Kinematics Group
+        private void btnResetKinGroup_MouseDown(object sender, MouseEventArgs e)
+        {
+            UIToPLCStructure.ResetKinematicGroup = true;
+        }
+        private void btnResetKinGroup_MouseUp(object sender, MouseEventArgs e)
+        {
+            UIToPLCStructure.ResetKinematicGroup = false;
+        }
+        #endregion
+
+        #region Tab Control Events
+
+        #region Jog Tab 
+
         #region XYZ Jog Mouse Down & Up Event Handler
 
         private void btnZPos_MouseDown(object sender, MouseEventArgs e)
@@ -260,58 +316,6 @@ namespace _3D_Delta_Kinematics_VS
         }
         #endregion
 
-        #region Axis Enable & reset
-
-        //Enable Axis
-        private void btnEnableAxis_Click(object sender, EventArgs e)
-        {
-            if (UIToPLCStructure.EnableAllAxis == false)
-            {
-                UIToPLCStructure.EnableAllAxis = true;
-            }
-            else
-            {
-                UIToPLCStructure.EnableAllAxis = false;
-            }
-        }
-
-        //Reset Axis
-        private void btnResetAxis_MouseDown(object sender, MouseEventArgs e)
-        {
-            UIToPLCStructure.ResetAllAxis = true;
-        }
-
-        private void btnResetAxis_MouseUp(object sender, MouseEventArgs e)
-        {
-            UIToPLCStructure.ResetAllAxis = false;
-        }
-
-        #endregion
-
-        #region Kinematics Group & reset
-
-        //Configure Kinematics Group
-        private void btnConfKinGroup_MouseDown(object sender, MouseEventArgs e)
-        {
-            UIToPLCStructure.ConfigKinematicGroup = true;
-        }
-
-        private void btnConfKinGroup_MouseUp(object sender, MouseEventArgs e)
-        {
-            UIToPLCStructure.ConfigKinematicGroup = false;
-        }
-
-        //Reset Kinematics Group
-        private void btnResetKinGroup_MouseDown(object sender, MouseEventArgs e)
-        {
-            UIToPLCStructure.ResetKinematicGroup = true;
-        }
-        private void btnResetKinGroup_MouseUp(object sender, MouseEventArgs e)
-        {
-            UIToPLCStructure.ResetKinematicGroup = false;
-        }
-        #endregion
-
         #region Jog Speed
 
         private void tbJogSpeed_KeyPress(object sender, System.Windows.Forms.KeyPressEventArgs e)
@@ -333,10 +337,19 @@ namespace _3D_Delta_Kinematics_VS
                 btnZPos.Focus();
 
                 // Prevent the ding sound on Enter key press
-                e.Handled = true; 
+                e.Handled = true;
 
             }
         }
+
+        #endregion
+
+        #endregion
+
+        #region NCI Tab
+
+
+
 
         #endregion
 
