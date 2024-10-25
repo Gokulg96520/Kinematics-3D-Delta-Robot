@@ -101,7 +101,7 @@ CASE nState OF
 				bError	:= TRUE;
 				nState	:= 9999;				
 			END_IF
-			fbStartGCode( bStop:=FALSE, sNciToPlc:= stItpToPlc ); 
+			fbStartGCode( bStart:=FALSE, sNciToPlc:= stItpToPlc ); 
 		END_IF
 		
 	50:
