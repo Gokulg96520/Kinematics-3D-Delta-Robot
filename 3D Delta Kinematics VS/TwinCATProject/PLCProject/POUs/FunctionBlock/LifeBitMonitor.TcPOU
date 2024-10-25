@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="LifeBitMonitor" Id="{f500135f-b75c-499a-9cb6-c5b966419c7d}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK LifeBitMonitor
+VAR
+	_EnableMonitoring : BOOL;
+	_MonitoringTime : TIME;
+	_LifeBitLostCount  : INT;
+END_VAR
+
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Property Name="LostCount" Id="{8568611d-9518-46d8-ab21-842ead2ded60}">
+      <Declaration><![CDATA[PROPERTY LostCount : INT]]></Declaration>
+      <Set Name="Set" Id="{4b2c5fa5-f694-4e84-ab69-41c9c679230d}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_LifeBitLostCount := LostCount;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="MonitoringTime" Id="{28c6ddf9-cc46-45b5-b077-f42d2edf2414}">
+      <Declaration><![CDATA[PROPERTY MonitoringTime : TIME]]></Declaration>
+      <Set Name="Set" Id="{254e1e14-864b-4317-815e-4c0d84d2b405}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_MonitoringTime := MonitoringTime; ]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Method Name="StartMonitor" Id="{8b8a07d8-7f2f-4dce-b131-13df6f100db8}">
+      <Declaration><![CDATA[METHOD StartMonitor : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_EnableMonitoring := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Status" Id="{1769495c-8957-48d6-abbe-1d51a5d9a5e4}">
+      <Declaration><![CDATA[METHOD Status : BOOL
+VAR_INPUT
+	LifeBit : BOOL;
+END_VAR
+VAR_INST
+    LifeBitTimer  : TON;
+	LifeBitLast : BOOL;
+	MissedCount : INT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF _EnableMonitoring THEN
+	(* Reset Timer on LifeBit Toggle *)
+	IF LifeBit AND NOT LifeBitLast THEN
+		 LifeBitTimer(IN := FALSE);
+		 MissedCount := 0;
+	END_IF
+	
+	(* Store the last state of LifeBit *)
+	LifeBitLast := LifeBit;
+	
+	(* Start the Timer *)
+	LifeBitTimer(IN := TRUE, PT := _MonitoringTime);
+	
+	(* Check for timeout and increment the missed count if the timer expires *)
+	IF LifeBitTimer.Q THEN
+	   MissedCount := MissedCount + 1;  (* Increment missed count for each timeout *)
+	END_IF;
+	
+	(* Update Communication Status *)
+	IF MissedCount >= _LifeBitLostCount THEN
+		Status := FALSE;            (* Communication failed after missing life bits *)
+	ELSE
+		Status := TRUE;             (* Communication is OK *)
+	END_IF;
+ELSE
+	MissedCount := 0;               (* Reset missed count when monitoring is off *)
+    LifeBitTimer(IN := FALSE);      (* Ensure timer is off when monitoring is off *)
+	Status := FALSE;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="StopMonitor" Id="{fb4e3cae-ff36-4f5a-8b44-c87d39b8243b}">
+      <Declaration><![CDATA[METHOD StopMonitor : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_EnableMonitoring := FALSE;]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

@@ -3,6 +3,8 @@
   <DUT Name="UI_TO_PLC" Id="{8453b5d1-510b-416e-86be-55838aea0f30}">
     <Declaration><![CDATA[TYPE UI_TO_PLC :
 STRUCT
+	EnableMonitoring : BOOL;
+	LifeBit : BOOL;
 	EnableAllAxis : BOOL;
 	ResetAllAxis : BOOL;
 	ConfigKinematicGroup :BOOL;

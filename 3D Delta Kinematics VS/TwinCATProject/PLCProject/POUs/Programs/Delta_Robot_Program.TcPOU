@@ -60,6 +60,12 @@ VAR
 	bStopProgram: BOOL;
 	sProgramName: STRING(80):='testProgram.nc';
 	bNCIProgramNotRunning: BOOL;
+	
+	(* UI Life Bit Monitoring *)
+	fbLifeBitMonitor: LifeBitMonitor;
+	lifeBitStatus: BOOL;
+	exception : __SYSTEM.ExceptionCode;
+	bTest: bool;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -225,7 +231,44 @@ END_IF
     </Action>
     <Action Name="UI" Id="{62a58446-a97c-4afd-920b-3f96fac39f08}">
       <Implementation>
-        <ST><![CDATA[(*PLC to UI*)
+        <ST><![CDATA[(* Life Bit Monitoring *)
+IF UIData.stUI_TO_PLC.EnableMonitoring THEN
+	fbLifeBitMonitor.MonitoringTime := T#200MS;
+	fbLifeBitMonitor.LostCount := 1;
+	fbLifeBitMonitor.StartMonitor();
+ELSE
+	fbLifeBitMonitor.StopMonitor();
+END_IF
+
+lifeBitStatus := fbLifeBitMonitor.Status(LifeBit:=UIData.stUI_TO_PLC.LifeBit AND bTest);
+
+IF NOT lifeBitStatus THEN
+	(* For __TRY __CATCH Supported Platform *)
+	(*
+	__TRY
+		MEMSET(destAddr:=ADR(UIData.stUI_TO_PLC.LifeBit),
+		   	   fillByte:=16#0,
+		   	   n:=SIZEOF(UIData.stUI_TO_PLC)-1); //SIZE - 1 is Enable Monitoring Bit size deleted
+	__CATCH(exception)
+			//In case of Error 
+	__ENDTRY 
+	*)	
+	UIData.stUI_TO_PLC.LifeBit := 0;
+	UIData.stUI_TO_PLC.EnableAllAxis:= UIData.stUI_TO_PLC.ResetAllAxis:= 0;
+	UIData.stUI_TO_PLC.ConfigKinematicGroup:= UIData.stUI_TO_PLC.ResetKinematicGroup := 0;
+	UIData.stUI_TO_PLC.XJogPositive := UIData.stUI_TO_PLC.YJogPositive := 0;
+	UIData.stUI_TO_PLC.ZJogPositive := UIData.stUI_TO_PLC.XJogNegative := 0;
+	UIData.stUI_TO_PLC.YJogNegative := UIData.stUI_TO_PLC.ZJogNegative:= 0;
+	UIData.stUI_TO_PLC.JogSpeed := 0;
+	UIData.stUI_TO_PLC.NCIAxisGroup:= 0;
+	UIData.stUI_TO_PLC.NCIAxisUnGroup := UIData.stUI_TO_PLC.NCIInteperatorReset:= 0;
+	UIData.stUI_TO_PLC.RunPartProgram := UIData.stUI_TO_PLC.StopPartProgram:= 0;
+	UIData.stUI_TO_PLC.NCIOverRidePer := 0;
+	UIData.stUI_TO_PLC.PartProgramName:= '';
+	
+END_IF
+
+(*PLC to UI*)
 
 //Position Data
 UIData.stPLC_TO_UI.X_MCSPos := io_X.NcToPlc.ActPos;
@@ -266,6 +309,8 @@ bRunPRogram 	  := UIData.stUI_TO_PLC.RunPartProgram;
 bStopProgram 	  := UIData.stUI_TO_PLC.StopPartProgram;
 fUserOverRide 	:= UIData.stUI_TO_PLC.NCIOverRidePer;
 sProgramName := UIData.stUI_TO_PLC.PartProgramName;
+
+
 ]]></ST>
       </Implementation>
     </Action>

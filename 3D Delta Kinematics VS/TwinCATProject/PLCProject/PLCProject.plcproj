@@ -34,6 +34,9 @@
     <Compile Include="POUs\FunctionBlock\FB_EnableAxes.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\FunctionBlock\LifeBitMonitor.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="POUs\FunctionBlock\FB_LoadFileRun.TcPOU">
       <SubType>Code</SubType>
     </Compile>
