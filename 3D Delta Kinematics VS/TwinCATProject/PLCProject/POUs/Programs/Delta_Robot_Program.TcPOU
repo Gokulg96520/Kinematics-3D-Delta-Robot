@@ -233,7 +233,7 @@ END_IF
       <Implementation>
         <ST><![CDATA[(* Life Bit Monitoring *)
 IF UIData.stUI_TO_PLC.EnableMonitoring THEN
-	fbLifeBitMonitor.MonitoringTime := T#600MS;
+	fbLifeBitMonitor.MonitoringTime := T#800MS;
 	fbLifeBitMonitor.StartMonitor();
 ELSE
 	fbLifeBitMonitor.StopMonitor();
