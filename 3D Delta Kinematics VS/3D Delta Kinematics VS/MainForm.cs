@@ -262,6 +262,10 @@ namespace _3D_Delta_Kinematics_VS
                     break;
             }
 
+            //Part Program Line
+            tbPartPrgLine1.Text = PLCToUIStructure.PartProgramLine1;
+            tbPartPrgLine2.Text = PLCToUIStructure.PartProgramLine2;
+            tbPartPrgLine3.Text = PLCToUIStructure.PartProgramLine3;
 
             //3D Delta Robot XYZ Update
             MovePlatePos.x = PLCToUIStructure.X_MCSPos;
