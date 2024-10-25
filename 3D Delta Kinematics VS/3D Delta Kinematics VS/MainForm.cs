@@ -157,7 +157,7 @@ namespace _3D_Delta_Kinematics_VS
         //Disconnect TcAds & Reset Communication Data to Default Value
         public void DisconnectTcAds()
         {
-            if (tcClient != null)
+            if (tcClient != null && tcClient.IsConnected)
             {
                 if (timerCtrl != null)
                 {
@@ -167,11 +167,7 @@ namespace _3D_Delta_Kinematics_VS
 
                 //Reset Communication Data to Default Value
                 UIToPLCStructure.EnableMonitoring = false;
-                if (tcClient.IsConnected)
-                {
-                    tcClient.WriteAny(hUIToPLCStructure, UIToPLCStructure);
-                }
-
+                tcClient.WriteAny(hUIToPLCStructure, UIToPLCStructure);
 
                 try
                 {
@@ -803,7 +799,7 @@ namespace _3D_Delta_Kinematics_VS
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             // Show confirmation dialog
-            if (tcClient != null)
+            if (tcClient != null && tcClient.IsConnected)
             {
                 var result = MessageBox.Show("Are you sure you want to exit TcAds Communication will be Disconnected",
                              "Confirm Exit",
