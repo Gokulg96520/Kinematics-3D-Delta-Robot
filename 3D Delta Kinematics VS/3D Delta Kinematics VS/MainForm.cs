@@ -47,8 +47,6 @@ namespace _3D_Delta_Kinematics_VS
             
         }
 
-
-
         #region TwinCAT ADS Communication
 
         //Initalize UI to TcAds Communication Data
@@ -91,6 +89,17 @@ namespace _3D_Delta_Kinematics_VS
                 //create Handle Once Connected
                 hPLCToUIStructure = tcClient.CreateVariableHandle("UIData.stPLC_TO_UI");
                 hUIToPLCStructure = tcClient.CreateVariableHandle("UIData.stUI_TO_PLC");
+
+                //Set LifeBit Monitoring to True
+                UIToPLCStructure.EnableMonitoring = true;
+                try
+                {
+                    tcClient.WriteAny(hUIToPLCStructure, UIToPLCStructure);
+                }
+                catch (Exception err)
+                {
+                    MessageBox.Show(err.Message);
+                }
 
                 //Start Timer
                 timerCtrl = new Timer();
@@ -137,17 +146,27 @@ namespace _3D_Delta_Kinematics_VS
                 MessageBox.Show(err.Message);
             }
 
-
         }
 
         // Event Hanlder for Ads Connect
         private void btnDisconnect_Click(object sender, EventArgs e)
         {
+            DisconnectTcAds();
+        }
+
+        //Disconnect TcAds & Reset Communication Data to Default Value
+        public void DisconnectTcAds()
+        {
+
             if (timerCtrl != null)
             {
                 timerCtrl.Stop();
                 timerCtrl.Dispose();
             }
+
+            //Reset Communication Data to Default Value
+            UIToPLCStructure.EnableMonitoring = false;
+            tcClient.WriteAny(hUIToPLCStructure, UIToPLCStructure);
 
             try
             {
@@ -166,6 +185,7 @@ namespace _3D_Delta_Kinematics_VS
                 btnConnect.BackColor = Color.Red;
                 MessageBox.Show(err.Message);
             }
+
         }
 
         #endregion
