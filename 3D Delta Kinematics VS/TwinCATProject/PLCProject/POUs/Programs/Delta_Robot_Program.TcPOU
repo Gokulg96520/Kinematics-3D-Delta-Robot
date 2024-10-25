@@ -232,9 +232,8 @@ END_IF
     <Action Name="UI" Id="{62a58446-a97c-4afd-920b-3f96fac39f08}">
       <Implementation>
         <ST><![CDATA[(* Life Bit Monitoring *)
-IF UIData.stUI_TO_PLC.EnableMonitoring THEN
-	fbLifeBitMonitor.MonitoringTime := T#200MS;
-	fbLifeBitMonitor.LostCount := 1;
+IF UIData.stUI_TO_PLC.EnableMonitoring OR bTest THEN
+	fbLifeBitMonitor.MonitoringTime := T#500MS;
 	fbLifeBitMonitor.StartMonitor();
 ELSE
 	fbLifeBitMonitor.StopMonitor();
@@ -253,7 +252,7 @@ IF NOT lifeBitStatus THEN
 			//In case of Error 
 	__ENDTRY 
 	*)	
-	UIData.stUI_TO_PLC.LifeBit := 0;
+	UIData.stUI_TO_PLC.EnableMonitoring := UIData.stUI_TO_PLC.LifeBit := 0;
 	UIData.stUI_TO_PLC.EnableAllAxis:= UIData.stUI_TO_PLC.ResetAllAxis:= 0;
 	UIData.stUI_TO_PLC.ConfigKinematicGroup:= UIData.stUI_TO_PLC.ResetKinematicGroup := 0;
 	UIData.stUI_TO_PLC.XJogPositive := UIData.stUI_TO_PLC.YJogPositive := 0;

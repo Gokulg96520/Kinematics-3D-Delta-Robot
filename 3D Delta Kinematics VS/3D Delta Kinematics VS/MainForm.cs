@@ -111,7 +111,16 @@ namespace _3D_Delta_Kinematics_VS
 
             try
             {
-         
+                //Life Bit Toggle
+                if (UIToPLCStructure.LifeBit == false)
+                {
+                    UIToPLCStructure.LifeBit = true;
+                }
+                else
+                {
+                    UIToPLCStructure.LifeBit = false;
+                }
+
                 PLCToUIStructure = (PLCStructure.InputStructure)tcClient.ReadAny(hPLCToUIStructure, typeof(PLCStructure.InputStructure));
                 tcClient.WriteAny(hUIToPLCStructure, UIToPLCStructure);
                 UpdateUI();

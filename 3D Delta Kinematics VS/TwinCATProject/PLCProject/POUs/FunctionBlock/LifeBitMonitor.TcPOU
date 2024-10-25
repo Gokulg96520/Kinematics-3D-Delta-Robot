@@ -12,17 +12,6 @@ END_VAR
     <Implementation>
       <ST><![CDATA[]]></ST>
     </Implementation>
-    <Property Name="LostCount" Id="{8568611d-9518-46d8-ab21-842ead2ded60}">
-      <Declaration><![CDATA[PROPERTY LostCount : INT]]></Declaration>
-      <Set Name="Set" Id="{4b2c5fa5-f694-4e84-ab69-41c9c679230d}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[_LifeBitLostCount := LostCount;]]></ST>
-        </Implementation>
-      </Set>
-    </Property>
     <Property Name="MonitoringTime" Id="{28c6ddf9-cc46-45b5-b077-f42d2edf2414}">
       <Declaration><![CDATA[PROPERTY MonitoringTime : TIME]]></Declaration>
       <Set Name="Set" Id="{254e1e14-864b-4317-815e-4c0d84d2b405}">
@@ -49,7 +38,6 @@ END_VAR
 VAR_INST
     LifeBitTimer  : TON;
 	LifeBitLast : BOOL;
-	MissedCount : INT;
 END_VAR
 ]]></Declaration>
       <Implementation>
@@ -57,7 +45,6 @@ END_VAR
 	(* Reset Timer on LifeBit Toggle *)
 	IF LifeBit AND NOT LifeBitLast THEN
 		 LifeBitTimer(IN := FALSE);
-		 MissedCount := 0;
 	END_IF
 	
 	(* Store the last state of LifeBit *)
@@ -66,19 +53,13 @@ END_VAR
 	(* Start the Timer *)
 	LifeBitTimer(IN := TRUE, PT := _MonitoringTime);
 	
-	(* Check for timeout and increment the missed count if the timer expires *)
-	IF LifeBitTimer.Q THEN
-	   MissedCount := MissedCount + 1;  (* Increment missed count for each timeout *)
-	END_IF;
-	
 	(* Update Communication Status *)
-	IF MissedCount >= _LifeBitLostCount THEN
-		Status := FALSE;            (* Communication failed after missing life bits *)
+	IF LifeBitTimer.Q THEN
+		Status := FALSE;            (* Communication failed *)
 	ELSE
 		Status := TRUE;             (* Communication is OK *)
 	END_IF;
 ELSE
-	MissedCount := 0;               (* Reset missed count when monitoring is off *)
     LifeBitTimer(IN := FALSE);      (* Ensure timer is off when monitoring is off *)
 	Status := FALSE;
 END_IF]]></ST>
