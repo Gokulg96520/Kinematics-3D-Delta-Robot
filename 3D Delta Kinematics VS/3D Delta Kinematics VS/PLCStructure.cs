@@ -38,6 +38,12 @@ namespace _3D_Delta_Kinematics_VS
             public bool NCIAXisError = false;
             [MarshalAs(UnmanagedType.U4)]
             public Int32 NCIInterpreterState = 0;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 81)]
+            public string PartProgramLine1 = "";
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 81)]
+            public string PartProgramLine2 = "";
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 81)]
+            public string PartProgramLine3 = "";
 
         }
 

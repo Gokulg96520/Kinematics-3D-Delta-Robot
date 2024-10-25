@@ -60,12 +60,22 @@ VAR
 	bStopProgram: BOOL;
 	sProgramName: STRING(80):='testProgram.nc';
 	bNCIProgramNotRunning: BOOL;
+		pulseTimer: TON;
+	fbAdsRead : ADSREAD;
+	sRunningPrg : STRING(500);
+	delimiter   : STRING := '$R$N';   
+    line1       : STRING(80);        
+    line2       : STRING(80);           
+    line3       : STRING(80);          
+    delimPos    : INT;                
+	sTempStr: STRING(500);
 	
 	(* UI Life Bit Monitoring *)
 	fbLifeBitMonitor: LifeBitMonitor;
 	lifeBitStatus: BOOL;
 	exception : __SYSTEM.ExceptionCode;
-	bTest: bool;
+
+
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -222,6 +232,33 @@ IF nItpState = 1 OR nItpState = 2 THEN
 ELSE
 	bNCIProgramNotRunning := FALSE;
 END_IF
+
+(* Reading Current Program Line*)
+(* Reading Current Program Line *)
+pulseTimer(IN := NOT pulseTimer.Q, PT := T#500MS); 
+fbAdsRead(
+	NETID:='', //AMS Net ID
+	PORT:=500, 
+	IDXGRP:=16#2303,           //16#2300 + NC Interpreater Channel ID
+	IDXOFFS:=16#20000001, 
+	LEN:=SIZEOF(sRunningPrg), 
+	DESTADDR:=ADR(sRunningPrg), 
+	READ:=pulseTimer.Q, 
+	TMOUT:= , 
+	BUSY=> , 
+	ERR=> , 
+	ERRID=> );
+	
+sTempStr := sRunningPrg;
+delimPos := FIND(sTempStr, delimiter);
+line1 := MID(sTempStr,delimPos-1, 1);  // Extract the first line
+sTempStr := DELETE(sTempStr,delimPos+1,1);
+delimPos := FIND(sTempStr, delimiter);
+line2 := MID(sTempStr,delimPos-1, 1);  // Extract the Second line
+sTempStr := DELETE(sTempStr,delimPos+1,1);
+delimPos := FIND(sTempStr, delimiter);
+line3 := MID(sTempStr,delimPos-1, 1); // Extract the Third line
+
 	
 
 
@@ -288,6 +325,10 @@ UIData.stPLC_TO_UI.KinematicGroupError := bKinGroupError;
 UIData.stPLC_TO_UI.NCIAxisGrouped := bNCIAxisGrouped;
 UIData.stPLC_TO_UI.NCIAXisError := bNCIInteperatorError;
 UIData.stPLC_TO_UI.NCIInterpreterState := nItpState;
+
+UIData.stPLC_TO_UI.PartProgramLine1 := line1;
+UIData.stPLC_TO_UI.PartProgramLine2 := line2;
+UIData.stPLC_TO_UI.PartProgramLine3 := line3;
 
 (*UI to PLC*)
 bEnableAxes := UIData.stUI_TO_PLC.EnableAllAxis;
