@@ -44,6 +44,11 @@ namespace _3D_Delta_Kinematics_VS
         [StructLayout(LayoutKind.Sequential, Pack = 8)]
         public class OutputStructure
         {
+
+            [MarshalAs(UnmanagedType.I1)]
+            public bool EnableMonitoring = false;
+            [MarshalAs(UnmanagedType.I1)]
+            public bool LifeBit = false;
             [MarshalAs(UnmanagedType.I1)]
             public bool EnableAllAxis = false;
             [MarshalAs(UnmanagedType.I1)]
