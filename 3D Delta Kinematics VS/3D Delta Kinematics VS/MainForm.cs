@@ -36,7 +36,8 @@ namespace _3D_Delta_Kinematics_VS
         private Timer timerCtrl;
         private PLCStructure.InputStructure PLCToUIStructure;
         private PLCStructure.OutputStructure UIToPLCStructure;
-        private int hStructure;
+        private int hPLCToUIStructure;
+        private int hUIToPLCStructure;
 
         public MainForm()
         {
@@ -66,6 +67,7 @@ namespace _3D_Delta_Kinematics_VS
             //TcADS Communication Data
             UIToPLCStructure.JogSpeed = 50.0f;
             UIToPLCStructure.NCIOverRidePer = 100.0f;
+
         }
 
         // Event Hanlder for Ads Connect
@@ -85,6 +87,12 @@ namespace _3D_Delta_Kinematics_VS
             {
                 btnConnect.BackColor = Color.GreenYellow;
                 MessageBox.Show("Connected to Controller");
+
+                //create Handle Once Connected
+                hPLCToUIStructure = tcClient.CreateVariableHandle("UIData.stPLC_TO_UI");
+                hUIToPLCStructure = tcClient.CreateVariableHandle("UIData.stUI_TO_PLC");
+
+                //Start Timer
                 timerCtrl = new Timer();
                 timerCtrl.Interval = 200;
                 timerCtrl.Tick += OnCtrlTimerEvent;
@@ -103,12 +111,9 @@ namespace _3D_Delta_Kinematics_VS
 
             try
             {
-                hStructure = tcClient.CreateVariableHandle("UIData.stPLC_TO_UI");
-                PLCToUIStructure = (PLCStructure.InputStructure)tcClient.ReadAny(hStructure, typeof(PLCStructure.InputStructure));
-
-                hStructure = tcClient.CreateVariableHandle("UIData.stUI_TO_PLC");
-                tcClient.WriteAny(hStructure, UIToPLCStructure);
-
+         
+                PLCToUIStructure = (PLCStructure.InputStructure)tcClient.ReadAny(hPLCToUIStructure, typeof(PLCStructure.InputStructure));
+                tcClient.WriteAny(hUIToPLCStructure, UIToPLCStructure);
                 UpdateUI();
 
             }
