@@ -17,6 +17,7 @@
 *.project.~u
 *.tsproj.bak
 *.xti.bak
+*.xti
 LineIDs.dbg
 LineIDs.dbg.bak
 _Boot/
