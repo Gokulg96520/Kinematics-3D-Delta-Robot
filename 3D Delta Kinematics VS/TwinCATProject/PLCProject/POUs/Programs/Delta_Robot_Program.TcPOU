@@ -59,6 +59,7 @@ VAR
 	bRunPRogram: BOOL;
 	bStopProgram: BOOL;
 	sProgramName: STRING(80):='testProgram.nc';
+	bNCIProgramNotRunning: BOOL;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -92,8 +93,8 @@ fbEnableAxes(
     </Action>
     <Action Name="JogMCS" Id="{773da444-5073-46a7-a95b-c0c675e8c1cf}">
       <Implementation>
-        <ST><![CDATA[// Manual Jogging
-IF bKinematicsGroupReady THEN
+        <ST><![CDATA[// Manual Jogging Enable after Kinematic grouping is done & NCI program is Not Running
+IF bKinematicsGroupReady AND bNCIProgramNotRunning THEN
 	bJogEnable := TRUE;
 ELSE
 	bJogEnable := FALSE;
@@ -208,6 +209,13 @@ fbLoadRunStop(
 	bDone=> , 
 	bError=> , 
 	nInterpreterState=> );
+	
+(* Interlock for Jog *)
+IF nItpState = 1 OR nItpState = 2 THEN
+	bNCIProgramNotRunning := TRUE;
+ELSE
+	bNCIProgramNotRunning := FALSE;
+END_IF
 	
 
 
