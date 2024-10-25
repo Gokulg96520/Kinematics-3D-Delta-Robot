@@ -21,8 +21,8 @@ namespace _3D_Delta_Kinematics_VS
 
         //GL Control Data 
         private float _zoom; // Initial zoom factor
-        private float _rotationX ; // Rotation around X-axis
-        private float _rotationY ; // Rotation around Y-axis
+        private float _rotationX; // Rotation around X-axis
+        private float _rotationY; // Rotation around Y-axis
         private float _moveXDirection; // Rotation around X-axis
         private float _moveYDirection; // Rotation around Y-axis
         private bool _isDragging = false; // For mouse dragging
@@ -44,7 +44,7 @@ namespace _3D_Delta_Kinematics_VS
             InitializeComponent();
             InitializeTcAds();
             InitializeGLComponent();
-            
+
         }
 
         #region TwinCAT ADS Communication
@@ -157,35 +157,36 @@ namespace _3D_Delta_Kinematics_VS
         //Disconnect TcAds & Reset Communication Data to Default Value
         public void DisconnectTcAds()
         {
-
-            if (timerCtrl != null)
+            if (tcClient != null)
             {
-                timerCtrl.Stop();
-                timerCtrl.Dispose();
-            }
-
-            //Reset Communication Data to Default Value
-            UIToPLCStructure.EnableMonitoring = false;
-            tcClient.WriteAny(hUIToPLCStructure, UIToPLCStructure);
-
-            try
-            {
-                tcClient.Dispose();
-                if (tcClient.IsConnected == false)
+                if (timerCtrl != null)
                 {
-                    btnConnect.BackColor = SystemColors.Control;
-                    btnEnableAxis.BackColor = SystemColors.Control;
-                    btnConfKinGroup.BackColor = SystemColors.Control;
-                    btnNCIAxisGrp.BackColor = SystemColors.Control;
-                    MessageBox.Show("Controller Disconneted");
+                    timerCtrl.Stop();
+                    timerCtrl.Dispose();
+                }
+
+                //Reset Communication Data to Default Value
+                UIToPLCStructure.EnableMonitoring = false;
+                tcClient.WriteAny(hUIToPLCStructure, UIToPLCStructure);
+
+                try
+                {
+                    tcClient.Dispose();
+                    if (tcClient.IsConnected == false)
+                    {
+                        btnConnect.BackColor = SystemColors.Control;
+                        btnEnableAxis.BackColor = SystemColors.Control;
+                        btnConfKinGroup.BackColor = SystemColors.Control;
+                        btnNCIAxisGrp.BackColor = SystemColors.Control;
+                        MessageBox.Show("Controller Disconneted");
+                    }
+                }
+                catch (Exception err)
+                {
+                    btnConnect.BackColor = Color.Red;
+                    MessageBox.Show(err.Message);
                 }
             }
-            catch (Exception err)
-            {
-                btnConnect.BackColor = Color.Red;
-                MessageBox.Show(err.Message);
-            }
-
         }
 
         #endregion
@@ -793,6 +794,34 @@ namespace _3D_Delta_Kinematics_VS
 
         #endregion
 
-  
+        #region MainForm Closing Event
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            // Show confirmation dialog
+            if (tcClient != null)
+            {
+                var result = MessageBox.Show("Are you sure you want to exit TcAds Communication will be Disconnected",
+                             "Confirm Exit",
+                             MessageBoxButtons.YesNo,
+                             MessageBoxIcon.Question);
+
+                if (result == DialogResult.Yes)
+                {
+                    DisconnectTcAds();
+                }
+                else
+                {
+                    // If user cancels, prevent the form from closing
+                    e.Cancel = true;  // Cancel closing
+                }
+
+            }
+
+        }
+
+        #endregion
+
+
     }
 }

@@ -74,6 +74,7 @@ namespace _3D_Delta_Kinematics_VS
             this.btnFileExp = new System.Windows.Forms.Button();
             this.tbNCProgramName = new System.Windows.Forms.TextBox();
             this.gbNC = new System.Windows.Forms.GroupBox();
+            this.tbIntrpState = new System.Windows.Forms.TextBox();
             this.btnStopPartprg = new System.Windows.Forms.Button();
             this.btnStartPartprg = new System.Windows.Forms.Button();
             this.lblPer = new System.Windows.Forms.Label();
@@ -82,7 +83,6 @@ namespace _3D_Delta_Kinematics_VS
             this.btnNCIAxisGrp = new System.Windows.Forms.Button();
             this.btnNCIAxisUnGrp = new System.Windows.Forms.Button();
             this.btnNCIIntrReset = new System.Windows.Forms.Button();
-            this.tbIntrpState = new System.Windows.Forms.TextBox();
             this.gbMCS.SuspendLayout();
             this.gbACS.SuspendLayout();
             this.gbJog.SuspendLayout();
@@ -651,6 +651,17 @@ namespace _3D_Delta_Kinematics_VS
             this.gbNC.TabStop = false;
             this.gbNC.Text = "NCI Interpreter State";
             // 
+            // tbIntrpState
+            // 
+            this.tbIntrpState.BackColor = System.Drawing.SystemColors.Control;
+            this.tbIntrpState.Enabled = false;
+            this.tbIntrpState.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbIntrpState.Location = new System.Drawing.Point(6, 23);
+            this.tbIntrpState.Name = "tbIntrpState";
+            this.tbIntrpState.Size = new System.Drawing.Size(213, 24);
+            this.tbIntrpState.TabIndex = 17;
+            this.tbIntrpState.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
             // btnStopPartprg
             // 
             this.btnStopPartprg.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -741,17 +752,6 @@ namespace _3D_Delta_Kinematics_VS
             this.btnNCIIntrReset.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnNCIIntrReset_MouseDown);
             this.btnNCIIntrReset.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btnNCIIntrReset_MouseUp);
             // 
-            // tbIntrpState
-            // 
-            this.tbIntrpState.BackColor = System.Drawing.SystemColors.Control;
-            this.tbIntrpState.Enabled = false;
-            this.tbIntrpState.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbIntrpState.Location = new System.Drawing.Point(6, 23);
-            this.tbIntrpState.Name = "tbIntrpState";
-            this.tbIntrpState.Size = new System.Drawing.Size(213, 24);
-            this.tbIntrpState.TabIndex = 17;
-            this.tbIntrpState.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -779,6 +779,7 @@ namespace _3D_Delta_Kinematics_VS
             this.Controls.Add(this.glControl);
             this.Name = "MainForm";
             this.Text = "3D Delta Robot Simulator";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.gbMCS.ResumeLayout(false);
             this.gbMCS.PerformLayout();
             this.gbACS.ResumeLayout(false);
