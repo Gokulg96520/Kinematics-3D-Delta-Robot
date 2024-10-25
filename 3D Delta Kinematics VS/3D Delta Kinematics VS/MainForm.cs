@@ -167,7 +167,11 @@ namespace _3D_Delta_Kinematics_VS
 
                 //Reset Communication Data to Default Value
                 UIToPLCStructure.EnableMonitoring = false;
-                tcClient.WriteAny(hUIToPLCStructure, UIToPLCStructure);
+                if (tcClient.IsConnected)
+                {
+                    tcClient.WriteAny(hUIToPLCStructure, UIToPLCStructure);
+                }
+
 
                 try
                 {
@@ -230,7 +234,7 @@ namespace _3D_Delta_Kinematics_VS
             {
                 btnConfKinGroup.BackColor = Color.Yellow;
             }
-           
+
             //NCI Status
             if (PLCToUIStructure.NCIAxisGrouped == true && PLCToUIStructure.NCIAXisError == false)
             {
@@ -261,13 +265,13 @@ namespace _3D_Delta_Kinematics_VS
                     tbIntrpState.Text = "UnKnown";
                     break;
             }
-            
+
 
             //3D Delta Robot XYZ Update
             MovePlatePos.x = PLCToUIStructure.X_MCSPos;
             MovePlatePos.y = PLCToUIStructure.Y_MCSPos;
             MovePlatePos.z = PLCToUIStructure.Z_MCSPos;
-            
+
             //Redraw Render 
             glControl.Invalidate();
         }
@@ -745,7 +749,7 @@ namespace _3D_Delta_Kinematics_VS
             Draw3DDeltaRobot();
 
         }
-    
+
         // Method to draw XYZ axis
         private void DrawCoordinateAxes()
         {
