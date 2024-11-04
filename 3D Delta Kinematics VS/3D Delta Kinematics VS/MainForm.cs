@@ -1081,12 +1081,6 @@ namespace _3D_Delta_Kinematics_VS
 
             }
 
-            // Stoping OpenGL Render Thread
-            if (renderThread != null && renderThread.IsAlive)
-            {
-                await stopRenderThread();
-            }
-
         }
 
         #endregion
