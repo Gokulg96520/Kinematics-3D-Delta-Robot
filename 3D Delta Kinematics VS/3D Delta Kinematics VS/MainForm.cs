@@ -13,11 +13,33 @@ using OpenTK.Graphics.OpenGL;
 using TwinCAT.Ads;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Threading;
+using System.Collections.Concurrent;
 
 namespace _3D_Delta_Kinematics_VS
 {
     public partial class MainForm : Form
     {
+        // TwinCAT PLC Thread 
+        private Thread plcThread; // The thread handling PLC communication      
+        private CancellationTokenSource ctsPlcThread; // Used to signal thread shutdown
+
+        //TcAds  
+        private TcAdsClient tcClient; //ADS Client 
+        private PLCStructure.InputStructure PLCToUIStructure; // PLC to UI Structure 
+        private PLCStructure.OutputStructure UIToPLCStructure; // UI to PLC Structure
+        private int hPLCToUIStructure; //hReference for PLC to UI Structure 
+        private int hUIToPLCStructure; //hReference for UI to PLC Structure 
+        private System.Timers.Timer plcTimer; // Timer to use in PLC Thread 
+
+        //Post Data to UI Thread
+        private SynchronizationContext syncContext;
+
+        //Put Data to PLC Thread 
+        //Producer Consumer concept UI Thread is Producer & PLC Thread is Consumer
+        private BlockingCollection<PLCStructure.OutputStructure> plcQueue = new BlockingCollection<PLCStructure.OutputStructure>(10);
+        private PLCStructure.OutputStructure eventDataA; //For Capturing Data as Events happend Fast 
+        private PLCStructure.OutputStructure eventDataB; //For Capturing Data as Events happend Fast 
 
         //GL Control Data 
         private float _zoom; // Initial zoom factor
@@ -31,66 +53,120 @@ namespace _3D_Delta_Kinematics_VS
         //Inital Position of Delta Robot
         public vec3 MovePlatePos = new vec3(0, 0, -376.0f);
 
-        //TcAds
-        private TcAdsClient tcClient;
-        private Timer timerCtrl;
-        private PLCStructure.InputStructure PLCToUIStructure;
-        private PLCStructure.OutputStructure UIToPLCStructure;
-        private int hPLCToUIStructure;
-        private int hUIToPLCStructure;
+        //Form Closing Flag
+        public bool formClosingFlag;
 
         public MainForm()
         {
             InitializeComponent();
-            InitializeTcAds();
+            InitializeFormData();
             InitializeGLComponent();
 
         }
 
+        private void InitializeFormData()
+        {
+            //UI Data 
+            tbAMSNetID.Text = "192.168.1.19.1.1";
+            tbJogSpeed.Text = "50";
+            tbNCIOvrridePer.Text = "100";
+
+            //Initialize of Post Data from PLC Thread to UI Thread
+            syncContext = SynchronizationContext.Current;
+
+            //Initialize of Put Data from UI Thread to PLC using Blocking Collection
+            eventDataA = eventDataB = new PLCStructure.OutputStructure();
+            eventDataA.JogSpeed = eventDataB.JogSpeed = 50.0f;
+            eventDataA.NCIOverRidePer = eventDataB.NCIOverRidePer = 50.0f;
+            plcQueue = new BlockingCollection<PLCStructure.OutputStructure>(new ConcurrentQueue<PLCStructure.OutputStructure>(), 10); // Set max capacity
+
+            //Form Closing 
+            formClosingFlag = false;
+        }
+
         #region TwinCAT ADS Communication
 
-        //Initalize UI to TcAds Communication Data
-        private void InitializeTcAds()
+        // Event Hanlder for Ads Connect
+        private void btnConnect_Click(object sender, EventArgs e)
+        {
+            startPLCThread();
+        }
+
+        // Async Event Hanlder for Ads Disconnect
+        private async void btnDisconnect_Click(object sender, EventArgs e)
+        {
+            bool result = await stopPLCThread();
+            if (!result)
+            {
+                tbError.Text = "TwinCAT PLC is already disconnected";
+            }
+        }
+
+        //Method Start PLC Thread 
+        private void startPLCThread()
+        {
+            //Prevent multiple starts
+            if (plcThread == null || !plcThread.IsAlive)
+            {
+                ctsPlcThread = new CancellationTokenSource(); // Create a new cancellation token
+                plcThread = new Thread(() => PLCCommunication(tbAMSNetID.Text, ctsPlcThread.Token));//Create New Thread Object
+                plcThread.IsBackground = true; //Make PLC Thread as Background Thread
+                plcThread.Start(); //Start PLC Thread
+            }
+            else
+            {
+                tbError.Text = "TwinCAT PLC is already connected";
+            }
+
+        }
+
+        //PLC Thread Method Runs PLC Communication in Seperate Thread
+        private void PLCCommunication(string AMSNetID, CancellationToken Token)
         {
 
             //Create PLCStructure Object
             PLCToUIStructure = new PLCStructure.InputStructure();
             UIToPLCStructure = new PLCStructure.OutputStructure();
 
-            //UI Data 
-            tbAMSNetID.Text = "192.168.1.19.1.1";
-            tbJogSpeed.Text = "50";
-            tbNCIOvrridePer.Text = "100";
-
-            //TcADS Communication Data
+            //Initalize UIToPLC Data 
             UIToPLCStructure.JogSpeed = 50.0f;
             UIToPLCStructure.NCIOverRidePer = 100.0f;
 
-        }
-
-        // Event Hanlder for Ads Connect
-        private void btnConnect_Click(object sender, EventArgs e)
-        {
+            //TcClient  
             tcClient = new TcAdsClient();
+
+            //Sequence 1 Connecting to tcClient
             try
             {
-                tcClient.Connect(tbAMSNetID.Text, 851);
+                tcClient.Connect(AMSNetID, 851);
             }
             catch (Exception err)
             {
-                btnConnect.BackColor = Color.Red;
-                MessageBox.Show(err.Message);
+                //btnConnect.BackColor = Color.Red;
+                updateErrorTextBox(err.Message);
+                onPLCClientError(err);
+                return;
             }
+
             if (tcClient.IsConnected == true)
             {
-                btnConnect.BackColor = Color.GreenYellow;
-                MessageBox.Show("Connected to Controller");
+                //btnConnect.BackColor = Color.GreenYellow;
+                updateErrorTextBox("Connected to Controller");
 
-                //create Handle Once Connected
-                hPLCToUIStructure = tcClient.CreateVariableHandle("UIData.stPLC_TO_UI");
-                hUIToPLCStructure = tcClient.CreateVariableHandle("UIData.stUI_TO_PLC");
+                //Sequence 2 After Connecting Create a Handle
+                try
+                {
+                    hPLCToUIStructure = tcClient.CreateVariableHandle("UIData.stPLC_TO_UI");
+                    hUIToPLCStructure = tcClient.CreateVariableHandle("UIData.stUI_TO_PLC");
+                }
+                catch (Exception err)
+                {
+                    updateErrorTextBox(err.Message);
+                    onPLCClientError(err);
+                    return;
+                }
 
-                //Set LifeBit Monitoring to True
+                //Sequence 3 Set Enable Monitoring to True
                 UIToPLCStructure.EnableMonitoring = true;
                 try
                 {
@@ -98,26 +174,112 @@ namespace _3D_Delta_Kinematics_VS
                 }
                 catch (Exception err)
                 {
-                    MessageBox.Show(err.Message);
+                    updateErrorTextBox(err.Message);
+                    onPLCClientError(err);
+                    return;
                 }
 
-                //Start Timer
-                timerCtrl = new Timer();
-                timerCtrl.Interval = 200;
-                timerCtrl.Tick += OnCtrlTimerEvent;
-                timerCtrl.Start();
+                //Sequence 4 Start Timer
+                startPLCTimer();
+
+                //Wait for Cancellation request 
+                try
+                {
+                    Token.WaitHandle.WaitOne();// Block here until cancellation is requested
+                }
+                finally
+                {
+                    DisconnectTcAds();
+                    Console.WriteLine("PLC loop exiting...");
+                }
             }
             else if (tcClient.IsConnected == false)
             {
-                btnConnect.BackColor = Color.Red;
-                MessageBox.Show("Controller 1 Not Connected");
+                //btnConnect.BackColor = Color.Red;
+                updateErrorTextBox("Controller Not Connected");
             }
         }
 
-        // Event Hanlder for 200ms Timer
-        private void OnCtrlTimerEvent(object sender, EventArgs e)
+        //PLC Thread Method Start PLC Timer 
+        private void startPLCTimer()
         {
+            plcTimer = new System.Timers.Timer(200);
+            plcTimer.Elapsed += OnPLCTimerElapsed;
+            plcTimer.AutoReset = true;
+            plcTimer.Start();
+        }
 
+        //PLC Thread Method Stop PLC Timer 
+        private void stopPLCTimer()
+        {
+            if (plcTimer != null)
+            {
+                plcTimer.Stop();
+                plcTimer.Dispose();
+            }
+        }
+
+        //PLC Thread Method Disconnect TcAds & Reset Communication Data to Default Value
+        public void DisconnectTcAds()
+        {
+            if (tcClient != null && tcClient.IsConnected)
+            {
+                //Stop PLC Timer
+                stopPLCTimer();
+
+                //Reset Communication Data to Default Value
+                UIToPLCStructure.EnableMonitoring = false;
+                try
+                {
+                    tcClient.WriteAny(hUIToPLCStructure, UIToPLCStructure);
+                }
+                catch (Exception err)
+                {
+                    updateErrorTextBox(err.Message);
+                    onPLCClientError(err);
+                    return;
+                }
+
+                try
+                {
+                    tcClient.Dispose();
+
+                    if (tcClient.IsConnected == false)
+                    {
+                        resetColor();
+                        updateErrorTextBox("Controller Disconneted");
+                    }
+                }
+                catch (Exception err)
+                {
+                    //btnConnect.BackColor = Color.Red;
+                    updateErrorTextBox(err.Message);
+                    onPLCClientError(err);
+                    return;
+                }
+            }
+        }
+
+        //PLC Thread Timer Elapsed Event for Cyclic Communication 
+        private void OnPLCTimerElapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            //Read Data from PLC
+            try
+            {
+                //Read from PLC
+                PLCToUIStructure = (PLCStructure.InputStructure)tcClient.ReadAny(hPLCToUIStructure, typeof(PLCStructure.InputStructure));
+                //Post Data to UI Thread
+                syncContext.Post(UpdateUI, PLCToUIStructure);
+            }
+            catch (Exception err)
+            {
+                //btnConnect.BackColor = Color.Red;
+                updateErrorTextBox(err.Message);
+                onPLCClientError(err);
+                return;
+            }
+
+            //Write Data to PLC
             try
             {
                 //Life Bit Toggle
@@ -130,62 +292,108 @@ namespace _3D_Delta_Kinematics_VS
                     UIToPLCStructure.LifeBit = false;
                 }
 
-                PLCToUIStructure = (PLCStructure.InputStructure)tcClient.ReadAny(hPLCToUIStructure, typeof(PLCStructure.InputStructure));
+                //Get Data from UI Thread
+                if (!plcQueue.IsCompleted)
+                {
+                    if (plcQueue.TryTake(out PLCStructure.OutputStructure data))
+                    {
+                        UIToPLCStructure.EnableAllAxis = data.EnableAllAxis;
+                        UIToPLCStructure.ResetAllAxis = data.ResetAllAxis;
+                        UIToPLCStructure.ConfigKinematicGroup = data.ConfigKinematicGroup;
+                        UIToPLCStructure.ResetKinematicGroup = data.ResetKinematicGroup;
+                        UIToPLCStructure.XJogPositive = data.XJogPositive;
+                        UIToPLCStructure.YJogPositive = data.YJogPositive;
+                        UIToPLCStructure.ZJogPositive = data.ZJogPositive;
+                        UIToPLCStructure.XJogNegative = data.XJogNegative;
+                        UIToPLCStructure.YJogNegative = data.YJogNegative;
+                        UIToPLCStructure.ZJogNegative = data.ZJogNegative;
+                        UIToPLCStructure.JogSpeed = data.JogSpeed;
+                        UIToPLCStructure.NCIAxisGroup = data.NCIAxisGroup;
+                        UIToPLCStructure.NCIAxisUnGroup = data.NCIAxisUnGroup;
+                        UIToPLCStructure.NCIInteperatorReset = data.NCIInteperatorReset;
+                        UIToPLCStructure.RunPartProgram = data.RunPartProgram;
+                        UIToPLCStructure.StopPartProgram = data.StopPartProgram;
+                        UIToPLCStructure.NCIOverRidePer = data.NCIOverRidePer;
+                        UIToPLCStructure.PartProgramName = data.PartProgramName;
+                    }
+                }
+                //Write Data to PLC
                 tcClient.WriteAny(hUIToPLCStructure, UIToPLCStructure);
-                UpdateUI();
 
             }
             catch (Exception err)
             {
-                if (timerCtrl != null)
-                {
-                    timerCtrl.Stop();
-                    timerCtrl.Dispose();
-                }
-                btnConnect.BackColor = Color.Red;
-                MessageBox.Show(err.Message);
+                updateErrorTextBox(err.Message);
+                onPLCClientError(err);
+                return;
             }
 
         }
 
-        // Event Hanlder for Ads Connect
-        private void btnDisconnect_Click(object sender, EventArgs e)
+        //Method onPLCError
+        private async void onPLCError()
         {
-            DisconnectTcAds();
+            await stopPLCThread();
         }
 
-        //Disconnect TcAds & Reset Communication Data to Default Value
-        public void DisconnectTcAds()
+        //Task Method Stop PLC Thread
+        private async Task<bool> stopPLCThread()
         {
-            if (tcClient != null && tcClient.IsConnected)
+            // Request cancellation
+            if (plcThread != null && plcThread.IsAlive)
             {
-                if (timerCtrl != null)
+                ctsPlcThread.Cancel(); // Signal the thread to stop
+                await Task.Run(() => plcThread.Join());
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        //PLC Thread tcClientError Method
+        private void onPLCClientError(Exception err)
+        {
+            Invoke(new Action(onPLCError));
+        }
+
+        //PLC Thread Method Invoke UI Thread Show Message Box 
+        private void updateErrorTextBox(string message)
+        {
+            if (InvokeRequired)
+            {
+                // If we are on a different thread, use Invoke to call the method on the UI thread
+                if (!formClosingFlag)
                 {
-                    timerCtrl.Stop();
-                    timerCtrl.Dispose();
+                    Invoke(new Action<string>(updateErrorTextBox), message);
+                }
+            }
+            else
+            {
+                tbError.Text = message;
+            }
+        }
+
+        //When Disconnected Reset Colors of UI
+        private void resetColor()
+        {
+            if (InvokeRequired)
+            {
+                // If we are on a different thread, use Invoke to call the method on the UI thread
+                if (!formClosingFlag)
+                {
+                    Invoke(new Action(resetColor));
                 }
 
-                //Reset Communication Data to Default Value
-                UIToPLCStructure.EnableMonitoring = false;
-                tcClient.WriteAny(hUIToPLCStructure, UIToPLCStructure);
-
-                try
-                {
-                    tcClient.Dispose();
-                    if (tcClient.IsConnected == false)
-                    {
-                        btnConnect.BackColor = SystemColors.Control;
-                        btnEnableAxis.BackColor = SystemColors.Control;
-                        btnConfKinGroup.BackColor = SystemColors.Control;
-                        btnNCIAxisGrp.BackColor = SystemColors.Control;
-                        MessageBox.Show("Controller Disconneted");
-                    }
-                }
-                catch (Exception err)
-                {
-                    btnConnect.BackColor = Color.Red;
-                    MessageBox.Show(err.Message);
-                }
+            }
+            else
+            {
+                // We are on the UI thread, update the color
+                btnConnect.BackColor = SystemColors.Control;
+                btnEnableAxis.BackColor = SystemColors.Control;
+                btnConfKinGroup.BackColor = SystemColors.Control;
+                btnNCIAxisGrp.BackColor = SystemColors.Control;
             }
         }
 
@@ -193,8 +401,14 @@ namespace _3D_Delta_Kinematics_VS
 
         #region UI & Render Update 
 
-        private void UpdateUI()
+        private void UpdateUI(object UIdata)
         {
+            var PLCToUIStructure = UIdata as PLCStructure.InputStructure;
+            if (PLCToUIStructure == null)
+            {
+                return;
+            }
+
             //MCS & ACS Position
             tbXCord.Text = PLCToUIStructure.X_MCSPos.ToString("F3");
             tbYCord.Text = PLCToUIStructure.Y_MCSPos.ToString("F3");
@@ -222,7 +436,8 @@ namespace _3D_Delta_Kinematics_VS
             {
                 btnConfKinGroup.BackColor = Color.GreenYellow;
 
-            }else if (PLCToUIStructure.KinematicGroupError == true )
+            }
+            else if (PLCToUIStructure.KinematicGroupError == true)
             {
                 btnConfKinGroup.BackColor = Color.Red;
             }
@@ -273,7 +488,7 @@ namespace _3D_Delta_Kinematics_VS
             MovePlatePos.z = PLCToUIStructure.Z_MCSPos;
 
             //Redraw Render 
-            glControl.Invalidate();
+            //glControl.Invalidate();
         }
 
         #endregion
@@ -285,25 +500,28 @@ namespace _3D_Delta_Kinematics_VS
         //Enable Axis
         private void btnEnableAxis_Click(object sender, EventArgs e)
         {
-            if (UIToPLCStructure.EnableAllAxis == false)
+            if (eventDataA.EnableAllAxis == false)
             {
-                UIToPLCStructure.EnableAllAxis = true;
+                eventDataA.EnableAllAxis = true;
             }
             else
             {
-                UIToPLCStructure.EnableAllAxis = false;
+                eventDataA.EnableAllAxis = false;
             }
+            addDataToQueue(eventDataA);
         }
 
         //Reset Axis
         private void btnResetAxis_MouseDown(object sender, MouseEventArgs e)
         {
-            UIToPLCStructure.ResetAllAxis = true;
+            eventDataA.ResetAllAxis = true;
+            addDataToQueue(eventDataA);
         }
 
         private void btnResetAxis_MouseUp(object sender, MouseEventArgs e)
         {
-            UIToPLCStructure.ResetAllAxis = false;
+            eventDataB.ResetAllAxis = false;
+            addDataToQueue(eventDataB);
         }
 
         #endregion
@@ -313,54 +531,64 @@ namespace _3D_Delta_Kinematics_VS
         //Configure Kinematics Group
         private void btnConfKinGroup_MouseDown(object sender, MouseEventArgs e)
         {
-            UIToPLCStructure.ConfigKinematicGroup = true;
+            eventDataA.ConfigKinematicGroup = true;
+            addDataToQueue(eventDataA);
         }
 
         private void btnConfKinGroup_MouseUp(object sender, MouseEventArgs e)
         {
-            UIToPLCStructure.ConfigKinematicGroup = false;
+            eventDataB.ConfigKinematicGroup = false;
+            addDataToQueue(eventDataB);
         }
 
         //Reset Kinematics Group
         private void btnResetKinGroup_MouseDown(object sender, MouseEventArgs e)
         {
-            UIToPLCStructure.ResetKinematicGroup = true;
+            eventDataA.ResetKinematicGroup = true;
+            addDataToQueue(eventDataA);
         }
         private void btnResetKinGroup_MouseUp(object sender, MouseEventArgs e)
         {
-            UIToPLCStructure.ResetKinematicGroup = false;
+            eventDataB.ResetKinematicGroup = false;
+            addDataToQueue(eventDataB);
         }
         #endregion
 
         #region NCI Group & Reset
         private void btnNCIAxisGrp_MouseDown(object sender, MouseEventArgs e)
         {
-            UIToPLCStructure.NCIAxisGroup = true;
+            eventDataA.NCIAxisGroup = true;
+            addDataToQueue(eventDataA);
         }
 
         private void btnNCIAxisGrp_MouseUp(object sender, MouseEventArgs e)
         {
-            UIToPLCStructure.NCIAxisGroup = false;
+            eventDataB.NCIAxisGroup = false;
+            addDataToQueue(eventDataB);
         }
 
         private void btnNCIAxisUnGrp_MouseDown(object sender, MouseEventArgs e)
         {
-            UIToPLCStructure.NCIAxisUnGroup = true;
+            eventDataA.NCIAxisUnGroup = true;
+            addDataToQueue(eventDataA);
         }
 
         private void btnNCIAxisUnGrp_MouseUp(object sender, MouseEventArgs e)
         {
-            UIToPLCStructure.NCIAxisUnGroup = false;
+            eventDataB.NCIAxisUnGroup = false;
+            addDataToQueue(eventDataB);
         }
 
         private void btnNCIIntrReset_MouseDown(object sender, MouseEventArgs e)
         {
-            UIToPLCStructure.NCIInteperatorReset = true;
+            eventDataA.NCIInteperatorReset = true;
+            addDataToQueue(eventDataA);
         }
 
         private void btnNCIIntrReset_MouseUp(object sender, MouseEventArgs e)
         {
-            UIToPLCStructure.NCIInteperatorReset = false;
+            eventDataB.NCIInteperatorReset = false;
+            addDataToQueue(eventDataB);
         }
         #endregion
 
@@ -372,62 +600,74 @@ namespace _3D_Delta_Kinematics_VS
 
         private void btnZPos_MouseDown(object sender, MouseEventArgs e)
         {
-            UIToPLCStructure.ZJogPositive = true;
+            eventDataA.ZJogPositive = true;
+            addDataToQueue(eventDataA);
         }
 
         private void btnZPos_MouseUp(object sender, MouseEventArgs e)
         {
-            UIToPLCStructure.ZJogPositive = false;
+            eventDataB.ZJogPositive = false;
+            addDataToQueue(eventDataB);
         }
 
         private void btnZNeg_MouseDown(object sender, MouseEventArgs e)
         {
-            UIToPLCStructure.ZJogNegative = true;
+            eventDataA.ZJogNegative = true;
+            addDataToQueue(eventDataA);
         }
 
         private void btnZNeg_MouseUp(object sender, MouseEventArgs e)
         {
-            UIToPLCStructure.ZJogNegative = false;
+            eventDataB.ZJogNegative = false;
+            addDataToQueue(eventDataB);
         }
 
         private void btnYNeg_MouseDown(object sender, MouseEventArgs e)
         {
-            UIToPLCStructure.YJogNegative = true;
+            eventDataA.YJogNegative = true;
+            addDataToQueue(eventDataA);
         }
 
         private void btnYNeg_MouseUp(object sender, MouseEventArgs e)
         {
-            UIToPLCStructure.YJogNegative = false;
+            eventDataB.YJogNegative = false;
+            addDataToQueue(eventDataB);
         }
 
         private void btnYPos_MouseDown(object sender, MouseEventArgs e)
         {
-            UIToPLCStructure.YJogPositive = true;
+            eventDataA.YJogPositive = true;
+            addDataToQueue(eventDataA);
         }
 
         private void btnYPos_MouseUp(object sender, MouseEventArgs e)
         {
-            UIToPLCStructure.YJogPositive = false;
+            eventDataB.YJogPositive = false;
+            addDataToQueue(eventDataB);
         }
 
         private void btnXNeg_MouseDown(object sender, MouseEventArgs e)
         {
-            UIToPLCStructure.XJogNegative = true;
+            eventDataA.XJogNegative = true;
+            addDataToQueue(eventDataA);
         }
 
         private void btnXNeg_MouseUp(object sender, MouseEventArgs e)
         {
-            UIToPLCStructure.XJogNegative = false;
+            eventDataB.XJogNegative = false;
+            addDataToQueue(eventDataB);
         }
 
         private void btnXPos_MouseDown(object sender, MouseEventArgs e)
         {
-            UIToPLCStructure.XJogPositive = true;
+            eventDataA.XJogPositive = true;
+            addDataToQueue(eventDataA);
         }
 
         private void btnXPos_MouseUp(object sender, MouseEventArgs e)
         {
-            UIToPLCStructure.XJogPositive = false;
+            eventDataB.XJogPositive = false;
+            addDataToQueue(eventDataB);
         }
         #endregion
 
@@ -440,13 +680,14 @@ namespace _3D_Delta_Kinematics_VS
                 float.TryParse(tbJogSpeed.Text, out float speed);
                 if ((speed > 1 && speed <= 200))
                 {
-                    UIToPLCStructure.JogSpeed = speed;
+                    eventDataA.JogSpeed = speed;
                 }
                 else
                 {
-                    UIToPLCStructure.JogSpeed = 50.0f;
+                    eventDataA.JogSpeed = 50.0f;
                     tbJogSpeed.Text = "50.0";
                 }
+                addDataToQueue(eventDataA);
 
                 // Set focus to some other Control
                 btnZPos.Focus();
@@ -471,13 +712,15 @@ namespace _3D_Delta_Kinematics_VS
                 float.TryParse(tbNCIOvrridePer.Text, out float overridePer);
                 if ((overridePer > 1 && overridePer <= 100))
                 {
-                    UIToPLCStructure.NCIOverRidePer = overridePer;
+                    eventDataA.NCIOverRidePer = overridePer;
                 }
                 else
                 {
-                    UIToPLCStructure.NCIOverRidePer = 100.0f;
+                    eventDataA.NCIOverRidePer = 100.0f;
                     tbNCIOvrridePer.Text = "100.0";
                 }
+
+                addDataToQueue(eventDataA);
 
                 // Set focus to some other Control
                 btnFileExp.Focus();
@@ -498,12 +741,13 @@ namespace _3D_Delta_Kinematics_VS
             if (!string.IsNullOrEmpty(selectedFilePath))
             {
                 tbNCProgramName.Text = selectedFilePath;
-                UIToPLCStructure.PartProgramName = selectedFilePath;
+                eventDataA.PartProgramName = selectedFilePath;
             }
             else
             {
                 MessageBox.Show("No file was selected.", "Selection Canceled");
             }
+            addDataToQueue(eventDataA);
         }
 
         // Method to open File Explorer and return the selected file path
@@ -532,22 +776,26 @@ namespace _3D_Delta_Kinematics_VS
 
         private void btnStartPartprg_MouseDown(object sender, MouseEventArgs e)
         {
-            UIToPLCStructure.RunPartProgram = true;
+            eventDataA.RunPartProgram = true;
+            addDataToQueue(eventDataA);
         }
 
         private void btnStartPartprg_MouseUp(object sender, MouseEventArgs e)
         {
-            UIToPLCStructure.RunPartProgram = false;
+            eventDataB.RunPartProgram = false;
+            addDataToQueue(eventDataB);
         }
 
         private void btnStopPartprg_MouseDown(object sender, MouseEventArgs e)
         {
-            UIToPLCStructure.StopPartProgram = true;
+            eventDataA.StopPartProgram = true;
+            addDataToQueue(eventDataA);
         }
 
         private void btnStopPartprg_MouseUp(object sender, MouseEventArgs e)
         {
-            UIToPLCStructure.StopPartProgram = false;
+            eventDataB.StopPartProgram = false;
+            addDataToQueue(eventDataB);
         }
 
         #endregion
@@ -556,6 +804,13 @@ namespace _3D_Delta_Kinematics_VS
 
         #endregion
 
+        private void addDataToQueue(PLCStructure.OutputStructure data)
+        {
+            if (!plcQueue.TryAdd(data))
+            {
+                tbError.Text = "Adding Data to Queue Failed";
+            }
+        }
         #endregion
 
         #region OpenGL GL Control & Render 
@@ -800,10 +1055,10 @@ namespace _3D_Delta_Kinematics_VS
 
         #region MainForm Closing Event
 
-        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        private async void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             // Show confirmation dialog
-            if (tcClient != null && tcClient.IsConnected)
+            if (plcThread != null && plcThread.IsAlive)
             {
                 var result = MessageBox.Show("Are you sure you want to exit TcAds Communication will be Disconnected",
                              "Confirm Exit",
@@ -812,20 +1067,29 @@ namespace _3D_Delta_Kinematics_VS
 
                 if (result == DialogResult.Yes)
                 {
-                    DisconnectTcAds();
+                    formClosingFlag = true;
+                    //Stoping PLC Thread
+                    await stopPLCThread();
+                    Console.WriteLine("PLC thread stoped");
                 }
                 else
                 {
                     // If user cancels, prevent the form from closing
                     e.Cancel = true;  // Cancel closing
+                    return;
                 }
 
+            }
+
+            // Stoping OpenGL Render Thread
+            if (renderThread != null && renderThread.IsAlive)
+            {
+                await stopRenderThread();
             }
 
         }
 
         #endregion
-
 
     }
 }
