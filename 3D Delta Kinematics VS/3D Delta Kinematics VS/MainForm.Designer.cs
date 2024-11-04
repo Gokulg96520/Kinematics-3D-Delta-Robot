@@ -71,7 +71,12 @@ namespace _3D_Delta_Kinematics_VS
             this.tbJogSpeed = new System.Windows.Forms.TextBox();
             this.lblJogSpeed = new System.Windows.Forms.Label();
             this.tbNCI = new System.Windows.Forms.TabPage();
+            this.gbNCLines = new System.Windows.Forms.GroupBox();
+            this.tbPartPrgLine3 = new System.Windows.Forms.TextBox();
+            this.tbPartPrgLine2 = new System.Windows.Forms.TextBox();
+            this.tbPartPrgLine1 = new System.Windows.Forms.TextBox();
             this.btnFileExp = new System.Windows.Forms.Button();
+            this.tbNCProgramName = new System.Windows.Forms.TextBox();
             this.gbNC = new System.Windows.Forms.GroupBox();
             this.tbIntrpState = new System.Windows.Forms.TextBox();
             this.btnStopPartprg = new System.Windows.Forms.Button();
@@ -82,11 +87,8 @@ namespace _3D_Delta_Kinematics_VS
             this.btnNCIAxisGrp = new System.Windows.Forms.Button();
             this.btnNCIAxisUnGrp = new System.Windows.Forms.Button();
             this.btnNCIIntrReset = new System.Windows.Forms.Button();
-            this.gbNCLines = new System.Windows.Forms.GroupBox();
-            this.tbPartPrgLine1 = new System.Windows.Forms.TextBox();
-            this.tbPartPrgLine2 = new System.Windows.Forms.TextBox();
-            this.tbPartPrgLine3 = new System.Windows.Forms.TextBox();
-            this.tbNCProgramName = new System.Windows.Forms.TextBox();
+            this.tbError = new System.Windows.Forms.TextBox();
+            this.lbInfo = new System.Windows.Forms.Label();
             this.gbMCS.SuspendLayout();
             this.gbACS.SuspendLayout();
             this.gbJog.SuspendLayout();
@@ -94,8 +96,8 @@ namespace _3D_Delta_Kinematics_VS
             this.tbCtrl.SuspendLayout();
             this.tbJog.SuspendLayout();
             this.tbNCI.SuspendLayout();
-            this.gbNC.SuspendLayout();
             this.gbNCLines.SuspendLayout();
+            this.gbNC.SuspendLayout();
             this.SuspendLayout();
             // 
             // glControl
@@ -104,9 +106,9 @@ namespace _3D_Delta_Kinematics_VS
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.glControl.BackColor = System.Drawing.Color.Black;
-            this.glControl.Location = new System.Drawing.Point(254, 2);
+            this.glControl.Location = new System.Drawing.Point(254, 36);
             this.glControl.Name = "glControl";
-            this.glControl.Size = new System.Drawing.Size(561, 517);
+            this.glControl.Size = new System.Drawing.Size(561, 483);
             this.glControl.TabIndex = 0;
             this.glControl.VSync = false;
             // 
@@ -186,7 +188,7 @@ namespace _3D_Delta_Kinematics_VS
             this.gbMCS.Controls.Add(this.lbXCord);
             this.gbMCS.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.gbMCS.ForeColor = System.Drawing.Color.White;
-            this.gbMCS.Location = new System.Drawing.Point(259, 4);
+            this.gbMCS.Location = new System.Drawing.Point(259, 36);
             this.gbMCS.Name = "gbMCS";
             this.gbMCS.Size = new System.Drawing.Size(126, 85);
             this.gbMCS.TabIndex = 3;
@@ -264,7 +266,7 @@ namespace _3D_Delta_Kinematics_VS
             this.gbACS.Controls.Add(this.lbM1Cord);
             this.gbACS.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.gbACS.ForeColor = System.Drawing.Color.White;
-            this.gbACS.Location = new System.Drawing.Point(259, 90);
+            this.gbACS.Location = new System.Drawing.Point(259, 122);
             this.gbACS.Name = "gbACS";
             this.gbACS.Size = new System.Drawing.Size(126, 85);
             this.gbACS.TabIndex = 4;
@@ -621,6 +623,52 @@ namespace _3D_Delta_Kinematics_VS
             this.tbNCI.TabIndex = 1;
             this.tbNCI.Text = "  NCI";
             // 
+            // gbNCLines
+            // 
+            this.gbNCLines.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.gbNCLines.BackColor = System.Drawing.SystemColors.Control;
+            this.gbNCLines.Controls.Add(this.tbPartPrgLine3);
+            this.gbNCLines.Controls.Add(this.tbPartPrgLine2);
+            this.gbNCLines.Controls.Add(this.tbPartPrgLine1);
+            this.gbNCLines.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gbNCLines.ForeColor = System.Drawing.Color.Black;
+            this.gbNCLines.Location = new System.Drawing.Point(6, 154);
+            this.gbNCLines.Name = "gbNCLines";
+            this.gbNCLines.Size = new System.Drawing.Size(225, 123);
+            this.gbNCLines.TabIndex = 18;
+            this.gbNCLines.TabStop = false;
+            this.gbNCLines.Text = "Current Part Program";
+            // 
+            // tbPartPrgLine3
+            // 
+            this.tbPartPrgLine3.BackColor = System.Drawing.SystemColors.Control;
+            this.tbPartPrgLine3.Enabled = false;
+            this.tbPartPrgLine3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbPartPrgLine3.Location = new System.Drawing.Point(6, 87);
+            this.tbPartPrgLine3.Name = "tbPartPrgLine3";
+            this.tbPartPrgLine3.Size = new System.Drawing.Size(213, 24);
+            this.tbPartPrgLine3.TabIndex = 20;
+            // 
+            // tbPartPrgLine2
+            // 
+            this.tbPartPrgLine2.BackColor = System.Drawing.SystemColors.Control;
+            this.tbPartPrgLine2.Enabled = false;
+            this.tbPartPrgLine2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbPartPrgLine2.Location = new System.Drawing.Point(6, 58);
+            this.tbPartPrgLine2.Name = "tbPartPrgLine2";
+            this.tbPartPrgLine2.Size = new System.Drawing.Size(213, 24);
+            this.tbPartPrgLine2.TabIndex = 19;
+            // 
+            // tbPartPrgLine1
+            // 
+            this.tbPartPrgLine1.BackColor = System.Drawing.SystemColors.Control;
+            this.tbPartPrgLine1.Enabled = false;
+            this.tbPartPrgLine1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbPartPrgLine1.Location = new System.Drawing.Point(6, 29);
+            this.tbPartPrgLine1.Name = "tbPartPrgLine1";
+            this.tbPartPrgLine1.Size = new System.Drawing.Size(213, 24);
+            this.tbPartPrgLine1.TabIndex = 18;
+            // 
             // btnFileExp
             // 
             this.btnFileExp.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -631,6 +679,17 @@ namespace _3D_Delta_Kinematics_VS
             this.btnFileExp.TabIndex = 17;
             this.btnFileExp.UseVisualStyleBackColor = true;
             this.btnFileExp.Click += new System.EventHandler(this.btnFileExp_Click);
+            // 
+            // tbNCProgramName
+            // 
+            this.tbNCProgramName.BackColor = System.Drawing.SystemColors.Control;
+            this.tbNCProgramName.Enabled = false;
+            this.tbNCProgramName.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbNCProgramName.Location = new System.Drawing.Point(6, 34);
+            this.tbNCProgramName.Name = "tbNCProgramName";
+            this.tbNCProgramName.Size = new System.Drawing.Size(186, 24);
+            this.tbNCProgramName.TabIndex = 16;
+            this.tbNCProgramName.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // gbNC
             // 
@@ -746,68 +805,33 @@ namespace _3D_Delta_Kinematics_VS
             this.btnNCIIntrReset.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnNCIIntrReset_MouseDown);
             this.btnNCIIntrReset.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btnNCIIntrReset_MouseUp);
             // 
-            // gbNCLines
+            // tbError
             // 
-            this.gbNCLines.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.gbNCLines.BackColor = System.Drawing.SystemColors.Control;
-            this.gbNCLines.Controls.Add(this.tbPartPrgLine3);
-            this.gbNCLines.Controls.Add(this.tbPartPrgLine2);
-            this.gbNCLines.Controls.Add(this.tbPartPrgLine1);
-            this.gbNCLines.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gbNCLines.ForeColor = System.Drawing.Color.Black;
-            this.gbNCLines.Location = new System.Drawing.Point(6, 154);
-            this.gbNCLines.Name = "gbNCLines";
-            this.gbNCLines.Size = new System.Drawing.Size(225, 123);
-            this.gbNCLines.TabIndex = 18;
-            this.gbNCLines.TabStop = false;
-            this.gbNCLines.Text = "Current Part Program";
+            this.tbError.Enabled = false;
+            this.tbError.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbError.Location = new System.Drawing.Point(294, 6);
+            this.tbError.Name = "tbError";
+            this.tbError.Size = new System.Drawing.Size(515, 24);
+            this.tbError.TabIndex = 15;
+            this.tbError.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // tbPartPrgLine1
+            // lbInfo
             // 
-            this.tbPartPrgLine1.BackColor = System.Drawing.SystemColors.Control;
-            this.tbPartPrgLine1.Enabled = false;
-            this.tbPartPrgLine1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbPartPrgLine1.Location = new System.Drawing.Point(6, 29);
-            this.tbPartPrgLine1.Name = "tbPartPrgLine1";
-            this.tbPartPrgLine1.Size = new System.Drawing.Size(213, 24);
-            this.tbPartPrgLine1.TabIndex = 18;
-            // 
-            // tbPartPrgLine2
-            // 
-            this.tbPartPrgLine2.BackColor = System.Drawing.SystemColors.Control;
-            this.tbPartPrgLine2.Enabled = false;
-            this.tbPartPrgLine2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbPartPrgLine2.Location = new System.Drawing.Point(6, 58);
-            this.tbPartPrgLine2.Name = "tbPartPrgLine2";
-            this.tbPartPrgLine2.Size = new System.Drawing.Size(213, 24);
-            this.tbPartPrgLine2.TabIndex = 19;
-            // 
-            // tbPartPrgLine3
-            // 
-            this.tbPartPrgLine3.BackColor = System.Drawing.SystemColors.Control;
-            this.tbPartPrgLine3.Enabled = false;
-            this.tbPartPrgLine3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbPartPrgLine3.Location = new System.Drawing.Point(6, 87);
-            this.tbPartPrgLine3.Name = "tbPartPrgLine3";
-            this.tbPartPrgLine3.Size = new System.Drawing.Size(213, 24);
-            this.tbPartPrgLine3.TabIndex = 20;
-            // 
-            // tbNCProgramName
-            // 
-            this.tbNCProgramName.BackColor = System.Drawing.SystemColors.Control;
-            this.tbNCProgramName.Enabled = false;
-            this.tbNCProgramName.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbNCProgramName.Location = new System.Drawing.Point(6, 34);
-            this.tbNCProgramName.Name = "tbNCProgramName";
-            this.tbNCProgramName.Size = new System.Drawing.Size(186, 24);
-            this.tbNCProgramName.TabIndex = 16;
-            this.tbNCProgramName.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.lbInfo.AutoSize = true;
+            this.lbInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbInfo.Location = new System.Drawing.Point(256, 9);
+            this.lbInfo.Name = "lbInfo";
+            this.lbInfo.Size = new System.Drawing.Size(32, 18);
+            this.lbInfo.TabIndex = 16;
+            this.lbInfo.Text = "Info";
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(816, 521);
+            this.Controls.Add(this.lbInfo);
+            this.Controls.Add(this.tbError);
             this.Controls.Add(this.btnNCIIntrReset);
             this.Controls.Add(this.btnNCIAxisUnGrp);
             this.Controls.Add(this.btnNCIAxisGrp);
@@ -843,10 +867,10 @@ namespace _3D_Delta_Kinematics_VS
             this.tbJog.PerformLayout();
             this.tbNCI.ResumeLayout(false);
             this.tbNCI.PerformLayout();
-            this.gbNC.ResumeLayout(false);
-            this.gbNC.PerformLayout();
             this.gbNCLines.ResumeLayout(false);
             this.gbNCLines.PerformLayout();
+            this.gbNC.ResumeLayout(false);
+            this.gbNC.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -912,6 +936,8 @@ namespace _3D_Delta_Kinematics_VS
         private System.Windows.Forms.TextBox tbPartPrgLine2;
         private System.Windows.Forms.TextBox tbPartPrgLine1;
         private System.Windows.Forms.TextBox tbNCProgramName;
+        private System.Windows.Forms.TextBox tbError;
+        private System.Windows.Forms.Label lbInfo;
     }
 }
 
