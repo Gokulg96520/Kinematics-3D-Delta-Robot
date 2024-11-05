@@ -108,7 +108,12 @@
     <None Include="Resources\openFileIcon.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="NCEdit\TcNcEdit.exe" />
+    <None Include="NCEdit\TcNcEdit.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Edit.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

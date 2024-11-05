@@ -15,7 +15,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Collections.Concurrent;
-using Beckhoff.Forms.Nc;
+using System.Diagnostics;
 
 namespace _3D_Delta_Kinematics_VS
 {
@@ -409,6 +409,15 @@ namespace _3D_Delta_Kinematics_VS
             }
         }
 
+        //Method to Add Data to Que
+        private void addDataToQueue(PLCStructure.OutputStructure data)
+        {
+            if (!plcQueue.TryAdd(data))
+            {
+                tbError.Text = "Adding Data to Queue Failed";
+            }
+        }
+
         #endregion
 
         #region UI & Render Update 
@@ -477,15 +486,19 @@ namespace _3D_Delta_Kinematics_VS
             {
                 case 1:
                     tbIntrpState.Text = "Idle";
+                    btnFileExp.Enabled = btnNCEdit.Enabled = true;
                     break;
                 case 2:
                     tbIntrpState.Text = "Ready";
+                    btnFileExp.Enabled = btnNCEdit.Enabled = true;
                     break;
                 case 5:
                     tbIntrpState.Text = "Running";
+                    btnFileExp.Enabled = btnNCEdit.Enabled = false;
                     break;
                 default:
                     tbIntrpState.Text = "UnKnown";
+                    btnFileExp.Enabled = btnNCEdit.Enabled = false;
                     break;
             }
 
@@ -567,6 +580,7 @@ namespace _3D_Delta_Kinematics_VS
         #endregion
 
         #region NCI Group & Reset
+
         private void btnNCIAxisGrp_MouseDown(object sender, MouseEventArgs e)
         {
             eventDataA.NCIAxisGroup = true;
@@ -602,6 +616,8 @@ namespace _3D_Delta_Kinematics_VS
             eventDataB.NCIInteperatorReset = false;
             addDataToQueue(eventDataB);
         }
+
+
         #endregion
 
         #region Tab Control Events
@@ -810,19 +826,44 @@ namespace _3D_Delta_Kinematics_VS
             addDataToQueue(eventDataB);
         }
 
-        #endregion
-
-        #endregion
-
-        #endregion
-
-        private void addDataToQueue(PLCStructure.OutputStructure data)
+        private void btnNCEdit_Click(object sender, EventArgs e)
         {
-            if (!plcQueue.TryAdd(data))
+            TriggerNCEditExe(tbNCProgramName.Text);
+        }
+
+        private void TriggerNCEditExe(string filename)
+        {
+            try
             {
-                tbError.Text = "Adding Data to Queue Failed";
+                // Use a relative path to the executable in the NCEdit folder within the output directory
+                string exePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "NCEdit", "TcNcEdit.exe");
+
+                // Define the fixed path to the file you want to open
+                string fixedDirectory = @"C:\TwinCAT\Mc\Nci\" ;
+                string filePath = Path.Combine(fixedDirectory, filename);
+
+                // Create a new process start info with the executable path and file path as argument
+                ProcessStartInfo startInfo = new ProcessStartInfo
+                    {
+                        FileName = exePath,
+                        Arguments = $"\"{filePath}\""  // Add quotes to handle spaces in the file path
+                    };
+
+                // Start the process
+                Process.Start(startInfo);
+            }
+            catch (Exception ex)
+            {
+                tbError.Text = ex.Message;
             }
         }
+
+        #endregion
+
+        #endregion
+
+        #endregion
+
         #endregion
 
         #region OpenGL GL Control & Render 
@@ -1096,6 +1137,7 @@ namespace _3D_Delta_Kinematics_VS
         }
 
         #endregion
+
 
     }
 }
