@@ -499,7 +499,7 @@ namespace _3D_Delta_Kinematics_VS
             MovePlatePos.z = PLCToUIStructure.Z_MCSPos;
 
             //Redraw Render 
-            //glControl.Invalidate();
+            glControl.Invalidate();
         }
 
         #endregion
