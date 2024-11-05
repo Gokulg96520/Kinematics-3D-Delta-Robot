@@ -61,7 +61,6 @@ namespace _3D_Delta_Kinematics_VS
             InitializeComponent();
             InitializeFormData();
             InitializeGLComponent();
-
         }
 
         private void InitializeFormData()
@@ -142,7 +141,7 @@ namespace _3D_Delta_Kinematics_VS
             }
             catch (Exception err)
             {
-                //btnConnect.BackColor = Color.Red;
+                updateConnectButtonColor(Color.Red);
                 updateErrorTextBox(err.Message);
                 onPLCClientError(err);
                 return;
@@ -150,7 +149,7 @@ namespace _3D_Delta_Kinematics_VS
 
             if (tcClient.IsConnected == true)
             {
-                //btnConnect.BackColor = Color.GreenYellow;
+                updateConnectButtonColor(Color.GreenYellow);
                 updateErrorTextBox("Connected to Controller");
 
                 //Sequence 2 After Connecting Create a Handle
@@ -190,12 +189,12 @@ namespace _3D_Delta_Kinematics_VS
                 finally
                 {
                     DisconnectTcAds();
-                    Console.WriteLine("PLC loop exiting...");
+                    //Console.WriteLine("PLC loop exiting...");
                 }
             }
             else if (tcClient.IsConnected == false)
             {
-                //btnConnect.BackColor = Color.Red;
+                updateConnectButtonColor(Color.Red);
                 updateErrorTextBox("Controller Not Connected");
             }
         }
@@ -252,7 +251,7 @@ namespace _3D_Delta_Kinematics_VS
                 }
                 catch (Exception err)
                 {
-                    //btnConnect.BackColor = Color.Red;
+                    updateConnectButtonColor(Color.Red);
                     updateErrorTextBox(err.Message);
                     onPLCClientError(err);
                     return;
@@ -372,6 +371,18 @@ namespace _3D_Delta_Kinematics_VS
             else
             {
                 tbError.Text = message;
+            }
+        }
+
+        private void updateConnectButtonColor(Color color)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() => updateConnectButtonColor(color)));
+            }
+            else
+            {
+                btnConnect.BackColor = color;
             }
         }
 
@@ -1070,7 +1081,7 @@ namespace _3D_Delta_Kinematics_VS
                     formClosingFlag = true;
                     //Stoping PLC Thread
                     await stopPLCThread();
-                    Console.WriteLine("PLC thread stoped");
+                    //Console.WriteLine("PLC thread stopped");
                 }
                 else
                 {
