@@ -69,6 +69,9 @@ namespace _3D_Delta_Kinematics_VS
 
         private void InitializeFormData()
         {
+            //Open Form in Maximized Positon
+            this.WindowState = FormWindowState.Maximized;
+
             //UI Data 
             tbAMSNetID.Text = "192.168.1.19.1.1";
             tbJogSpeed.Text = "50";
@@ -809,7 +812,7 @@ namespace _3D_Delta_Kinematics_VS
             }
             else
             {
-                MessageBox.Show("No file was selected.", "Selection Canceled");
+                tbError.Text = "No file was selected,Selection Canceled";
             }
             addDataToQueue(eventDataA);
         }
@@ -864,7 +867,15 @@ namespace _3D_Delta_Kinematics_VS
 
         private void btnNCEdit_Click(object sender, EventArgs e)
         {
-            TriggerNCEditExe(tbNCProgramName.Text);
+            if (string.IsNullOrEmpty(tbNCProgramName.Text))
+            {
+                tbError.Text = "No file was selected";
+            }
+            else
+            {
+                TriggerNCEditExe(tbNCProgramName.Text);
+            }
+            
         }
 
         private void TriggerNCEditExe(string filename)
