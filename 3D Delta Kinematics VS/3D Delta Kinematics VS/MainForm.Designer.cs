@@ -64,19 +64,16 @@ namespace _3D_Delta_Kinematics_VS
             this.btnYPos = new System.Windows.Forms.Button();
             this.btnXPos = new System.Windows.Forms.Button();
             this.btnXNeg = new System.Windows.Forms.Button();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.tbCtrl = new System.Windows.Forms.TabControl();
             this.tbJog = new System.Windows.Forms.TabPage();
             this.lblmms = new System.Windows.Forms.Label();
             this.tbJogSpeed = new System.Windows.Forms.TextBox();
             this.lblJogSpeed = new System.Windows.Forms.Label();
             this.tbNCI = new System.Windows.Forms.TabPage();
-            this.btnNCEdit = new System.Windows.Forms.Button();
             this.gbNCLines = new System.Windows.Forms.GroupBox();
             this.tbPartPrgLine3 = new System.Windows.Forms.TextBox();
             this.tbPartPrgLine2 = new System.Windows.Forms.TextBox();
             this.tbPartPrgLine1 = new System.Windows.Forms.TextBox();
-            this.btnFileExp = new System.Windows.Forms.Button();
             this.tbNCProgramName = new System.Windows.Forms.TextBox();
             this.gbNC = new System.Windows.Forms.GroupBox();
             this.tbIntrpState = new System.Windows.Forms.TextBox();
@@ -90,15 +87,18 @@ namespace _3D_Delta_Kinematics_VS
             this.btnNCIIntrReset = new System.Windows.Forms.Button();
             this.tbError = new System.Windows.Forms.TextBox();
             this.lbInfo = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.btnNCEdit = new System.Windows.Forms.Button();
+            this.btnFileExp = new System.Windows.Forms.Button();
             this.gbMCS.SuspendLayout();
             this.gbACS.SuspendLayout();
             this.gbJog.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tbCtrl.SuspendLayout();
             this.tbJog.SuspendLayout();
             this.tbNCI.SuspendLayout();
             this.gbNCLines.SuspendLayout();
             this.gbNC.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // glControl
@@ -538,17 +538,6 @@ namespace _3D_Delta_Kinematics_VS
             this.btnXNeg.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnXNeg_MouseDown);
             this.btnXNeg.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btnXNeg_MouseUp);
             // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.pictureBox1.Image = global::_3D_Delta_Kinematics_VS.Properties.Resources.CoOrdinate;
-            this.pictureBox1.Location = new System.Drawing.Point(18, 24);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(188, 215);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 20;
-            this.pictureBox1.TabStop = false;
-            // 
             // tbCtrl
             // 
             this.tbCtrl.Controls.Add(this.tbJog);
@@ -625,17 +614,6 @@ namespace _3D_Delta_Kinematics_VS
             this.tbNCI.TabIndex = 1;
             this.tbNCI.Text = "  NCI";
             // 
-            // btnNCEdit
-            // 
-            this.btnNCEdit.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnNCEdit.Image = global::_3D_Delta_Kinematics_VS.Properties.Resources.Edit;
-            this.btnNCEdit.Location = new System.Drawing.Point(198, 34);
-            this.btnNCEdit.Name = "btnNCEdit";
-            this.btnNCEdit.Size = new System.Drawing.Size(34, 25);
-            this.btnNCEdit.TabIndex = 19;
-            this.btnNCEdit.UseVisualStyleBackColor = true;
-            this.btnNCEdit.Click += new System.EventHandler(this.btnNCEdit_Click);
-            // 
             // gbNCLines
             // 
             this.gbNCLines.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -655,7 +633,6 @@ namespace _3D_Delta_Kinematics_VS
             // tbPartPrgLine3
             // 
             this.tbPartPrgLine3.BackColor = System.Drawing.SystemColors.Control;
-            this.tbPartPrgLine3.Enabled = false;
             this.tbPartPrgLine3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbPartPrgLine3.Location = new System.Drawing.Point(6, 87);
             this.tbPartPrgLine3.Name = "tbPartPrgLine3";
@@ -665,7 +642,6 @@ namespace _3D_Delta_Kinematics_VS
             // tbPartPrgLine2
             // 
             this.tbPartPrgLine2.BackColor = System.Drawing.SystemColors.Control;
-            this.tbPartPrgLine2.Enabled = false;
             this.tbPartPrgLine2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbPartPrgLine2.Location = new System.Drawing.Point(6, 58);
             this.tbPartPrgLine2.Name = "tbPartPrgLine2";
@@ -675,28 +651,15 @@ namespace _3D_Delta_Kinematics_VS
             // tbPartPrgLine1
             // 
             this.tbPartPrgLine1.BackColor = System.Drawing.SystemColors.Control;
-            this.tbPartPrgLine1.Enabled = false;
             this.tbPartPrgLine1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbPartPrgLine1.Location = new System.Drawing.Point(6, 29);
             this.tbPartPrgLine1.Name = "tbPartPrgLine1";
             this.tbPartPrgLine1.Size = new System.Drawing.Size(213, 24);
             this.tbPartPrgLine1.TabIndex = 18;
             // 
-            // btnFileExp
-            // 
-            this.btnFileExp.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnFileExp.Image = global::_3D_Delta_Kinematics_VS.Properties.Resources.openFileIcon1;
-            this.btnFileExp.Location = new System.Drawing.Point(162, 34);
-            this.btnFileExp.Name = "btnFileExp";
-            this.btnFileExp.Size = new System.Drawing.Size(34, 25);
-            this.btnFileExp.TabIndex = 17;
-            this.btnFileExp.UseVisualStyleBackColor = true;
-            this.btnFileExp.Click += new System.EventHandler(this.btnFileExp_Click);
-            // 
             // tbNCProgramName
             // 
             this.tbNCProgramName.BackColor = System.Drawing.SystemColors.Control;
-            this.tbNCProgramName.Enabled = false;
             this.tbNCProgramName.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbNCProgramName.Location = new System.Drawing.Point(6, 34);
             this.tbNCProgramName.Name = "tbNCProgramName";
@@ -841,6 +804,39 @@ namespace _3D_Delta_Kinematics_VS
             this.lbInfo.TabIndex = 16;
             this.lbInfo.Text = "Info";
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.pictureBox1.Image = global::_3D_Delta_Kinematics_VS.Properties.Resources.CoOrdinate;
+            this.pictureBox1.Location = new System.Drawing.Point(18, 24);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(188, 215);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 20;
+            this.pictureBox1.TabStop = false;
+            // 
+            // btnNCEdit
+            // 
+            this.btnNCEdit.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnNCEdit.Image = global::_3D_Delta_Kinematics_VS.Properties.Resources.Edit;
+            this.btnNCEdit.Location = new System.Drawing.Point(198, 34);
+            this.btnNCEdit.Name = "btnNCEdit";
+            this.btnNCEdit.Size = new System.Drawing.Size(34, 25);
+            this.btnNCEdit.TabIndex = 19;
+            this.btnNCEdit.UseVisualStyleBackColor = true;
+            this.btnNCEdit.Click += new System.EventHandler(this.btnNCEdit_Click);
+            // 
+            // btnFileExp
+            // 
+            this.btnFileExp.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnFileExp.Image = global::_3D_Delta_Kinematics_VS.Properties.Resources.openFileIcon1;
+            this.btnFileExp.Location = new System.Drawing.Point(162, 34);
+            this.btnFileExp.Name = "btnFileExp";
+            this.btnFileExp.Size = new System.Drawing.Size(34, 25);
+            this.btnFileExp.TabIndex = 17;
+            this.btnFileExp.UseVisualStyleBackColor = true;
+            this.btnFileExp.Click += new System.EventHandler(this.btnFileExp_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -877,7 +873,6 @@ namespace _3D_Delta_Kinematics_VS
             this.gbACS.PerformLayout();
             this.gbJog.ResumeLayout(false);
             this.gbJog.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.tbCtrl.ResumeLayout(false);
             this.tbJog.ResumeLayout(false);
             this.tbJog.PerformLayout();
@@ -887,6 +882,7 @@ namespace _3D_Delta_Kinematics_VS
             this.gbNCLines.PerformLayout();
             this.gbNC.ResumeLayout(false);
             this.gbNC.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

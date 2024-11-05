@@ -57,6 +57,9 @@ namespace _3D_Delta_Kinematics_VS
         //Form Closing Flag
         public bool formClosingFlag;
 
+        //Add Arrow to Text
+        public string addArrowFirstLine, addArrowSecondLine;
+
         public MainForm()
         {
             InitializeComponent();
@@ -502,9 +505,42 @@ namespace _3D_Delta_Kinematics_VS
                     break;
             }
 
+            // Set text box colors based on the conditions
+            if (!string.IsNullOrEmpty(PLCToUIStructure.PartProgramLine1) &&
+                !string.IsNullOrEmpty(PLCToUIStructure.PartProgramLine2) &&
+                 string.IsNullOrEmpty(PLCToUIStructure.PartProgramLine3))
+            {
+                // If Line 3 is empty, make Line 1 text box color blue
+                tbPartPrgLine1.BackColor = Color.LightBlue;
+                tbPartPrgLine2.BackColor = SystemColors.Control;  // Default background color
+                tbPartPrgLine3.BackColor = SystemColors.Control;
+                addArrowFirstLine = "→ ";
+                addArrowSecondLine = "";
+            }
+            else if (!string.IsNullOrEmpty(PLCToUIStructure.PartProgramLine1) &&
+                     !string.IsNullOrEmpty(PLCToUIStructure.PartProgramLine2) &&
+                     !string.IsNullOrEmpty(PLCToUIStructure.PartProgramLine3))
+            {
+                // If all 3 lines are present, make Line 2 text box color blue
+                tbPartPrgLine1.BackColor = SystemColors.Control;
+                tbPartPrgLine2.BackColor = Color.LightBlue;
+                tbPartPrgLine3.BackColor = SystemColors.Control;
+                addArrowFirstLine = "";
+                addArrowSecondLine = "→ ";
+            }
+            else
+            {
+                // Reset colors if conditions are not met
+                tbPartPrgLine1.BackColor = SystemColors.Control;
+                tbPartPrgLine2.BackColor = SystemColors.Control;
+                tbPartPrgLine3.BackColor = SystemColors.Control;
+                addArrowFirstLine = "";
+                addArrowSecondLine = "";
+            }
+
             //Part Program Line
-            tbPartPrgLine1.Text = PLCToUIStructure.PartProgramLine1;
-            tbPartPrgLine2.Text = PLCToUIStructure.PartProgramLine2;
+            tbPartPrgLine1.Text = addArrowFirstLine + PLCToUIStructure.PartProgramLine1;
+            tbPartPrgLine2.Text = addArrowSecondLine + PLCToUIStructure.PartProgramLine2;
             tbPartPrgLine3.Text = PLCToUIStructure.PartProgramLine3;
 
             //3D Delta Robot XYZ Update
