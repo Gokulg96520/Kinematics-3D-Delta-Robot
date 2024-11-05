@@ -89,6 +89,7 @@ namespace _3D_Delta_Kinematics_VS
             this.btnNCIIntrReset = new System.Windows.Forms.Button();
             this.tbError = new System.Windows.Forms.TextBox();
             this.lbInfo = new System.Windows.Forms.Label();
+            this.btnNCEdit = new System.Windows.Forms.Button();
             this.gbMCS.SuspendLayout();
             this.gbACS.SuspendLayout();
             this.gbJog.SuspendLayout();
@@ -608,6 +609,7 @@ namespace _3D_Delta_Kinematics_VS
             // tbNCI
             // 
             this.tbNCI.BackColor = System.Drawing.SystemColors.Control;
+            this.tbNCI.Controls.Add(this.btnNCEdit);
             this.tbNCI.Controls.Add(this.gbNCLines);
             this.tbNCI.Controls.Add(this.btnFileExp);
             this.tbNCI.Controls.Add(this.tbNCProgramName);
@@ -673,7 +675,7 @@ namespace _3D_Delta_Kinematics_VS
             // 
             this.btnFileExp.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnFileExp.Image = global::_3D_Delta_Kinematics_VS.Properties.Resources.openFileIcon1;
-            this.btnFileExp.Location = new System.Drawing.Point(196, 34);
+            this.btnFileExp.Location = new System.Drawing.Point(161, 34);
             this.btnFileExp.Name = "btnFileExp";
             this.btnFileExp.Size = new System.Drawing.Size(34, 25);
             this.btnFileExp.TabIndex = 17;
@@ -687,7 +689,7 @@ namespace _3D_Delta_Kinematics_VS
             this.tbNCProgramName.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbNCProgramName.Location = new System.Drawing.Point(6, 34);
             this.tbNCProgramName.Name = "tbNCProgramName";
-            this.tbNCProgramName.Size = new System.Drawing.Size(186, 24);
+            this.tbNCProgramName.Size = new System.Drawing.Size(149, 24);
             this.tbNCProgramName.TabIndex = 16;
             this.tbNCProgramName.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -828,6 +830,16 @@ namespace _3D_Delta_Kinematics_VS
             this.lbInfo.TabIndex = 16;
             this.lbInfo.Text = "Info";
             // 
+            // btnNCEdit
+            // 
+            this.btnNCEdit.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnNCEdit.Image = global::_3D_Delta_Kinematics_VS.Properties.Resources.openFileIcon1;
+            this.btnNCEdit.Location = new System.Drawing.Point(197, 35);
+            this.btnNCEdit.Name = "btnNCEdit";
+            this.btnNCEdit.Size = new System.Drawing.Size(34, 25);
+            this.btnNCEdit.TabIndex = 19;
+            this.btnNCEdit.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -941,6 +953,7 @@ namespace _3D_Delta_Kinematics_VS
         private System.Windows.Forms.TextBox tbNCProgramName;
         private System.Windows.Forms.TextBox tbError;
         private System.Windows.Forms.Label lbInfo;
+        private System.Windows.Forms.Button btnNCEdit;
     }
 }
 

@@ -15,6 +15,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Collections.Concurrent;
+using Beckhoff.Forms.Nc;
 
 namespace _3D_Delta_Kinematics_VS
 {
